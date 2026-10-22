@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
@@ -12,13 +11,6 @@ public class PlayerInputManager : MonoBehaviour
 
     private HashSet<Gamepad> joinedGamePads = new HashSet<Gamepad>();
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         foreach (var gamepad in Gamepad.all)
@@ -27,6 +19,7 @@ public class PlayerInputManager : MonoBehaviour
             {
                 var player = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: gamepad);
                 player.transform.position = spawnPoint.position;
+                player.SwitchCurrentActionMap("Player");
                 joinedGamePads.Add(gamepad);
 
             }
