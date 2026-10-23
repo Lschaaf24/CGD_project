@@ -127,13 +127,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfed09dd1e0659e459323673d96f2c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 2000
+  moveSpeed: 8
   interactionRadius: 1
   interactionLayers:
     serializedVersion: 2
     m_Bits: 64
-  slideSpeed: 12
-  slideDuration: 0.3
+  hopForce: 2
+  dashForce: 3
+  slideSpeed: 10
+  slideDuration: 0.1
+  slideCooldown: 0.5
 --- !u!114 &4241951362885355025
 MonoBehaviour:
   m_ObjectHideFlags: 0

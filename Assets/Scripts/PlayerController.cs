@@ -6,14 +6,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float interactionRadius = 0.1f;
     [SerializeField] private LayerMask interactionLayers;
 
-    [SerializeField] private float hopForce = 5.0f;
-    [SerializeField] private float dashForce = 20.0f;
-    [SerializeField] private float slideSpeed = 8f;
+    [SerializeField] private float hopForce = 0.5f;
+    [SerializeField] private float dashForce = 1f;
+    [SerializeField] private float slideSpeed = 2f;
     [SerializeField] private float slideDuration = 1.0f;
+    [SerializeField] private float slideCooldown = 0.5f;
     private float slideTimer;
     private bool isSliding = false;
 
@@ -43,48 +44,59 @@ public class PlayerController : MonoBehaviour
 
     public void OnSlide(InputValue value)
     {
-        StartSlide();
+        if (!isSliding)
+        {
+            StartCoroutine(StartSlide());
+        }
     }
 
-    private void StartSlide()
+    private IEnumerator StartSlide()
     {
-        rb.AddForce(Vector3.up * hopForce, ForceMode.Impulse);
+        isSliding = true;
 
-        Vector3 dashDirection = new Vector3(movementInput.x, 0f, movementInput.y);
 
-        rb.AddForce(dashDirection, ForceMode.Impulse);
+        //rb.AddForce(Vector3.up * hopForce, ForceMode.Impulse);
+        //rb.AddForce(moveDirection * slideSpeed, ForceMode.Impulse);
+
+        rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.2f);
 
         slideTimer = 0.0f;
-        isSliding = true;
+        while (slideTimer < slideDuration)
+        {
+            Vector3 slideDirection = moveDirection * slideSpeed;
+            Vector3 velocity = rb.linearVelocity;
+            velocity = new Vector3(Mathf.Lerp(velocity.x, slideDirection.x, 12f * Time.fixedDeltaTime), velocity.y, Mathf.Lerp(velocity.z, slideDirection.z, 12f * Time.fixedDeltaTime));
+            rb.linearVelocity = velocity;
+
+            slideTimer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        
+        yield return new WaitForSeconds(slideCooldown);
+        isSliding = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         InteractionDetection();
 
+        if (isSliding) return; 
 
-        if (isSliding)
-        {
-            HandleSlide();
-        }
-        
-        
         moveDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
-        rb.linearVelocity = moveDirection * moveSpeed * Time.deltaTime;
-        
-        
+        Vector3 walkingDirection = moveDirection * moveSpeed;
+
+        Vector3 velocity = rb.linearVelocity;
+
+        velocity = new Vector3(Mathf.Lerp(velocity.x, walkingDirection.x, 12f * Time.fixedDeltaTime), velocity.y , Mathf.Lerp(velocity.z, walkingDirection.z, 12f * Time.fixedDeltaTime));
+
+        rb.linearVelocity = velocity;
+
     }
 
-    private void HandleSlide()
-    {
-        slideTimer += Time.fixedDeltaTime;
-
-        if(slideTimer >= slideDuration)
-        {
-            isSliding = false;
-            return;
-        }
-    }
 
     private void InteractionDetection()
     {
