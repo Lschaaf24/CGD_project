@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    private Level currentLevel;
+    [SerializeField] private LevelSelector LevelSelector;
     private States currentState;
+    [SerializeField] private Level currentLevel;
+
 
     UnityEvent SwitchedStates;
 
@@ -37,7 +39,8 @@ public class GameManager : MonoBehaviour
 
         SwitchedStates.AddListener(OnEventTriggered);
 
-        currentLevel = LevelSelector.Instance.currentLevel;
+        LevelSelector = GetComponent<LevelSelector>();
+        currentLevel = LevelSelector.GetCurrentLevel();
 
 
     }

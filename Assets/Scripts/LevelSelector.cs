@@ -12,11 +12,12 @@ public class LevelSelector : MonoBehaviour
 
     public Level currentLevel;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentLevel = levels[0];
-
+        Debug.Log(currentLevel.GetLevelData().getTimeLimit());
 
     }
 
@@ -25,4 +26,11 @@ public class LevelSelector : MonoBehaviour
     {
         
     }
+
+    public Level GetCurrentLevel()
+    {
+        return currentLevel; 
+    }
+
+
 }

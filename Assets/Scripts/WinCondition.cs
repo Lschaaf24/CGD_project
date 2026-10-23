@@ -7,6 +7,7 @@ public class WinCondition : MonoBehaviour
     UnityEvent QuotaReached;
     UnityEvent TimeLimitReached;
 
+    private 
 
 
     void Start()
@@ -28,12 +29,13 @@ public class WinCondition : MonoBehaviour
 
     private void OnTimeLimitReached()
     {
-        throw new NotImplementedException();
+        Debug.Log("Time Limit Reached");
     }
 
     private void OnQuotaReached()
     {
-        throw new NotImplementedException();
+        Debug.Log("Quota Reached");
+
     }
 
     void Update()

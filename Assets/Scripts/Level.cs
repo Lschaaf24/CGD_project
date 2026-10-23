@@ -19,4 +19,11 @@ public class Level : MonoBehaviour
     {
         
     }
+
+    public LevelDataSO GetLevelData()
+    {
+        return data;
+    }
+
+
 }
