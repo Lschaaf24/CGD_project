@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private GameObject closestObject = null;
     private GameObject interactedObject = null;
 
-    private bool inTask = false;
+    [SerializeField] private bool inTask = false;
 
     private void Awake()
     {
@@ -51,8 +51,11 @@ public class PlayerController : MonoBehaviour
             {
                 if (task.EnterTask(this)) 
                 {
-                    inTask = true;
-                    interactedObject = closestObject;
+                    if (!task.isTaskCompleted()) 
+                    {
+                        inTask = true;
+                        interactedObject = closestObject;
+                    }
                 }
                 
             }
