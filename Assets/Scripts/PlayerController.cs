@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideSpeed = 8f;
     [SerializeField] private float slideDuration = 1.0f;
     private bool isSliding = false;
+    
 
     
     private Vector2 movementInput = Vector2.zero;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
 
     private GameObject interactedObject = null;
-
+    private bool inTask = false;
 
     private void Awake()
     {
@@ -72,6 +73,12 @@ public class PlayerController : MonoBehaviour
         {
             currentlyOverlapping = true;
             interactedObject = collider.gameObject;
+            var task = interactedObject.GetComponent<Task>();
+            if (task && !inTask) 
+            {
+                inTask = true;
+                task.EnterTask();
+            }
             break;
         }
 
