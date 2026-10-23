@@ -255,10 +255,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1664373573}
-  - component: {fileID: 1664373572}
   - component: {fileID: 1664373571}
   - component: {fileID: 1664373570}
   - component: {fileID: 1664373569}
+  - component: {fileID: 1664373572}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -290,7 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbac2e082014444aacd33eaaa91a722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSelector
-  levels: []
+  levels:
+  - {fileID: 1664373571}
   currentLevel: {fileID: 0}
 --- !u!114 &1664373571
 MonoBehaviour:
@@ -317,6 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1355e5aded2e80a488f0454a7c5ce49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  LevelSelector: {fileID: 0}
+  currentLevel: {fileID: 0}
 --- !u!4 &1664373573
 Transform:
   m_ObjectHideFlags: 0
