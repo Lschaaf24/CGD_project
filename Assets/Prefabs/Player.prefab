@@ -132,6 +132,8 @@ MonoBehaviour:
   interactionLayers:
     serializedVersion: 2
     m_Bits: 64
+  slideSpeed: 8
+  slideDuration: 1
 --- !u!114 &4241951362885355025
 MonoBehaviour:
   m_ObjectHideFlags: 0

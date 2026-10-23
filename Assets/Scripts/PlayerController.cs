@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,7 +42,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnSlide(InputValue value)
     {
+        StartCoroutine(HandleSlide());
+    }
 
+    private IEnumerator HandleSlide()
+    {
+        throw new NotImplementedException();
     }
 
     private void Update()
