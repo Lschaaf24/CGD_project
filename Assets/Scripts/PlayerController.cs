@@ -1,9 +1,8 @@
+
 using System;
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,21 +10,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactionRadius = 0.1f;
     [SerializeField] private LayerMask interactionLayers;
 
+    [SerializeField] private float hopForce = 5.0f;
+    [SerializeField] private float dashForce = 20.0f;
     [SerializeField] private float slideSpeed = 8f;
     [SerializeField] private float slideDuration = 1.0f;
+    private float slideTimer;
     private bool isSliding = false;
 
     
     private Vector2 movementInput = Vector2.zero;
-    private Vector3 playerVelocity;
-    private CharacterController controller;
+    private Vector3 moveDirection;
+    private Rigidbody rb;
 
     private GameObject interactedObject = null;
 
-
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public void OnMove(InputValue value)
@@ -42,28 +43,51 @@ public class PlayerController : MonoBehaviour
 
     public void OnSlide(InputValue value)
     {
-        StartCoroutine(HandleSlide());
+        StartSlide();
     }
 
-    private IEnumerator HandleSlide()
+    private void StartSlide()
     {
-        throw new NotImplementedException();
+        rb.AddForce(Vector3.up * hopForce, ForceMode.Impulse);
+
+        Vector3 dashDirection = new Vector3(movementInput.x, 0f, movementInput.y);
+
+        rb.AddForce(dashDirection, ForceMode.Impulse);
+
+        slideTimer = 0.0f;
+        isSliding = true;
     }
 
     private void Update()
     {
-        Vector3 move = new Vector3(movementInput.x, 0.0f, movementInput.y);
-        move = Vector3.ClampMagnitude(move, 1f);
-
-        playerVelocity.y += -9.81f * Time.deltaTime;
-
-        Vector3 finalMove = move * moveSpeed + Vector3.up * playerVelocity.y;
+        InteractionDetection();
 
 
-        controller.Move(finalMove * Time.deltaTime);
+        if (isSliding)
+        {
+            HandleSlide();
+        }
+        
+        
+        moveDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
+        rb.linearVelocity = moveDirection * moveSpeed * Time.deltaTime;
+        
+        
+    }
 
+    private void HandleSlide()
+    {
+        slideTimer += Time.fixedDeltaTime;
 
+        if(slideTimer >= slideDuration)
+        {
+            isSliding = false;
+            return;
+        }
+    }
 
+    private void InteractionDetection()
+    {
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius, interactionLayers);
 
@@ -79,7 +103,6 @@ public class PlayerController : MonoBehaviour
         {
             interactedObject = null;
         }
-        
     }
 
     private void OnDrawGizmos()
