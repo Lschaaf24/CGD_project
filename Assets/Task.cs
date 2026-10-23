@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Tasks : MonoBehaviour
+public class Task : MonoBehaviour
 {
    
    
@@ -20,10 +20,11 @@ public class Tasks : MonoBehaviour
     [Range(1, 4)]
     [SerializeField] private int players_required = 1;
 
-    [Tooltip("Will the task always exist or does it spawn temporarily")]
-    [SerializeField] private bool permanent_task = false;
+    [Tooltip("Will the task always persist or does it spawn temporarily")]
+    [SerializeField] private bool persistent_task = false;
 
-
+    [Tooltip("Does the task require continous input?")]
+    [SerializeField] private bool continuous_task = false;
 
     [Space(15)]
 
@@ -41,8 +42,9 @@ public class Tasks : MonoBehaviour
     [Tooltip("Particle Effect to be played when the task is ready")]
     [SerializeField] private ParticleSystem particle_system;
 
-    //bool completion = false;
-
+    bool is_completed = false;
+    int current_players = 0;
+    bool in_task = false;
    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,8 +56,53 @@ public class Tasks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (in_task) 
+        {
+
+        }   
+    }
+
+    public bool EnterTask() 
+    {
+        Debug.Log("ENTERED");
+        if(current_players < players_required) 
+        {
+            current_players++;
+            if(current_players == players_required) 
+            {
+                BeginTask();
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    public void BeginTask() 
+    {
+        if (continuous_task) 
+        {
+
+        }
+        EndTask();
+    }
+
+    public void EndTask()
+    {
+        Debug.Log("TASK COMPLETED");
+        if (persistent_task) 
+        {
+            is_completed = true;
+            current_players = 0;
+            return;
+        }
+        Destroy(this.gameObject);
+
         
     }
+
+     
+
 
 
 
