@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,7 +20,7 @@ public class Task : MonoBehaviour
 
     [Tooltip("The number of players required to complete the task")]
     [Range(1, 4)]
-    [SerializeField] private int playersRequired = 1;
+    [SerializeField] protected int playersRequired = 1;
 
     [Tooltip("Will the task always persist or does it spawn temporarily")]
     [SerializeField] private bool persistentTask = false;
@@ -30,22 +32,27 @@ public class Task : MonoBehaviour
 
     [Header("FX")]
 
-    [InspectorName("Animation")]
     [Tooltip("Animation to be played on the player when interacting with the task")]
     [SerializeField] private Animation animation;
 
-    [InspectorName("Sound Effect")]
     [Tooltip("Sound Effect to be played when the player completes the task")]
     [SerializeField] private AudioClip soundEffect;
 
-    [InspectorName("Particle System")]
     [Tooltip("Particle Effect to be played when the task is ready")]
-    [SerializeField] private ParticleSystem particlSystem;
+    [SerializeField] private ParticleSystem particleSystem;
+
+    [Tooltip("Icon that appears when the task is ready")]
+    [SerializeField] private GameObject icon;
 
     bool isCompleted = false;
     int currentPlayers = 0;
     bool taskStarted = false;
-   
+    bool taskReady = false;
+
+    List<PlayerController> engaged_players = new List<PlayerController>();
+
+    float interval = 5.0f;
+    float elapsed_time = 0.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -54,19 +61,28 @@ public class Task : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        if (taskStarted) 
+    
+        if (taskReady == false) 
         {
-
+            elapsed_time += Time.deltaTime;
+            if (elapsed_time >= interval) 
+            {
+                taskReady = true;
+                elapsed_time = 0.0f;
+                icon.SetActive(true);
+            }
         }   
     }
 
-    public bool EnterTask() 
+    public bool EnterTask(PlayerController player) 
     {
+        if (!taskReady) return false;
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 
         {
+            engaged_players.Add(player);
             currentPlayers++;
             if(currentPlayers == playersRequired) 
             {
@@ -76,32 +92,36 @@ public class Task : MonoBehaviour
         }
         return false;
     }
-
-
-    public void BeginTask() 
-    {
-        if (continuousTask) 
-        {
-
-        }
-        EndTask();
-    }
-
-    public void EndTask()
+    protected virtual void EndTask()
     {
         Debug.Log("TASK COMPLETED");
         if (persistentTask) 
         {
+            taskReady = false;
             isCompleted = true;
             currentPlayers = 0;
-            return;
+            foreach(var player in engaged_players) 
+            {
+                player.TaskEject();
+            }
+            engaged_players.Clear();
         }
-        Destroy(this.gameObject);
-
-        
+        else 
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-     
+
+
+    public virtual void TaskAction() { }
+
+    protected virtual void BeginTask()  
+    { 
+        icon.SetActive(false); 
+    }
+
+
 
 
 

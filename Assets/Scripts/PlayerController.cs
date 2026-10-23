@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using System;
 using System.Collections;
 using System.Threading;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private CharacterController controller;
 
+    private GameObject closestObject = null;
     private GameObject interactedObject = null;
     private bool inTask = false;
 
@@ -36,9 +38,30 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-        if (interactedObject == null) return;
-        Debug.Log("interaction");
-       
+        if (closestObject == null) return;
+        Task task;
+        if (interactedObject == null) 
+        {
+            Debug.Log("INTERACT!");
+            task = closestObject.GetComponent<Task>();
+            if (task && !inTask)
+            {
+                if (task.EnterTask(this)) 
+                {
+                    inTask = true;
+                    interactedObject = closestObject;
+                }
+                
+            }
+            return;
+
+        }
+      
+        task = interactedObject.GetComponent<Task>();
+        if (task != null) 
+        {
+            task.TaskAction();
+        }
     }
 
     public void OnSlide(InputValue value)
@@ -72,19 +95,13 @@ public class PlayerController : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             currentlyOverlapping = true;
-            interactedObject = collider.gameObject;
-            var task = interactedObject.GetComponent<Task>();
-            if (task && !inTask) 
-            {
-                inTask = true;
-                task.EnterTask();
-            }
+            closestObject = collider.gameObject;
             break;
         }
 
         if (!currentlyOverlapping)
         {
-            interactedObject = null;
+            closestObject = null;
         }
         
     }
@@ -92,5 +109,12 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, interactionRadius);
+    }
+
+    public void TaskEject() 
+    {
+        inTask = false;
+        interactedObject = null;
+        Debug.Log("EJECTED");
     }
 }
