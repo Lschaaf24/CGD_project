@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
 
-    private LevelSelector currenLevel;
+    private Level currentLevel;
     private States currentState;
 
     UnityEvent SwitchedStates;
@@ -17,12 +18,14 @@ public class GameManager : MonoBehaviour
 
     enum States
     {
-        LevelSelectionScreen,
         GamePlay,
         Pause,
     }
 
-
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
 
     void Start()
@@ -33,6 +36,10 @@ public class GameManager : MonoBehaviour
         }
 
         SwitchedStates.AddListener(OnEventTriggered);
+
+        currentLevel = LevelSelector.Instance.currentLevel;
+
+
     }
 
     private void OnEventTriggered()

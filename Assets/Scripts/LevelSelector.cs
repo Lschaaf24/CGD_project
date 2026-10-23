@@ -1,15 +1,23 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class LevelSelector : MonoBehaviour
 {
-    private List<Level> Levels;
 
+    public static LevelSelector Instance { get; private set; }
+
+    [SerializeField] private List<Level> levels;
+
+    public Level currentLevel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        currentLevel = levels[0];
+
+
     }
 
     // Update is called once per frame

@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class Level : LevelData
+public class Level : MonoBehaviour
 {
 
     public static Level instance;
+
+    [SerializeField] private LevelDataSO data;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
