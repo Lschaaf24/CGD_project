@@ -137,6 +137,7 @@ MonoBehaviour:
   slideSpeed: 10
   slideDuration: 0.1
   slideCooldown: 0.5
+  Throw: {fileID: -2849114375367226987, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &4241951362885355025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,10 +171,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
-    m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
@@ -238,6 +235,30 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8dc9a2f1-e05f-474d-bb7e-ab73c4f43d0e
+    m_ActionName: 'Player/Slide[/XInputControllerWindows/buttonEast]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5804665223641237709}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnThrow
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6242586e-5e9f-4e26-8efd-5179e1f23c16
+    m_ActionName: 'Player/Throw[/XInputControllerWindows/rightTrigger,/XInputControllerWindows/leftTrigger]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ed5bbb2-f38d-47c9-bd5d-001380492f03
+    m_ActionName: 'Player/Pickup[/XInputControllerWindows/buttonWest]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
