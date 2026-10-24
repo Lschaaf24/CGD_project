@@ -2,6 +2,7 @@ using NUnit.Framework.Internal;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -19,13 +20,19 @@ public class PlayerController : MonoBehaviour
     private bool isSliding = false;
     
 
-    
+    private Item heldItem = null;
+    [SerializeField] private InputActionReference Throw;
+
+
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
     private Rigidbody rb;
 
     private GameObject closestObject = null;
     private GameObject interactedObject = null;
+    private GameObject itemObject = null;
+
+    private bool isChargingThrow;
 
     [SerializeField] private bool inTask = false;
 
@@ -33,6 +40,34 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
+    private void OnEnable()
+    {
+        Throw.action.started += OnThrowStarted;
+        Throw.action.canceled += OnThrowCanceled;
+    }
+
+    private void OnDisable()
+    {
+        Throw.action.started -= OnThrowStarted;
+        Throw.action.canceled -= OnThrowCanceled;
+    }
+
+    private void OnThrowStarted(InputAction.CallbackContext context)
+    {
+        if (heldItem == null) return;
+
+        isChargingThrow = true;
+        heldItem.BeginCharge();
+    }
+
+    private void OnThrowCanceled(InputAction.CallbackContext context)
+    {
+        if (heldItem == null || !isChargingThrow) return;
+
+        isChargingThrow = false;
+        heldItem.ReleaseCharge(transform.forward);
+    }
+
 
     public void OnMove(InputValue value)
     {
@@ -41,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
+
+        Debug.Log("INTERACT START!");
         if (closestObject == null) return;
         Task task;
         if (interactedObject == null) 
@@ -70,6 +107,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnPickup(InputValue value)
+    {
+        if (itemObject == null) return;
+        Debug.Log("pickup");
+
+        itemObject.transform.SetParent(this.gameObject.transform, false);
+
+    }
+
     public void OnSlide(InputValue value)
     {
         if (!isSliding)
@@ -77,6 +123,24 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(StartSlide());
         }
     }
+    
+    //public void OnThrow(InputValue value)
+    //{
+    //    bool isPressed = value.isPressed;
+
+    //    if (heldItem == null) return;
+
+    //    if (isPressed && !isChargingThrow)
+    //    {
+    //        isChargingThrow = true;
+    //        heldItem.BeginCharge();
+    //    }
+    //    else if (!isPressed && isChargingThrow)
+    //    {
+    //        isChargingThrow = false;
+    //        heldItem.ReleaseCharge(transform.forward);
+    //    }
+    //}
 
     private IEnumerator StartSlide()
     {
@@ -128,14 +192,20 @@ public class PlayerController : MonoBehaviour
 
     private void InteractionDetection()
     {
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius, interactionLayers);
 
         bool currentlyOverlapping = false;
         foreach (Collider collider in colliders)
         {
             currentlyOverlapping = true;
+
             closestObject = collider.gameObject;
+
+            if (collider.gameObject.GetComponent<Item>() != null){
+                itemObject = collider.gameObject;
+                heldItem = collider.gameObject.GetComponent<Item>();
+            }
+
             break;
         }
 
