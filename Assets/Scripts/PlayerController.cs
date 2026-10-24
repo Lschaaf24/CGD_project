@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
+
+        Debug.Log("INTERACT START!");
         if (closestObject == null) return;
         Task task;
         if (interactedObject == null) 
@@ -200,8 +202,6 @@ public class PlayerController : MonoBehaviour
                 itemObject = collider.gameObject;
                 heldItem = collider.gameObject.GetComponent<Item>();
             }
-            
-            interactedObject = collider.gameObject;
 
             break;
         }
