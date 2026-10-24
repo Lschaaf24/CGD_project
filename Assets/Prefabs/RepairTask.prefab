@@ -119,7 +119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5588931690615556359
 RectTransform:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 7015080325355732025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.92, y: 0.04, z: 2.08}
+  m_LocalPosition: {x: -1.92, y: 0.02, z: 2.08}
   m_LocalScale: {x: 0.31956658, y: 0.31956658, z: 0.31956658}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -370,7 +370,9 @@ MonoBehaviour:
   playersRequired: 1
   persistentTask: 0
   continuousTask: 0
+  reward: {fileID: 7405823279860287245, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
   particleSystem: {fileID: 0}
   icon: {fileID: 2113159511872354562}
+  taskReady: 0

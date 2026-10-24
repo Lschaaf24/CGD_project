@@ -28,6 +28,10 @@ public class Task : MonoBehaviour
     [Tooltip("Does the task require continous input?")]
     [SerializeField] private bool continuousTask = false;
 
+    [Tooltip("The item the player gains from completing the task")]
+    [SerializeField] private GameObject reward;
+
+
     [Space(15)]
 
     [Header("FX")]
@@ -98,6 +102,10 @@ public class Task : MonoBehaviour
     protected virtual void EndTask()
     {
         Debug.Log("TASK COMPLETED");
+        if(reward != null) 
+        {
+            engaged_players[0].ReceiveItem(Instantiate(reward));
+        }
         foreach (var player in engaged_players)
         {
             player.TaskEject();

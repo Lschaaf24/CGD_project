@@ -5,19 +5,19 @@ using UnityEngine.Rendering;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private float maxChargeTime = 1.2f;
+    [SerializeField] protected float maxChargeTime = 1.2f;
 
-    [SerializeField] private float minSpeedMult = 0.5f;
-    [SerializeField] private float maxSpeedMult = 1f;
-    [SerializeField] private float throwSpeed = 15f;
+    [SerializeField] protected float minSpeedMult = 0.5f;
+    [SerializeField] protected float maxSpeedMult = 1f;
+    [SerializeField] protected float throwSpeed = 15f;
 
-    private float throwSpeedMult;
+    protected float throwSpeedMult;
 
     private Rigidbody rb;
 
     private bool isCharging;
     private float charge;
-    private float chargeRatio;
+    protected float chargeRatio;
 
     private void Start()
     {
@@ -40,7 +40,7 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void BeginCharge()
+    public virtual void BeginCharge()
     {
 
         isCharging = true;
@@ -48,7 +48,7 @@ public class Item : MonoBehaviour
 
     }
 
-    public void ReleaseCharge(Vector3 direction)
+    public virtual void ReleaseCharge(Vector3 direction)
     {
         Debug.Log("throw");
         isCharging = false;
@@ -56,7 +56,7 @@ public class Item : MonoBehaviour
         charge = 0;
     }
 
-    private void ThrowItem(Vector3 direction)
+    protected virtual void ThrowItem(Vector3 direction)
     {
         transform.SetParent(null);
         throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);

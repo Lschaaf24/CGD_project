@@ -112,8 +112,13 @@ public class PlayerController : MonoBehaviour
         if (itemObject == null) return;
         Debug.Log("pickup");
 
-        itemObject.transform.SetParent(this.gameObject.transform, false);
+        ReceiveItem(itemObject);
+    }
 
+    public void ReceiveItem(GameObject item) 
+    {
+        item.transform.SetParent(this.gameObject.transform, false);
+        itemObject = item;
     }
 
     public void OnSlide(InputValue value)
