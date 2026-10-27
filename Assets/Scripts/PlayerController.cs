@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isChargingThrow;
 
-    private bool inTask = false;
+    [SerializeField] private bool inTask = false;
 
     private void Awake()
     {
@@ -88,8 +88,11 @@ public class PlayerController : MonoBehaviour
             {
                 if (task.EnterTask(this)) 
                 {
-                    inTask = true;
-                    interactedObject = closestObject;
+                    if (!task.isTaskCompleted()) 
+                    {
+                        inTask = true;
+                        interactedObject = closestObject;
+                    }
                 }
                 
             }
@@ -109,8 +112,13 @@ public class PlayerController : MonoBehaviour
         if (itemObject == null) return;
         Debug.Log("pickup");
 
-        itemObject.transform.SetParent(this.gameObject.transform, false);
+        ReceiveItem(itemObject);
+    }
 
+    public void ReceiveItem(GameObject item) 
+    {
+        item.transform.SetParent(this.gameObject.transform, false);
+        itemObject = item;
     }
 
     public void OnSlide(InputValue value)

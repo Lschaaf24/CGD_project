@@ -758,12 +758,11 @@ MonoBehaviour:
   playersRequired: 1
   persistentTask: 1
   continuousTask: 1
+  reward: {fileID: 7405823279860287245, guid: 12d55bd6cc8994b4f8287e9f3abe016a, type: 3}
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
   particleSystem: {fileID: 0}
   icon: {fileID: 4969586915964870413}
-  engaged_players: []
-  interval: 5
-  elapsed_time: 0
+  taskReady: 0
   reelPercentage: 20
   reelUI: {fileID: 6232571534535711697}

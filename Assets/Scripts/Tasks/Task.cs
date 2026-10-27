@@ -28,6 +28,10 @@ public class Task : MonoBehaviour
     [Tooltip("Does the task require continous input?")]
     [SerializeField] private bool continuousTask = false;
 
+    [Tooltip("The item the player gains from completing the task")]
+    [SerializeField] private GameObject reward;
+
+
     [Space(15)]
 
     [Header("FX")]
@@ -42,12 +46,12 @@ public class Task : MonoBehaviour
     [SerializeField] private ParticleSystem particleSystem;
 
     [Tooltip("Icon that appears when the task is ready")]
-    [SerializeField] private GameObject icon;
+    [SerializeField] protected GameObject icon;
 
     bool isCompleted = false;
     int currentPlayers = 0;
     bool taskStarted = false;
-    bool taskReady = false;
+    [SerializeField] bool taskReady = false;
 
     List<PlayerController> engaged_players = new List<PlayerController>();
 
@@ -55,16 +59,19 @@ public class Task : MonoBehaviour
     float elapsed_time = 0.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-      
+        if (!persistentTask) 
+        {
+            taskReady = true; 
+        }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
     
-        if (taskReady == false) 
+        if (taskReady == false && persistentTask) 
         {
             elapsed_time += Time.deltaTime;
             if (elapsed_time >= interval) 
@@ -95,15 +102,20 @@ public class Task : MonoBehaviour
     protected virtual void EndTask()
     {
         Debug.Log("TASK COMPLETED");
+        if(reward != null) 
+        {
+            engaged_players[0].ReceiveItem(Instantiate(reward));
+        }
+        foreach (var player in engaged_players)
+        {
+            player.TaskEject();
+        }
+        taskReady = false;
+        isCompleted = true;
+
         if (persistentTask) 
         {
-            taskReady = false;
-            isCompleted = true;
             currentPlayers = 0;
-            foreach(var player in engaged_players) 
-            {
-                player.TaskEject();
-            }
             engaged_players.Clear();
         }
         else 
@@ -119,6 +131,13 @@ public class Task : MonoBehaviour
     protected virtual void BeginTask()  
     { 
         icon.SetActive(false); 
+        isCompleted = false;
+    }
+
+    public bool isTaskCompleted() 
+    {
+        if(isCompleted) return true;
+        return false;
     }
 
 
