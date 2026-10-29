@@ -1,14 +1,12 @@
-Shader "Custom/URP-Skybox-Cubemap-MultiAxis"
+Shader "Custom/URP-Skybox-Cubemap-Locked"
 {
     Properties
     {
         _Tex ("Cubemap (HDR)", Cube) = "_Skybox" {}
         [Gamma] _Exposure ("Exposure", Range(0, 8)) = 1.0
-        _RotationX ("X Rotation Angle", Range(0, 360)) = 0
-        _RotationY ("Y Rotation Angle", Range(0, 360)) = 0
-        _RotationZ ("Z Rotation Angle", Range(0, 360)) = 0
         
-        [KeywordEnum(Y_Axis, X_Axis, Z_Axis)] _RotationAxis("Rotation Axis", Float) = 0
+        // Allows you to pick which side of the cubemap you are staring at
+        _OffsetRotationY ("Manual Y Offset", Range(0, 360)) = 0 
     }
 
     SubShader
@@ -21,8 +19,6 @@ Shader "Custom/URP-Skybox-Cubemap-MultiAxis"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            
-
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
             struct Attributes
@@ -40,43 +36,29 @@ Shader "Custom/URP-Skybox-Cubemap-MultiAxis"
             SamplerState sampler_Tex;
 
             float _Exposure;
-            float _RotationX;
-            float _RotationY;
-            float _RotationZ;
-
-
-
-             float3 RotateVector(float3 vertex, float degreesX, float degreesY, float degreesZ)
-            {
-                float alpha = -degreesX * PI / 180.0;
-                float sina, cosa;
-                sincos(alpha, sina, cosa);
-                float2x2 m = float2x2(cosa, -sina, sina, cosa);
-
-                float3 xAxis = float3(vertex.x, mul(m, vertex.yz));
-
-                alpha = -degreesY * PI / 180.0;
-                sincos(alpha, sina, cosa);
-                m = float2x2(cosa, -sina, sina, cosa);
-                float3 yAxis = float3(mul(m, vertex.xz), vertex.y).xzy;
-
-                alpha = -degreesZ * PI / 180.0;
-                sincos(alpha, sina, cosa);
-                m = float2x2(cosa, -sina, sina, cosa);
-                float3 zAxis = float3(mul(m, vertex.xy), vertex.z);
-                
-                return xAxis + yAxis + zAxis;
-    
-            }
+            float _OffsetRotationY;
+            
+            // The matrix we pass from the C# script
+            float4x4 _CamCounterRotation;
 
             Varyings vert (Attributes input)
             {
                 Varyings output;
 
-                float3 rotatedPosition = RotateVector(input.positionOS.xyz, _RotationX, _RotationY, _RotationZ);
+                output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
                 
-                output.positionCS = TransformObjectToHClip(rotatedPosition);
-                output.texcoord = input.positionOS.xyz;
+                // 1. Counter-rotate the sampling vector by the camera's inverse matrix
+                float3 lockedCoord = mul((float3x3)_CamCounterRotation, input.positionOS.xyz);
+                
+                // 2. Apply the manual Y offset so you can choose what part of the skybox to look at
+                float radY = -_OffsetRotationY * PI / 180.0;
+                float sina, cosa;
+                sincos(radY, sina, cosa);
+                float2x2 mY = float2x2(cosa, -sina, sina, cosa);
+                lockedCoord.xz = mul(mY, lockedCoord.xz);
+
+                output.texcoord = lockedCoord;
+                
                 return output;
             }
 

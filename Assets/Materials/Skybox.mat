@@ -103,7 +103,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Tex:
-        m_Texture: {fileID: 8900000, guid: 1640b2efca7841f48aed4e6838165567, type: 3}
+        m_Texture: {fileID: 8900000, guid: 8ad9661e13e72ef4ebb8a34b5ff38add, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
@@ -139,20 +139,21 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Exposure: 1
+    - _Exposure: 0.79
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _OffsetRotationY: 286
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Rotation: 0
     - _RotationAxis: 2
-    - _RotationX: -22.908962
-    - _RotationY: -354.61432
-    - _RotationZ: -352.9385
+    - _RotationX: -22.978806
+    - _RotationY: -2.598273
+    - _RotationZ: -3.4069042
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

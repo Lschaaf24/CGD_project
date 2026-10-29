@@ -30,12 +30,16 @@ public class CameraRock : MonoBehaviour
         float x = amptitude * s;
         float y = curve * x * x;
 
-        //transform.position = startPos + new Vector3(x, y, 0f);
+        transform.position = startPos + new Vector3(x, y, 0f);
 
         transform.rotation = startRot * Quaternion.Euler(0, -tiltDegrees * s, -tiltDegrees * s);
-        skyboxMat.SetFloat("_RotationX", -transform.eulerAngles.x);
-        skyboxMat.SetFloat("_RotationY", -transform.eulerAngles.y);
-        skyboxMat.SetFloat("_RotationZ", -transform.eulerAngles.z);
+
+        if (skyboxMat != null)
+        {
+            Quaternion inverseCamRot = Quaternion.Inverse(transform.rotation);
+
+            skyboxMat.SetMatrix("_CamCounterRotation", Matrix4x4.Rotate(inverseCamRot));
+        }
 
     }
 }
