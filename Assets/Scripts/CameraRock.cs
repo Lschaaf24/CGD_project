@@ -13,11 +13,14 @@ public class CameraRock : MonoBehaviour
     private Vector3 startPos;
     private Quaternion startRot;
 
+    private Material skyboxMat;
 
     void Start()
     {
         startPos = transform.position;
         startRot = transform.rotation;
+
+        skyboxMat = RenderSettings.skybox;
     }
 
     // Update is called once per frame
@@ -27,9 +30,12 @@ public class CameraRock : MonoBehaviour
         float x = amptitude * s;
         float y = curve * x * x;
 
-        transform.position = startPos + new Vector3(x, y, 0f);
+        //transform.position = startPos + new Vector3(x, y, 0f);
 
         transform.rotation = startRot * Quaternion.Euler(0, -tiltDegrees * s, -tiltDegrees * s);
+        skyboxMat.SetFloat("_RotationX", -transform.eulerAngles.x);
+        skyboxMat.SetFloat("_RotationY", -transform.eulerAngles.y);
+        skyboxMat.SetFloat("_RotationZ", -transform.eulerAngles.z);
 
     }
 }
