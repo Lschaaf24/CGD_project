@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EventManager : MonoBehaviour
 { 
-
+    public static EventManager Instance;
     [SerializeField] List<GameObject> taskList;
-    List<Event> activeEvents;
+    [SerializeField] List<Event> activeEvents;
     int handledEvents = 0;
     [SerializeField] float eventRate;
     float lastEventTime = 0.0f;
@@ -27,24 +28,40 @@ public class EventManager : MonoBehaviour
         int intesity;
     }
 
-    int readyRods = 0;
-    int weighingRequired = 0;
-    int baitReplacementsRequired = 0;
-    int puddleCount = 0;
-    int slidingBoxes = 0;
-    int activeMajorEvents = 0;
+    public enum SceneCounter
+    {
+        ReadyRods,
+        WeighingRequired,
+        BaitReplacementsRequired,
+        PuddleCount,
+        SlidingBoxes,
+        ActiveMajorEvents
+    }
 
     float targetWeight = 100.0f;
     float expectedWeight = 0;
     float timeLimit = 180; //In Seconds
     float elapsedTime = 0.0f;
 
+    private Dictionary<SceneCounter, int> counters = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         taskList = GameObject.FindGameObjectsWithTag("Event").ToList<GameObject>();
+        Instance = this;
     }
+
+    private void Awake()
+    {
+        foreach(SceneCounter counter in System.Enum.GetValues(typeof(SceneCounter))) 
+        {
+            counters[counter] = 0;
+        }
+    }
+
+   
+
 
     // Update is called once per frame
     void Update()
@@ -52,17 +69,42 @@ public class EventManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
         expectedWeight = targetWeight * (elapsedTime / timeLimit);
 
+        CalculatePressure();
+        Debug.Log(pressure);
+
     }
+
+    public void ChangeCounter(SceneCounter counter, int amount) 
+    {
+        counters[counter] += amount;
+
+        CheckEvents();
+    }
+
+    public int GetCounter(SceneCounter counter)
+    {
+        return counters[counter];
+    }
+
+    private void CheckEvents()
+    {
+        if (GetCounter(SceneCounter.ReadyRods) >= 3)
+        {
+            Debug.Log("Three rods ready!");
+        }
+    }
+
 
     private void CalculatePressure() 
     {
         pressure = 0;
-
-        pressure += readyRods * 8;
-        pressure += weighingRequired * 5;
-        pressure += baitReplacementsRequired * 4;
-        pressure += puddleCount * 5;
-        pressure += slidingBoxes * 12;
-        pressure += activeMajorEvents * 15;
+        pressure += counters[SceneCounter.ReadyRods] * 8;
+        pressure += counters[SceneCounter.WeighingRequired] * 5;
+        pressure += counters[SceneCounter.BaitReplacementsRequired] * 4;
+        pressure += counters[SceneCounter.PuddleCount] * 5;
+        pressure += counters[SceneCounter.SlidingBoxes] * 12;
+        pressure += counters[SceneCounter.ActiveMajorEvents] * 15;
     }
+
+
 }
