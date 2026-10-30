@@ -14,7 +14,7 @@ public class Item : MonoBehaviour
 
     [SerializeField] private ItemData itemType;
 
-    [SerializeField] private bool isFish;
+  
 
     protected float throwSpeedMult;
 
@@ -90,8 +90,5 @@ public class Item : MonoBehaviour
     }
 
 
-    public bool GetIsFish()
-    {
-        return isFish;
-    }
+  
 }
