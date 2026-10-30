@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 1273378985258037496}
   m_Layer: 6
   m_Name: Bucket
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,4 +270,5 @@ MonoBehaviour:
   minSpeedMult: 0.5
   maxSpeedMult: 1
   throwSpeed: 15
+  itemType: {fileID: 11400000, guid: f0a8d0d56f4b4a140a4fe64a9feb56c8, type: 2}
   puddle_task: {fileID: 7015080325355732025, guid: 70c0698f17132b741931f1e446b400e8, type: 3}

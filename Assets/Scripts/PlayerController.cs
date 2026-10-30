@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
         isChargingThrow = false;
         heldItem.ReleaseCharge(transform.forward);
+        heldItem = null;
     }
 
 
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour
     {
 
         Debug.Log("INTERACT START!");
+        //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
         if (interactedObject == null) 
@@ -110,16 +112,13 @@ public class PlayerController : MonoBehaviour
     public void OnPickup(InputValue value)
     {
         if (itemObject == null) return;
+        
         Debug.Log("pickup");
 
-        ReceiveItem(itemObject);
+        ReceiveItem(itemObject.GetComponent<Item>());
     }
 
-    public void ReceiveItem(GameObject item) 
-    {
-        item.transform.SetParent(this.gameObject.transform, false);
-        itemObject = item;
-    }
+
 
     public void OnSlide(InputValue value)
     {
@@ -206,9 +205,9 @@ public class PlayerController : MonoBehaviour
 
             closestObject = collider.gameObject;
 
-            if (collider.gameObject.GetComponent<Item>() != null){
+            if (collider.gameObject.GetComponent<Item>() != null)
+            {
                 itemObject = collider.gameObject;
-                heldItem = collider.gameObject.GetComponent<Item>();
             }
 
             break;
@@ -230,5 +229,41 @@ public class PlayerController : MonoBehaviour
         inTask = false;
         interactedObject = null;
         Debug.Log("EJECTED");
+    }
+
+    public void ReceiveItem(Item item)
+    {
+        if (heldItem) 
+        {
+            heldItem.transform.SetParent(null);
+        }
+        item.transform.SetParent(transform, false);
+        heldItem = item;
+    }
+
+    public void SwapItem(Item item, Transform senderTransform) 
+    {
+        if (item) 
+        {
+            item.transform.SetParent(transform, false);
+        }
+        if (heldItem) 
+        {
+            heldItem.transform.SetParent(senderTransform, false);
+        }
+        heldItem = item;
+
+    }   
+
+    public Item GetHeldItem() 
+    {
+        return heldItem;
+    }
+
+    public Item TakeItem() 
+    {
+        Item item = heldItem;
+        heldItem = null;
+        return item;
     }
 }

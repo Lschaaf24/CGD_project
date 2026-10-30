@@ -46,9 +46,6 @@ public class ObstacleMove : MonoBehaviour
 
         float maxFrictionAcceleration = Mathf.Abs(Mathf.Cos(rad)) * gravity * frictionCoefficient;
 
-        Debug.Log("Friction: " + maxFrictionAcceleration);
-        Debug.Log("Gravity: " + gravityAcceleration);
-        Debug.Log("Rad: " + rad);
         float netAcceleration = 0f;
 
         if (Mathf.Abs(currentSpeed) > 0.01f)

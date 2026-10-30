@@ -1,7 +1,8 @@
+using System;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class Item : MonoBehaviour
 {
@@ -11,20 +12,29 @@ public class Item : MonoBehaviour
     [SerializeField] protected float maxSpeedMult = 1f;
     [SerializeField] protected float throwSpeed = 15f;
 
+    [SerializeField] private ItemData itemType;
+
     protected float throwSpeedMult;
 
-    private Rigidbody rb;
+    protected Rigidbody rb;
 
     private bool isCharging;
     private float charge;
     protected float chargeRatio;
 
+    private float weight;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        if (itemType is FishData fishData)
+        {
+            weight = fishData.GenerateRandomWeight();
+        }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(transform.parent != null)
         {
@@ -63,6 +73,12 @@ public class Item : MonoBehaviour
 
         throwSpeed = throwSpeed * throwSpeedMult;
 
+
         rb.AddForce(direction * throwSpeed * Time.fixedDeltaTime);
+    }
+
+    public Type GetItemType() 
+    {
+        return itemType.GetType();
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,8 +31,7 @@ public class Task : MonoBehaviour
     [SerializeField] private bool continuousTask = false;
 
     [Tooltip("The item the player gains from completing the task")]
-    [SerializeField] private GameObject reward;
-
+    [SerializeField] protected GameObject reward;
 
     [Space(15)]
 
@@ -49,14 +50,19 @@ public class Task : MonoBehaviour
     [SerializeField] protected GameObject icon;
 
     bool isCompleted = false;
+
     int currentPlayers = 0;
     bool taskStarted = false;
-    [SerializeField] bool taskReady = false;
+    [SerializeField] protected bool taskReady = false;
 
     List<PlayerController> engaged_players = new List<PlayerController>();
 
     float interval = 5.0f;
     float elapsed_time = 0.0f;
+
+    Item currentItem = null;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -76,16 +82,22 @@ public class Task : MonoBehaviour
             elapsed_time += Time.deltaTime;
             if (elapsed_time >= interval) 
             {
-                taskReady = true;
                 elapsed_time = 0.0f;
+                taskReady = true;
                 icon.SetActive(true);
+
+
             }
-        }   
+        }
     }
 
     public bool EnterTask(PlayerController player) 
     {
         if (!taskReady) return false;
+
+        
+        player.SwapItem(currentItem, transform);
+
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 
         {
@@ -104,7 +116,7 @@ public class Task : MonoBehaviour
         Debug.Log("TASK COMPLETED");
         if(reward != null) 
         {
-            engaged_players[0].ReceiveItem(Instantiate(reward));
+            engaged_players[0].ReceiveItem(Instantiate(reward).GetComponent<Item>());
         }
         foreach (var player in engaged_players)
         {
@@ -130,7 +142,8 @@ public class Task : MonoBehaviour
 
     protected virtual void BeginTask()  
     { 
-        icon.SetActive(false); 
+        icon.SetActive(false);
+        taskReady = false;
         isCompleted = false;
     }
 
@@ -139,6 +152,8 @@ public class Task : MonoBehaviour
         if(isCompleted) return true;
         return false;
     }
+
+
 
 
 
