@@ -84,10 +84,10 @@ public class PlayerController : MonoBehaviour
         Task task;
         if (interactedObject == null) 
         {
-            Debug.Log("INTERACT!");
             task = closestObject.GetComponent<Task>();
             if (task && !inTask)
             {
+                Debug.Log("INTERACT!");
                 if (task.EnterTask(this)) 
                 {
                     if (!task.isTaskCompleted()) 
@@ -236,13 +236,18 @@ public class PlayerController : MonoBehaviour
         if (heldItem) 
         {
             heldItem.transform.SetParent(null);
+            heldItem.GetComponent<Collider>().enabled = true;
+
         }
         item.transform.SetParent(transform, false);
         heldItem = item;
+        heldItem.GetComponent<Collider>().enabled = false;
+
     }
 
-    public void SwapItem(Item item, Transform senderTransform) 
+    public Item SwapItem(Item item, Transform senderTransform) 
     {
+        Debug.Log("SWAP!!!!!");
         if (item) 
         {
             item.transform.SetParent(transform, false);
@@ -251,7 +256,12 @@ public class PlayerController : MonoBehaviour
         {
             heldItem.transform.SetParent(senderTransform, false);
         }
+
+        Item temp = heldItem;
         heldItem = item;
+
+        return temp;
+
 
     }   
 

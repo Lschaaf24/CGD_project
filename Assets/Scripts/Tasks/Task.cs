@@ -33,6 +33,10 @@ public class Task : MonoBehaviour
     [Tooltip("The item the player gains from completing the task")]
     [SerializeField] protected GameObject reward;
 
+
+    [Tooltip("Will the task take the players item?")]
+    [SerializeField] bool takeItem = false;
+
     [Space(15)]
 
     [Header("FX")]
@@ -60,7 +64,7 @@ public class Task : MonoBehaviour
     float interval = 5.0f;
     float elapsed_time = 0.0f;
 
-    Item currentItem = null;
+    protected Item currentItem = null;
 
 
 
@@ -95,8 +99,14 @@ public class Task : MonoBehaviour
     {
         if (!taskReady) return false;
 
-        
-        player.SwapItem(currentItem, transform);
+        if (takeItem)
+        {
+            currentItem = player.SwapItem(currentItem, transform);
+        }
+        else if (player.GetHeldItem() != null)
+        {
+            return false;
+        }
 
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 

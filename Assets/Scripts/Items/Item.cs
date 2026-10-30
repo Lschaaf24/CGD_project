@@ -28,10 +28,9 @@ public class Item : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        if (itemType is FishData fishData)
-        {
-            weight = fishData.GenerateRandomWeight();
-        }
+
+        weight = itemType.GenerateWeight();
+        
     }
 
     protected virtual void Update()
@@ -64,6 +63,7 @@ public class Item : MonoBehaviour
         isCharging = false;
         ThrowItem(direction);
         charge = 0;
+        GetComponent<Collider>().enabled = true;
     }
 
     protected virtual void ThrowItem(Vector3 direction)
@@ -80,5 +80,10 @@ public class Item : MonoBehaviour
     public Type GetItemType() 
     {
         return itemType.GetType();
+    }
+
+    public float GetWeight() 
+    {
+        return weight;
     }
 }

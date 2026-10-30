@@ -6,8 +6,9 @@ public class FishData : ItemData
     [SerializeField] private float minWeight = 1.0f;
     [SerializeField] private float maxWeight = 12.0f;
 
-    public float GenerateRandomWeight()
+    override public float GenerateWeight()
     {
+        
         return Random.Range(minWeight, maxWeight);
     }
 }
