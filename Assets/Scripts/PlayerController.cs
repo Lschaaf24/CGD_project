@@ -1,7 +1,8 @@
-
+using NUnit.Framework.Internal;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -17,18 +18,56 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideCooldown = 0.5f;
     private float slideTimer;
     private bool isSliding = false;
-
     
+
+    private Item heldItem = null;
+    [SerializeField] private InputActionReference Throw;
+
+
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
     private Rigidbody rb;
 
+    private GameObject closestObject = null;
     private GameObject interactedObject = null;
+    private GameObject itemObject = null;
+
+    private bool isChargingThrow;
+
+    [SerializeField] private bool inTask = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
+    private void OnEnable()
+    {
+        Throw.action.started += OnThrowStarted;
+        Throw.action.canceled += OnThrowCanceled;
+    }
+
+    private void OnDisable()
+    {
+        Throw.action.started -= OnThrowStarted;
+        Throw.action.canceled -= OnThrowCanceled;
+    }
+
+    private void OnThrowStarted(InputAction.CallbackContext context)
+    {
+        if (heldItem == null) return;
+
+        isChargingThrow = true;
+        heldItem.BeginCharge();
+    }
+
+    private void OnThrowCanceled(InputAction.CallbackContext context)
+    {
+        if (heldItem == null || !isChargingThrow) return;
+
+        isChargingThrow = false;
+        heldItem.ReleaseCharge(transform.forward);
+    }
+
 
     public void OnMove(InputValue value)
     {
@@ -37,9 +76,49 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-        if (interactedObject == null) return;
-        Debug.Log("interaction");
-       
+
+        Debug.Log("INTERACT START!");
+        if (closestObject == null) return;
+        Task task;
+        if (interactedObject == null) 
+        {
+            Debug.Log("INTERACT!");
+            task = closestObject.GetComponent<Task>();
+            if (task && !inTask)
+            {
+                if (task.EnterTask(this)) 
+                {
+                    if (!task.isTaskCompleted()) 
+                    {
+                        inTask = true;
+                        interactedObject = closestObject;
+                    }
+                }
+                
+            }
+            return;
+
+        }
+      
+        task = interactedObject.GetComponent<Task>();
+        if (task != null) 
+        {
+            task.TaskAction();
+        }
+    }
+
+    public void OnPickup(InputValue value)
+    {
+        if (itemObject == null) return;
+        Debug.Log("pickup");
+
+        ReceiveItem(itemObject);
+    }
+
+    public void ReceiveItem(GameObject item) 
+    {
+        item.transform.SetParent(this.gameObject.transform, false);
+        itemObject = item;
     }
 
     public void OnSlide(InputValue value)
@@ -49,6 +128,24 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(StartSlide());
         }
     }
+    
+    //public void OnThrow(InputValue value)
+    //{
+    //    bool isPressed = value.isPressed;
+
+    //    if (heldItem == null) return;
+
+    //    if (isPressed && !isChargingThrow)
+    //    {
+    //        isChargingThrow = true;
+    //        heldItem.BeginCharge();
+    //    }
+    //    else if (!isPressed && isChargingThrow)
+    //    {
+    //        isChargingThrow = false;
+    //        heldItem.ReleaseCharge(transform.forward);
+    //    }
+    //}
 
     private IEnumerator StartSlide()
     {
@@ -100,25 +197,38 @@ public class PlayerController : MonoBehaviour
 
     private void InteractionDetection()
     {
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius, interactionLayers);
 
         bool currentlyOverlapping = false;
         foreach (Collider collider in colliders)
         {
             currentlyOverlapping = true;
-            interactedObject = collider.gameObject;
+
+            closestObject = collider.gameObject;
+
+            if (collider.gameObject.GetComponent<Item>() != null){
+                itemObject = collider.gameObject;
+                heldItem = collider.gameObject.GetComponent<Item>();
+            }
+
             break;
         }
 
         if (!currentlyOverlapping)
         {
-            interactedObject = null;
+            closestObject = null;
         }
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, interactionRadius);
+    }
+
+    public void TaskEject() 
+    {
+        inTask = false;
+        interactedObject = null;
+        Debug.Log("EJECTED");
     }
 }
