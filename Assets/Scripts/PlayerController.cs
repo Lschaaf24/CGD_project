@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     
 
     private Item heldItem = null;
-    [SerializeField] private InputActionReference Throw;
+
+    private PlayerInput playerInput;
+    private InputAction throwAction;
 
 
     private Vector2 movementInput = Vector2.zero;
@@ -42,17 +44,19 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
     }
     private void OnEnable()
     {
-        Throw.action.started += OnThrowStarted;
-        Throw.action.canceled += OnThrowCanceled;
+        throwAction = playerInput.actions["Throw"];
+        throwAction.started += OnThrowStarted;
+        throwAction.canceled += OnThrowCanceled;
     }
 
     private void OnDisable()
     {
-        Throw.action.started -= OnThrowStarted;
-        Throw.action.canceled -= OnThrowCanceled;
+        throwAction.started -= OnThrowStarted;
+        throwAction.canceled -= OnThrowCanceled;
     }
 
     private void OnThrowStarted(InputAction.CallbackContext context)
@@ -92,8 +96,6 @@ public class PlayerController : MonoBehaviour
                 ReceiveItem(itemObject);
 
             }
-
-
 
             Debug.Log("INTERACT!");
             task = closestObject.GetComponent<Task>();

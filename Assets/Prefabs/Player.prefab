@@ -137,9 +137,9 @@ MonoBehaviour:
   slideSpeed: 10
   slideDuration: 0.1
   slideCooldown: 0.5
-  itemThrowHeight: 2
-  itemThrowForce: 2
-  Throw: {fileID: -2849114375367226987, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  itemThrowHeight: 2.5
+  itemThrowForce: 1.5
+  itemThrowSpeed: 10
   inTask: 0
 --- !u!114 &4241951362885355025
 MonoBehaviour:

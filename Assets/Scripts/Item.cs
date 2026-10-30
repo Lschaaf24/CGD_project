@@ -33,9 +33,7 @@ public class Item : MonoBehaviour
 
         if (isCharging)
         {
-            //Debug.Log("charging");
             charge = Mathf.Min(charge + Time.deltaTime, maxChargeTime);
-            Debug.Log("Charge: " + charge);
             chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
         }
     }

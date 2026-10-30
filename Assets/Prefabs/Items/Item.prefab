@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbd2cb4292df4a47845577ae68664ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  maxChargeTime: 2
+  maxChargeTime: 1.2
   minSpeedMult: 0.5
   maxSpeedMult: 1
 --- !u!54 &6832014398681273113
