@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class GameManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    [SerializeField] private LevelSelector LevelSelector;
+    [SerializeField] private LevelSelector levelSelector;
     private States currentState;
     [SerializeField] private Level currentLevel;
 
@@ -26,7 +27,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -39,8 +47,9 @@ public class GameManager : MonoBehaviour
 
         SwitchedStates.AddListener(OnEventTriggered);
 
-        LevelSelector = GetComponent<LevelSelector>();
-        currentLevel = LevelSelector.GetCurrentLevel();
+
+       /* levelselector = GetComponent<LevelSelector>();
+        currentLevel = levelselector.GetCurrentLevel();*/
 
 
     }
@@ -54,10 +63,44 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-      /*  if( SwitchedStates != null)
+        if (levelSelector == null)
         {
-            SwitchedStates.Invoke();
-        }*/
+            TryGetLevelSelector();
+        }
+        /*  if( SwitchedStates != null)
+          {
+              SwitchedStates.Invoke();
+          }*/
 
+    }
+
+    private void TryGetLevelSelector()
+    {
+        if (LevelSelector.Instance != null)
+        {
+            levelSelector = LevelSelector.Instance;
+            currentLevel = levelSelector.GetCurrentLevel();
+
+            Debug.Log("LevelSelector successfully assigned!");
+        }
+    }
+
+    private LevelSelector LevelSelector
+    {
+        get
+        {
+            if (levelSelector == null)
+                levelSelector = LevelSelector.Instance;
+
+            return levelSelector;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
     }
 }

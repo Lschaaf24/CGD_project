@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class WinCondition : MonoBehaviour
 {
     UnityEvent QuotaReached;
     UnityEvent TimeLimitReached;
+    UnityEvent EndGame;
 
-    private 
+    [SerializeField] private bool endGame = false; 
 
 
     void Start()
@@ -25,6 +27,21 @@ public class WinCondition : MonoBehaviour
         }
 
         TimeLimitReached.AddListener(OnTimeLimitReached);
+
+        if (EndGame == null)
+        {
+            EndGame = new UnityEvent();
+        }
+
+        EndGame.AddListener(OnLevelFinished);
+
+    }
+
+    private void OnLevelFinished()
+    {
+        Debug.Log("level finish Reached");
+        SceneManager.LoadScene("LevelSelector");
+
     }
 
     private void OnTimeLimitReached()
@@ -40,6 +57,9 @@ public class WinCondition : MonoBehaviour
 
     void Update()
     {
-        
+        if (endGame == true && EndGame != null)
+        {
+            OnLevelFinished();
+        }
     }
 }

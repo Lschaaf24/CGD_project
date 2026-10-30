@@ -25,5 +25,9 @@ public class Level : MonoBehaviour
         return data;
     }
 
+    public void SetLevelData(LevelDataSO Newdata)
+    {
+        data = Newdata;
+    }
 
 }
