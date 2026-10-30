@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4410958674168688481}
   - component: {fileID: 2214030823641906037}
   - component: {fileID: 6832014398681273113}
-  - component: {fileID: 8063104471667875761}
+  - component: {fileID: 1590347766885291022}
   m_Layer: 6
   m_Name: Fish
   m_TagString: Untagged
@@ -254,7 +254,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8063104471667875761
+--- !u!114 &1590347766885291022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,10 +263,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7405823279860287245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a2f74b74bdbf64482adfb48e7aa2d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bbd2cb4292df4a47845577ae68664ae, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishItem
+  m_EditorClassIdentifier: Assembly-CSharp::Item
   maxChargeTime: 2
-  minSpeedMult: 0.5
+  minSpeedMult: 0
   maxSpeedMult: 1
-  weight: 1
+  itemType: {fileID: 11400000, guid: 5a8a4355d17994048ad5ac6dd90682d9, type: 2}

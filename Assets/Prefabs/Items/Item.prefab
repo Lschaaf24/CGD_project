@@ -129,6 +129,7 @@ MonoBehaviour:
   maxChargeTime: 1.2
   minSpeedMult: 0.5
   maxSpeedMult: 1
+  itemType: {fileID: 11400000, guid: 88a1e568605e0164f921b539473f65be, type: 2}
 --- !u!54 &6832014398681273113
 Rigidbody:
   m_ObjectHideFlags: 0

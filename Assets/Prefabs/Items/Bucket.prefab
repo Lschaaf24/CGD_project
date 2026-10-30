@@ -269,4 +269,5 @@ MonoBehaviour:
   maxChargeTime: 2
   minSpeedMult: 0.5
   maxSpeedMult: 1
+  itemType: {fileID: 11400000, guid: f0a8d0d56f4b4a140a4fe64a9feb56c8, type: 2}
   puddle_task: {fileID: 7015080325355732025, guid: 70c0698f17132b741931f1e446b400e8, type: 3}
