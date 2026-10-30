@@ -266,8 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a2f74b74bdbf64482adfb48e7aa2d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishItem
-  maxChargeTime: 1.2
+  maxChargeTime: 2
   minSpeedMult: 0.5
   maxSpeedMult: 1
-  throwSpeed: 15
   weight: 1

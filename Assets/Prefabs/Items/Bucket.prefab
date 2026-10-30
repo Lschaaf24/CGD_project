@@ -266,8 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e16f215495317f4f83b1e0081fd932b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BucketItem
-  maxChargeTime: 1.2
+  maxChargeTime: 2
   minSpeedMult: 0.5
   maxSpeedMult: 1
-  throwSpeed: 15
   puddle_task: {fileID: 7015080325355732025, guid: 70c0698f17132b741931f1e446b400e8, type: 3}
