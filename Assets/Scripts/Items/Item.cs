@@ -47,6 +47,7 @@ public class Item : MonoBehaviour
             charge = Mathf.Min(charge + Time.fixedDeltaTime, maxChargeTime);
             chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
         }
+
     }
 
     public virtual void BeginCharge()
