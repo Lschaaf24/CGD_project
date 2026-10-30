@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputValue value)
     {
         Debug.Log("INTERACT START!");
+        //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
         if (interactedObject == null) 
@@ -101,6 +102,7 @@ public class PlayerController : MonoBehaviour
             task = closestObject.GetComponent<Task>();
             if (task && !inTask)
             {
+                Debug.Log("INTERACT!");
                 if (task.EnterTask(this)) 
                 {
                     if (!task.isTaskCompleted()) 
@@ -124,11 +126,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void ReceiveItem(GameObject item) 
-    {
-        item.transform.SetParent(this.gameObject.transform, false);
-        itemObject = item;
-    }
+
 
     public void OnSlide(InputValue value)
     {
@@ -195,9 +193,9 @@ public class PlayerController : MonoBehaviour
 
             closestObject = collider.gameObject;
 
-            if (collider.gameObject.GetComponent<Item>() != null){
+            if (collider.gameObject.GetComponent<Item>() != null)
+            {
                 itemObject = collider.gameObject;
-                heldItem = collider.gameObject.GetComponent<Item>();
             }
 
             break;
@@ -219,5 +217,51 @@ public class PlayerController : MonoBehaviour
         inTask = false;
         interactedObject = null;
         Debug.Log("EJECTED");
+    }
+
+    public void ReceiveItem(Item item)
+    {
+        if (heldItem) 
+        {
+            heldItem.transform.SetParent(null);
+            heldItem.GetComponent<Collider>().enabled = true;
+
+        }
+        item.transform.SetParent(transform, false);
+        heldItem = item;
+        heldItem.GetComponent<Collider>().enabled = false;
+
+    }
+
+    public Item SwapItem(Item item, Transform senderTransform) 
+    {
+        Debug.Log("SWAP!!!!!");
+        if (item) 
+        {
+            item.transform.SetParent(transform, false);
+        }
+        if (heldItem) 
+        {
+            heldItem.transform.SetParent(senderTransform, false);
+        }
+
+        Item temp = heldItem;
+        heldItem = item;
+
+        return temp;
+
+
+    }   
+
+    public Item GetHeldItem() 
+    {
+        return heldItem;
+    }
+
+    public Item TakeItem() 
+    {
+        Item item = heldItem;
+        heldItem = null;
+        return item;
     }
 }

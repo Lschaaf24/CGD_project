@@ -1,7 +1,8 @@
+using System;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class Item : MonoBehaviour
 {
@@ -10,20 +11,28 @@ public class Item : MonoBehaviour
     [SerializeField] protected float minSpeedMult = 0.0f;
     [SerializeField] protected float maxSpeedMult = 1f;
 
+    [SerializeField] private ItemData itemType;
+
     protected float throwSpeedMult;
 
-    private Rigidbody rb;
+    protected Rigidbody rb;
 
     private bool isCharging;
     private float charge = 0f;
     protected float chargeRatio;
 
+    private float weight;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+
+        weight = itemType.GenerateWeight();
+        
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(transform.parent != null)
         {
@@ -48,7 +57,8 @@ public class Item : MonoBehaviour
         Debug.Log("throw");
         isCharging = false;
         ThrowItem(direction, throwSpeed);
-        
+
+        GetComponent<Collider>().enabled = true;
     }
 
     protected virtual void ThrowItem(Vector3 direction, float throwSpeed)
@@ -68,5 +78,15 @@ public class Item : MonoBehaviour
             charge = 0;
 
         }
+    }
+
+    public Type GetItemType() 
+    {
+        return itemType.GetType();
+    }
+
+    public float GetWeight() 
+    {
+        return weight;
     }
 }

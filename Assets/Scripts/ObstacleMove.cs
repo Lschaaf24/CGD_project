@@ -16,11 +16,14 @@ public class ObstacleMove : MonoBehaviour
 
     Vector3 direction;
 
-    [Range(-45, 45)]
-    [SerializeField] float angle = 0.0f;
+    //[Range(-45, 45)]
+    //[SerializeField] float angle = 0.0f;
+    float angle = 0.0f;
 
     [Range(0, 10)]
     [SerializeField] float gravity = 0.0f;
+
+    [SerializeField] float frictionCoefficient;
 
     float currentSpeed = 0.0f;
 
@@ -33,11 +36,39 @@ public class ObstacleMove : MonoBehaviour
 
     void Update()
     {
-        Camera.main.transform.eulerAngles = new Vector3(23 - angle, 0, 0);
+        float rawAngle = Camera.main.transform.eulerAngles.z;
+        if (rawAngle > 180f) rawAngle -= 360f;
+        angle = rawAngle;
 
-        float acceletaion = Mathf.Sin(Mathf.Deg2Rad * angle) * gravity;
+        float rad = (angle) * Mathf.Deg2Rad;
 
-        currentSpeed += acceletaion * Time.deltaTime;
+        float gravityAcceleration = Mathf.Sin(rad) * gravity;
+
+        float maxFrictionAcceleration = Mathf.Abs(Mathf.Cos(rad)) * gravity * frictionCoefficient;
+
+        float netAcceleration = 0f;
+
+        if (Mathf.Abs(currentSpeed) > 0.01f)
+        {
+            // If moving, friction pushes purely against the current direction of movement
+            netAcceleration = gravityAcceleration - (Mathf.Sign(currentSpeed) * maxFrictionAcceleration);
+        }
+        else
+        {
+            // If standing still, gravity must overcome static friction to start moving
+            if (Mathf.Abs(gravityAcceleration) > maxFrictionAcceleration)
+            {
+                // Object breaks free! It accelerates in the direction gravity is pulling
+                netAcceleration = gravityAcceleration - (Mathf.Sign(gravityAcceleration) * maxFrictionAcceleration);
+            }
+            else
+            {
+                // Friction wins; the object stays completely still
+                currentSpeed = 0f;
+                netAcceleration = 0f;
+            }
+        }
+        currentSpeed += netAcceleration * Time.deltaTime;
 
         transform.position += direction * currentSpeed * Time.deltaTime;
 
