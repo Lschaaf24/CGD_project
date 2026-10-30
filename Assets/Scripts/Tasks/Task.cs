@@ -53,7 +53,7 @@ public class Task : MonoBehaviour
     [Tooltip("Icon that appears when the task is ready")]
     [SerializeField] protected GameObject icon;
 
-    bool isCompleted = false;
+    bool isCompleted = true;
 
     int currentPlayers = 0;
     bool taskStarted = false;
@@ -81,7 +81,7 @@ public class Task : MonoBehaviour
     protected virtual void Update()
     {
     
-        if (taskReady == false && persistentTask) 
+        if (taskReady == false && persistentTask && isCompleted == true) 
         {
             elapsed_time += Time.deltaTime;
             if (elapsed_time >= interval) 

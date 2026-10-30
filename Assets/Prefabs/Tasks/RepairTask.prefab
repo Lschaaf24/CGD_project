@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 3416505171047314107}
   m_Layer: 6
   m_Name: RepairTask
-  m_TagString: Untagged
+  m_TagString: Event
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -371,6 +371,7 @@ MonoBehaviour:
   persistentTask: 0
   continuousTask: 0
   reward: {fileID: 7405823279860287245, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+  takeItem: 0
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
   particleSystem: {fileID: 0}

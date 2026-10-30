@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 234123130759280697}
   m_Layer: 6
   m_Name: FishingTask
-  m_TagString: Untagged
+  m_TagString: Event
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -759,6 +759,7 @@ MonoBehaviour:
   persistentTask: 1
   continuousTask: 1
   reward: {fileID: 7405823279860287245, guid: 12d55bd6cc8994b4f8287e9f3abe016a, type: 3}
+  takeItem: 0
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
   particleSystem: {fileID: 0}
