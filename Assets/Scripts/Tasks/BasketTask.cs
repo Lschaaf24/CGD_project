@@ -21,9 +21,10 @@ public class BasketTask : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<Item>())
+        if(collision.gameObject.GetComponent<Item>().GetItemType() == typeof(FishData))
         {
             Debug.Log("score");
+            Destroy(collision.gameObject);
         }
         else
         {

@@ -14,6 +14,8 @@ public class Item : MonoBehaviour
 
     [SerializeField] private ItemData itemType;
 
+    [SerializeField] private bool isFish;
+
     protected float throwSpeedMult;
 
     protected Rigidbody rb;
@@ -85,5 +87,11 @@ public class Item : MonoBehaviour
     public float GetWeight() 
     {
         return weight;
+    }
+
+
+    public bool GetIsFish()
+    {
+        return isFish;
     }
 }
