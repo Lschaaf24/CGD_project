@@ -101,6 +101,7 @@ public class Task : MonoBehaviour
 
         if (takeItem)
         {
+            Debug.Log("current item:" + currentItem);
             currentItem = player.SwapItem(currentItem, transform);
         }
         else if (player.GetHeldItem() != null)

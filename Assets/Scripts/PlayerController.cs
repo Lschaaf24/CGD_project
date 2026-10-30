@@ -1,8 +1,5 @@
-using NUnit.Framework.Internal;
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -16,12 +13,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideSpeed = 2f;
     [SerializeField] private float slideDuration = 1.0f;
     [SerializeField] private float slideCooldown = 0.5f;
+
+    [SerializeField] private float itemThrowHeight = 1f;
+    [SerializeField] private float itemThrowForce = 4f;
+    [SerializeField] private float itemThrowSpeed = 10f;
+
+
     private float slideTimer;
     private bool isSliding = false;
     
 
     private Item heldItem = null;
-    [SerializeField] private InputActionReference Throw;
+
+    private PlayerInput playerInput;
+    private InputAction throwAction;
 
 
     private Vector2 movementInput = Vector2.zero;
@@ -39,17 +44,19 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
     }
     private void OnEnable()
     {
-        Throw.action.started += OnThrowStarted;
-        Throw.action.canceled += OnThrowCanceled;
+        throwAction = playerInput.actions["Throw"];
+        throwAction.started += OnThrowStarted;
+        throwAction.canceled += OnThrowCanceled;
     }
 
     private void OnDisable()
     {
-        Throw.action.started -= OnThrowStarted;
-        Throw.action.canceled -= OnThrowCanceled;
+        throwAction.started -= OnThrowStarted;
+        throwAction.canceled -= OnThrowCanceled;
     }
 
     private void OnThrowStarted(InputAction.CallbackContext context)
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
-        heldItem.ReleaseCharge(transform.forward);
+        heldItem.ReleaseCharge(moveDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
 
@@ -78,16 +85,19 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputValue value)
     {
 
-        Debug.Log("INTERACT START!");
         //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
         if (interactedObject == null) 
         {
+
+
+
+
             task = closestObject.GetComponent<Task>();
             if (task && !inTask)
             {
-                Debug.Log("INTERACT!");
+
                 if (task.EnterTask(this)) 
                 {
                     if (!task.isTaskCompleted()) 
@@ -98,7 +108,19 @@ public class PlayerController : MonoBehaviour
                 }
                 
             }
+            else
+            {
+                if (itemObject != null)
+                {
+                    Debug.Log("pickup");
+                    ReceiveItem(itemObject.GetComponent<Item>());
+
+                }
+            }
+
+
             return;
+
 
         }
       
@@ -109,50 +131,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnPickup(InputValue value)
-    {
-        if (itemObject == null) return;
-        
-        Debug.Log("pickup");
-
-        ReceiveItem(itemObject.GetComponent<Item>());
-    }
 
 
 
     public void OnSlide(InputValue value)
     {
-        if (!isSliding)
+        if (!isSliding && moveDirection.magnitude > 0.1f)
         {
             StartCoroutine(StartSlide());
         }
     }
     
-    //public void OnThrow(InputValue value)
-    //{
-    //    bool isPressed = value.isPressed;
-
-    //    if (heldItem == null) return;
-
-    //    if (isPressed && !isChargingThrow)
-    //    {
-    //        isChargingThrow = true;
-    //        heldItem.BeginCharge();
-    //    }
-    //    else if (!isPressed && isChargingThrow)
-    //    {
-    //        isChargingThrow = false;
-    //        heldItem.ReleaseCharge(transform.forward);
-    //    }
-    //}
 
     private IEnumerator StartSlide()
-    {
+    { 
+
         isSliding = true;
-
-
-        //rb.AddForce(Vector3.up * hopForce, ForceMode.Impulse);
-        //rb.AddForce(moveDirection * slideSpeed, ForceMode.Impulse);
 
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
 
@@ -228,17 +222,18 @@ public class PlayerController : MonoBehaviour
     {
         inTask = false;
         interactedObject = null;
-        Debug.Log("EJECTED");
+
     }
 
     public void ReceiveItem(Item item)
     {
-        if (heldItem) 
+        if (heldItem != null) 
         {
             heldItem.transform.SetParent(null);
             heldItem.GetComponent<Collider>().enabled = true;
 
         }
+
         item.transform.SetParent(transform, false);
         heldItem = item;
         heldItem.GetComponent<Collider>().enabled = false;
@@ -247,18 +242,21 @@ public class PlayerController : MonoBehaviour
 
     public Item SwapItem(Item item, Transform senderTransform) 
     {
-        Debug.Log("SWAP!!!!!");
-        if (item) 
+        if (item != null) 
         {
             item.transform.SetParent(transform, false);
         }
-        if (heldItem) 
+        if (heldItem != null) 
         {
             heldItem.transform.SetParent(senderTransform, false);
         }
 
+        Debug.Log("Held Item:" + heldItem);
+
         Item temp = heldItem;
         heldItem = item;
+
+        Debug.Log("Held Item:" + heldItem);
 
         return temp;
 

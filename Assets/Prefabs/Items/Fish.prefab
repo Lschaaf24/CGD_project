@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7524286109742235066}
   - component: {fileID: 962026939609057045}
   - component: {fileID: 4219034881096402328}
+  - component: {fileID: 3878170880033703902}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
@@ -90,6 +91,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3878170880033703902
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728723883358329499}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.0000001, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7405823279860287245
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,10 +125,10 @@ GameObject:
   - component: {fileID: 4410958674168688481}
   - component: {fileID: 2214030823641906037}
   - component: {fileID: 6832014398681273113}
-  - component: {fileID: 8681402816827822185}
+  - component: {fileID: 1590347766885291022}
   m_Layer: 6
   m_Name: Fish
-  m_TagString: Item
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,7 +254,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8681402816827822185
+--- !u!114 &1590347766885291022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,8 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbd2cb4292df4a47845577ae68664ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  maxChargeTime: 1.2
-  minSpeedMult: 0.5
+  maxChargeTime: 2
+  minSpeedMult: 0
   maxSpeedMult: 1
-  throwSpeed: 15
   itemType: {fileID: 11400000, guid: 5a8a4355d17994048ad5ac6dd90682d9, type: 2}

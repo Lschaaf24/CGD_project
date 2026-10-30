@@ -4,7 +4,7 @@ using UnityEngine;
 public class BucketItem : Item
 {
     [SerializeField] GameObject puddle_task;
-    protected override void ThrowItem(Vector3 direction) 
+    protected override void ThrowItem(Vector3 direction, float throwSpeed) 
     {
         throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
 

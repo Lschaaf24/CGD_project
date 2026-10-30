@@ -25,9 +25,13 @@ public class WeighTask : Task
     protected override void BeginTask()
     {
         base.BeginTask();
-        string weight = currentItem.GetWeight().ToString("0.00");
+        if(currentItem != null)
+        {
+            string weight = currentItem.GetWeight().ToString("0.00");
 
-        massDisplay.text = weight;
+            massDisplay.text = weight;
+
+        }
         EndTask();
     }
 
