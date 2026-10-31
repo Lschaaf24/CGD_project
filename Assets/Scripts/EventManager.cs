@@ -9,7 +9,6 @@ public class EventManager : MonoBehaviour
 { 
     public static EventManager Instance;
     [SerializeField] List<GameObject> taskList;
-    [SerializeField] List<Event> activeEvents;
     int handledEvents = 0;
     [SerializeField] float eventRate;
     float lastEventTime = 0.0f;
@@ -17,23 +16,24 @@ public class EventManager : MonoBehaviour
     int pressure = 0;
     int intensity = 1 ;
     
-    struct Event 
+    struct Events 
     {
-        string name;
-        int baseWeight;
-        int maxIntensity;
-        float cooldown;
-        float duration;
-        string[] excludeEvents;
-        int intesity;
+        List<string> names;
+        List<int> baseWeights;
+        List<int> maxIntensities;
+        List<float> cooldowns;
+        List<float> durations;
+        List<string[]> excludedEvents;
+        List<int> intesities;
     }
+    [SerializeField] Events activeEvents;
 
     public enum SceneCounter
     {
         ReadyRods,
         WeighingRequired,
         BaitReplacementsRequired,
-        PuddleCount,
+        RepairCount,
         SlidingBoxes,
         ActiveMajorEvents
     }
@@ -49,12 +49,12 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         taskList = GameObject.FindGameObjectsWithTag("Event").ToList<GameObject>();
-        Instance = this;
     }
 
     private void Awake()
     {
-        foreach(SceneCounter counter in System.Enum.GetValues(typeof(SceneCounter))) 
+        Instance = this;
+        foreach (SceneCounter counter in System.Enum.GetValues(typeof(SceneCounter))) 
         {
             counters[counter] = 0;
         }
@@ -76,9 +76,13 @@ public class EventManager : MonoBehaviour
 
     public void ChangeCounter(SceneCounter counter, int amount) 
     {
+        if (counters[counter] + amount < 0)
+        {
+            return;
+        }
         counters[counter] += amount;
-
         CheckEvents();
+
     }
 
     public int GetCounter(SceneCounter counter)
@@ -88,10 +92,7 @@ public class EventManager : MonoBehaviour
 
     private void CheckEvents()
     {
-        if (GetCounter(SceneCounter.ReadyRods) >= 3)
-        {
-            Debug.Log("Three rods ready!");
-        }
+        
     }
 
 
@@ -101,7 +102,7 @@ public class EventManager : MonoBehaviour
         pressure += counters[SceneCounter.ReadyRods] * 8;
         pressure += counters[SceneCounter.WeighingRequired] * 5;
         pressure += counters[SceneCounter.BaitReplacementsRequired] * 4;
-        pressure += counters[SceneCounter.PuddleCount] * 5;
+        pressure += counters[SceneCounter.RepairCount] * 5;
         pressure += counters[SceneCounter.SlidingBoxes] * 12;
         pressure += counters[SceneCounter.ActiveMajorEvents] * 15;
     }

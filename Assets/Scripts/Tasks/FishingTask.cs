@@ -9,10 +9,6 @@ public class FishingTask: Task
     [SerializeField] Slider reelUI;
     bool reeling = false;
 
-    public static event Action OnRodReady;
-    public static event Action OnRodReeledIn;
-
-
     private void Awake()
     {
         reelUI.value = reelPercentage/100;
@@ -44,6 +40,7 @@ public class FishingTask: Task
     {
         base.EndTask();
         EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, -1);
+        EventManager.Instance.ChangeCounter(EventManager.SceneCounter.WeighingRequired, 1);
         reelUI.gameObject.SetActive(false);
         reelPercentage = 20;
         reeling = false;

@@ -141,7 +141,7 @@ public class Task : MonoBehaviour
         }
         else 
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 

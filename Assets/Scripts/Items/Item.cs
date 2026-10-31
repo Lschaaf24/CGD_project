@@ -23,6 +23,8 @@ public class Item : MonoBehaviour
 
     private float weight;
 
+    private bool hasBeenWeighed = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -89,5 +91,15 @@ public class Item : MonoBehaviour
     public float GetWeight() 
     {
         return weight;
+    }
+
+    public bool GetHasBeenWeighed() 
+    {
+        return hasBeenWeighed;
+    }
+
+    public void SetHasBeenWeighed(bool weighed) 
+    {
+        hasBeenWeighed = weighed;
     }
 }
