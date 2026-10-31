@@ -30,4 +30,9 @@ public class Level : MonoBehaviour
         data = Newdata;
     }
 
+    public void OnClick()
+    {
+        LevelSelector.Instance.LoadLevel(this);
+    }
+
 }

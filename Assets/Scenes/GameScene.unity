@@ -1141,7 +1141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1684919638
 Transform:
   m_ObjectHideFlags: 0
@@ -1170,6 +1170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinCondition
   endGame: 0
+  levelData: {fileID: 0}
 --- !u!1001 &1893996035
 PrefabInstance:
   m_ObjectHideFlags: 0

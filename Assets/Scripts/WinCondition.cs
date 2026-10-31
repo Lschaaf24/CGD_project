@@ -9,11 +9,12 @@ public class WinCondition : MonoBehaviour
     UnityEvent TimeLimitReached;
     UnityEvent EndGame;
 
-    [SerializeField] private bool endGame = false; 
-
+    [SerializeField] private bool endGame = false;
+    [SerializeField] private LevelDataSO levelData;
 
     void Start()
     {
+
         if (QuotaReached == null)
         {
             QuotaReached = new UnityEvent();
@@ -35,13 +36,19 @@ public class WinCondition : MonoBehaviour
 
         EndGame.AddListener(OnLevelFinished);
 
+        levelData = GameManager.instance.GetLevelDataSO();
     }
 
     private void OnLevelFinished()
     {
         Debug.Log("level finish Reached");
-        SceneManager.LoadScene("LevelSelector");
 
+        LevelSelector.Instance.AddLevelToCompletedList(levelData);
+        LevelSelector.Instance.SetCurrentLevelData(null);
+
+
+        
+        SceneManager.LoadScene("LevelSelector");
     }
 
     private void OnTimeLimitReached()

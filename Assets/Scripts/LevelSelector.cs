@@ -13,9 +13,12 @@ public class LevelSelector : MonoBehaviour
     /*[SerializeField] private List<Level> levels;
     [SerializeField] private string Game_Scene_Name;*/
 
-    public Level currentLevel;
+    [SerializeField] private Level currentLevel;
+    [SerializeField] private LevelDataSO currentLevelDataSO;
 
-    [SerializeField] private List<Level> CompletedLevels;
+    [SerializeField] private List<LevelDataSO> CompletedLevels;
+
+
 
     private void Awake()
     {
@@ -50,9 +53,29 @@ public class LevelSelector : MonoBehaviour
         return currentLevel; 
     }
 
+    public void AddLevelToCompletedList(LevelDataSO levelDataSO)
+    {
+        if (levelDataSO == null || CompletedLevels.Contains(levelDataSO))
+            return;
+
+        CompletedLevels.Add(levelDataSO);
+    }
+
+    public LevelDataSO GetCurrentLevelData()
+    {
+        if(currentLevelDataSO == null)
+            return null;
+        return currentLevelDataSO;
+    }
+
     public void SetCurrentLevel(Level level)
     {
         currentLevel = level;
+    }
+
+    public void SetCurrentLevelData(LevelDataSO levelDataSO)
+    {
+        currentLevelDataSO = levelDataSO;
     }
 
     public string GetLevelName()
@@ -69,9 +92,8 @@ public class LevelSelector : MonoBehaviour
 
         Debug.Log(GetCurrentLevel().GetLevelData().getLevelScene());
 
-        this.AddComponent<Level>().SetLevelData(level.GetLevelData());
-        currentLevel = GetComponent<Level>();
-        SceneManager.LoadScene(level.GetLevelData().getLevelScene().name);
+        currentLevelDataSO = currentLevel.GetLevelData();
+        SceneManager.LoadScene(currentLevelDataSO.getLevelScene().name);
     }
 
     private void OnDestroy()

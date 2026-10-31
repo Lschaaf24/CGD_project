@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private LevelSelector levelSelector;
     private States currentState;
-    [SerializeField] private Level currentLevel;
+    [SerializeField] private LevelDataSO currentLevel;
 
 
     UnityEvent SwitchedStates;
@@ -27,14 +27,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        TryGetLevelSelector();
     }
 
 
@@ -63,10 +57,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (levelSelector == null)
+        /*if (levelSelector == null)
         {
             TryGetLevelSelector();
-        }
+        }*/
         /*  if( SwitchedStates != null)
           {
               SwitchedStates.Invoke();
@@ -79,7 +73,7 @@ public class GameManager : MonoBehaviour
         if (LevelSelector.Instance != null)
         {
             levelSelector = LevelSelector.Instance;
-            currentLevel = levelSelector.GetCurrentLevel();
+            currentLevel = levelSelector.GetCurrentLevelData();
 
             Debug.Log("LevelSelector successfully assigned!");
         }
@@ -95,12 +89,11 @@ public class GameManager : MonoBehaviour
             return levelSelector;
         }
     }
-
-    private void OnDestroy()
+   
+    public LevelDataSO GetLevelDataSO()
     {
-        if (instance == this)
-        {
-            instance = null;
-        }
+        return currentLevel;
     }
+
+
 }
