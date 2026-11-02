@@ -1,2 +1,18 @@
 fileFormatVersion: 2
 guid: 6854be8d39a835244860be641d5bbd96
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - reward: {instanceID: 0}
+  - requiredItem: {fileID: 11400000, guid: 8341e4cc69234f7448a609390b8182b3, type: 2}
+  - animation: {instanceID: 0}
+  - soundEffect: {instanceID: 0}
+  - particleSystem: {instanceID: 0}
+  - icon: {instanceID: 0}
+  - reelUI: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

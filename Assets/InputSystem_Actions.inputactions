@@ -95,15 +95,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Pickup",
-                    "type": "Button",
-                    "id": "4ed5bbb2-f38d-47c9-bd5d-001380492f03",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -456,17 +447,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "203c3f07-c0f6-4723-a9c9-82ab39c28ef2",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6832014398681273113}
   m_Layer: 6
   m_Name: Item
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   maxChargeTime: 1.2
   minSpeedMult: 0.5
   maxSpeedMult: 1
-  throwSpeed: 15
+  itemType: {fileID: 11400000, guid: 88a1e568605e0164f921b539473f65be, type: 2}
 --- !u!54 &6832014398681273113
 Rigidbody:
   m_ObjectHideFlags: 0

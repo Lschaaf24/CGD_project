@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CargoBox
   - DeathBox
+  - Item
   layers:
   - Default
   - TransparentFX
