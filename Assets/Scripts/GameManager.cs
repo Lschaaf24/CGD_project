@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelSelector levelSelector;
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
-
+    [SerializeField] private WinCondition winChecker;
 
     UnityEvent SwitchedStates;
 
