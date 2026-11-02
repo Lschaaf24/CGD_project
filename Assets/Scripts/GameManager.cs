@@ -1,8 +1,10 @@
 using System;
 using Unity.VisualScripting;
+using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
@@ -15,8 +17,6 @@ public class GameManager : MonoBehaviour
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
     [SerializeField] private WinCondition winChecker;
-
-    UnityEvent SwitchedStates;
 
 
     enum States
@@ -34,37 +34,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (SwitchedStates == null)
-        { 
-            SwitchedStates = new UnityEvent();
-        }
-
-        SwitchedStates.AddListener(OnEventTriggered);
-
-
-       /* levelselector = GetComponent<LevelSelector>();
-        currentLevel = levelselector.GetCurrentLevel();*/
-
 
     }
 
-    private void OnEventTriggered()
-    {
 
-        Debug.Log("States Switched");
-
-    }
 
     void Update()
     {
-        /*if (levelSelector == null)
-        {
-            TryGetLevelSelector();
-        }*/
-        /*  if( SwitchedStates != null)
-          {
-              SwitchedStates.Invoke();
-          }*/
+        
 
     }
 
@@ -95,5 +72,41 @@ public class GameManager : MonoBehaviour
         return currentLevel;
     }
 
+    private void SetState(States newState)
+    {
+        if (currentState == newState) return;
 
+        currentState = newState;
+
+        switch (newState)
+        {
+            case States.Pause:
+                Time.timeScale = 0f;
+                break;
+            case States.GamePlay:
+                Time.timeScale = 1f;
+                break;
+        }
+    }
+
+    void OnEnable()
+    {
+        winChecker.OnEndGame += OnLevelFinished;
+    }
+
+    void OnDisable()
+    {
+        winChecker.OnEndGame -= OnLevelFinished;
+    }
+
+    private void OnLevelFinished()
+    {
+        Debug.Log("level finish Reached");
+        levelSelector.AddLevelToCompletedList(currentLevel);
+
+
+
+        SceneManager.LoadScene("LevelSelector");
+        levelSelector.SetCurrentLevelData(null);
+    }
 }
