@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -65,6 +64,8 @@ public class Task : MonoBehaviour
     protected float elapsed_time = 0.0f;
 
     protected Item currentItem = null;
+
+    public event Action<Task> OnTaskCompleted;
 
 
 
@@ -141,8 +142,9 @@ public class Task : MonoBehaviour
         }
         else 
         {
-            this.gameObject.SetActive(false);
+            Destroy(this);
         }
+        OnTaskCompleted?.Invoke(this);
     }
 
 

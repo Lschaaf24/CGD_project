@@ -1,40 +1,30 @@
-using NUnit.Framework;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class EventManager : MonoBehaviour
 { 
     public static EventManager Instance;
-    [SerializeField] List<GameObject> taskList;
-    int handledEvents = 0;
-    [SerializeField] float eventRate;
-    float lastEventTime = 0.0f;
+    float targetIntensity = 0;
+    float currentIntensity = 0;
 
-    int pressure = 0;
-    int intensity = 1 ;
-    
-    struct Events 
-    {
-        List<string> names;
-        List<int> baseWeights;
-        List<int> maxIntensities;
-        List<float> cooldowns;
-        List<float> durations;
-        List<string[]> excludedEvents;
-        List<int> intesities;
-    }
-    [SerializeField] Events activeEvents;
+
+
+
+
+    [SerializeField] List<GameEvent> events = new();
 
     public enum SceneCounter
     {
         ReadyRods,
         WeighingRequired,
+        SortingRequired,
         BaitReplacementsRequired,
         RepairCount,
-        SlidingBoxes,
+        TipDegrees,
         ActiveMajorEvents
     }
 
@@ -43,12 +33,17 @@ public class EventManager : MonoBehaviour
     float timeLimit = 180; //In Seconds
     float elapsedTime = 0.0f;
 
+    int currentBudget = 2;
+    int maxBudget = 2;
+
+    float budgetRegenTimer;
+
     private Dictionary<SceneCounter, int> counters = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        taskList = GameObject.FindGameObjectsWithTag("Event").ToList<GameObject>();
+        StartCoroutine(CheckEvents());
     }
 
     private void Awake()
@@ -69,9 +64,17 @@ public class EventManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
         expectedWeight = targetWeight * (elapsedTime / timeLimit);
 
-        CalculatePressure();
-        Debug.Log(pressure);
+        float pressure = CalculatePressure();
 
+        targetIntensity = Mathf.Clamp01(pressure / 100f);
+
+        float changeSpeed = targetIntensity > currentIntensity ? 0.15f : 0.05f;
+
+        currentIntensity = Mathf.MoveTowards(currentIntensity, targetIntensity, Time.deltaTime * changeSpeed);
+
+
+
+        UpdateBudget();
     }
 
     public void ChangeCounter(SceneCounter counter, int amount) 
@@ -81,8 +84,6 @@ public class EventManager : MonoBehaviour
             return;
         }
         counters[counter] += amount;
-        CheckEvents();
-
     }
 
     public int GetCounter(SceneCounter counter)
@@ -90,22 +91,120 @@ public class EventManager : MonoBehaviour
         return counters[counter];
     }
 
-    private void CheckEvents()
+    private IEnumerator CheckEvents()
     {
-        
+        while (true)
+        {
+
+            yield return new WaitForSeconds(5);
+
+            Debug.Log("CHECK");
+
+            List<GameEvent> elibgibleEvents = new();
+
+            int totalWeight = 0;
+
+            foreach (GameEvent gameEvent in events)
+            {
+                if (gameEvent.isActive) continue;
+                if (currentIntensity < gameEvent.GetRequiredIntensity()) continue;
+                if (gameEvent.IsCoolingDown()) continue;
+                if (!CanAffordEvent(gameEvent)) continue;
+
+                elibgibleEvents.Add(gameEvent);
+                totalWeight += gameEvent.baseWeight;
+            }
+
+            if (elibgibleEvents.Count == 0) continue;
+
+            int randomValue = UnityEngine.Random.Range(0, totalWeight);
+
+            foreach (GameEvent gameEvent in elibgibleEvents)
+            {
+                randomValue -= gameEvent.baseWeight;
+
+                if (randomValue < 0)
+                {
+                    TriggerEvent(gameEvent);
+                    break;
+                }
+            }
+        }
     }
 
 
-    private void CalculatePressure() 
+    private float CalculatePressure() 
     {
-        pressure = 0;
+        float pressure = 0;
         pressure += counters[SceneCounter.ReadyRods] * 8;
         pressure += counters[SceneCounter.WeighingRequired] * 5;
-        pressure += counters[SceneCounter.BaitReplacementsRequired] * 4;
+        pressure += counters[SceneCounter.SortingRequired] * 4;
+        pressure += counters[SceneCounter.BaitReplacementsRequired] * 6;
         pressure += counters[SceneCounter.RepairCount] * 5;
-        pressure += counters[SceneCounter.SlidingBoxes] * 12;
-        pressure += counters[SceneCounter.ActiveMajorEvents] * 15;
+        pressure += counters[SceneCounter.TipDegrees] * 12;
+
+        return pressure;
     }
+
+    private void UpdateBudget() 
+    {
+
+        if (currentIntensity <= 0.2)
+        {
+            maxBudget = 2;
+        }
+        else if (currentIntensity <= 0.5)
+        {
+            maxBudget = 4;
+        }
+        else if (currentIntensity <= 0.8)
+        {
+            maxBudget = 6;
+        }
+        else
+        {
+            maxBudget = 8;
+        }
+
+        currentBudget = Mathf.Min(currentBudget, maxBudget);
+
+        //float budgetRegenTime = Mathf.Lerp(maxBudgetRegenTime, minBudgetRegenTime, currentIntensity);
+
+        if(currentBudget < maxBudget) 
+        {
+            budgetRegenTimer += Time.deltaTime;
+
+            if (budgetRegenTimer >= 15.0f)
+            {
+                currentBudget++;
+
+                budgetRegenTimer -= 15;
+            }
+        }
+        else 
+        {
+            budgetRegenTimer = 0;
+        }
+
+    }
+
+    private bool CanAffordEvent(GameEvent gameEvent) 
+    {
+        return currentBudget >= gameEvent.budgetCost;
+    }
+
+
+    private void TriggerEvent(GameEvent gameEvent) 
+    {
+        if (!CanAffordEvent(gameEvent)) return;
+        if (gameEvent.IsCoolingDown()) return;
+
+        currentBudget -= gameEvent.budgetCost;
+
+        gameEvent.lastTriggeredTime = Time.time;
+        gameEvent.StartEvent();
+    }
+
 
 
 }

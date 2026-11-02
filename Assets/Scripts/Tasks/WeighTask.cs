@@ -26,6 +26,7 @@ public class WeighTask : Task
         {
             currentItem.SetHasBeenWeighed(true);
             EventManager.Instance.ChangeCounter(EventManager.SceneCounter.WeighingRequired, -1);
+            EventManager.Instance.ChangeCounter(EventManager.SceneCounter.SortingRequired, 1);
         }
 
     }
