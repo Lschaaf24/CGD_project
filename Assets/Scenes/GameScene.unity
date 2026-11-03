@@ -541,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: winChecker
       value: 
-      objectReference: {fileID: 3443401795673081988, guid: f4d88fad6728d874e91b023f3e16ae25, type: 3}
+      objectReference: {fileID: 859311812}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -979,6 +979,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4d88fad6728d874e91b023f3e16ae25, type: 3}
+--- !u!114 &859311812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3443401795673081988, guid: f4d88fad6728d874e91b023f3e16ae25, type: 3}
+  m_PrefabInstance: {fileID: 859311811}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed15238ef82e1c84bb1b30ef26b7e740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinCondition
 --- !u!1001 &1030362450
 PrefabInstance:
   m_ObjectHideFlags: 0
