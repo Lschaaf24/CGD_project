@@ -1631,6 +1631,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasketTask
       objectReference: {fileID: 0}
+    - target: {fileID: 8699123226854879665, guid: e8650cef3dfa90840a4d5d09a7988c4e, type: 3}
+      propertyPath: m_Size.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699123226854879665, guid: e8650cef3dfa90840a4d5d09a7988c4e, type: 3}
+      propertyPath: m_Center.y
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

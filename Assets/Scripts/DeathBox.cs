@@ -30,7 +30,10 @@ public class DeathBox : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         go.position = respawnPos.transform.position;
-        go.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        if (go.GetComponent<Rigidbody>() != null)
+        {
+            go.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        }
 
 
         yield return null;
