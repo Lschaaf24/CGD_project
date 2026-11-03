@@ -164,6 +164,17 @@ public class Task : MonoBehaviour
         return false;
     }
 
+    public virtual void LeaveTask(PlayerController player) 
+    {
+        player.TaskEject();
+        currentPlayers -= 1;
+        engaged_players.Remove(player);
+       
+        taskReady = true;
+        Debug.Log("FAILED TASK");
+       
+    }
+
 
 
 

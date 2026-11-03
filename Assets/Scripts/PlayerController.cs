@@ -210,6 +210,10 @@ public class PlayerController : MonoBehaviour
         if (!currentlyOverlapping)
         {
             closestObject = null;
+            if (inTask)
+            {
+                interactedObject.GetComponent<Task>().LeaveTask(this);
+            }
         }
     }
 
@@ -222,7 +226,6 @@ public class PlayerController : MonoBehaviour
     {
         inTask = false;
         interactedObject = null;
-
     }
 
     public void ReceiveItem(Item item)
