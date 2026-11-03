@@ -1,12 +1,14 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
 public enum SoundType
 {
-    Example, Example2,
-
+     Footsteps,
+     RunningWater, 
 }
+
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
@@ -23,16 +25,12 @@ public class SoundManager : MonoBehaviour
         {
             Array.Resize(ref soundlist, audionames.Length);
         }
-
         for (int i = 0; i < audionames.Length; i++)
         {
             soundlist[i].name = audionames[i];
-
-
-        }
-       
+        }     
     }
-
+    
     void Awake()
     {
 
@@ -48,22 +46,13 @@ public class SoundManager : MonoBehaviour
     public struct SoundList
     {
         [HideInInspector] public string name;
-        public AudioClip[] sounds;
-
+         public AudioClip[] sounds;
     }
 
     public static void PlaySound(SoundType sound, float volume = 1)
     {
-
-
         int index = (int)sound;
-
-
-
         AudioClip[] clips = instance.soundlist[index].sounds;
-
-
-
         instance.audioSource.PlayOneShot(clips[0], Mathf.Clamp01(volume));
     }
 

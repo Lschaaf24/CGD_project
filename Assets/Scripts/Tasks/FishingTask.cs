@@ -48,6 +48,7 @@ public class FishingTask: Task
         if(reelPercentage >= 100) 
         {
             EndTask();
+           
         }
     }
 
