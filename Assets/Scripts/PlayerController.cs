@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
+    private Vector3 lastMoveDirection;
     private Rigidbody rb;
 
     private GameObject closestObject = null;
@@ -72,7 +73,7 @@ public class PlayerController : MonoBehaviour
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
-        heldItem.ReleaseCharge(moveDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
+        heldItem.ReleaseCharge(lastMoveDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
 
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         movementInput = value.Get<Vector2>();
+        lastMoveDirection = moveDirection;
     }
 
     public void OnInteract(InputValue value)
