@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6226303018169725729}
   - component: {fileID: 1300537552409307895}
   - component: {fileID: 8699123226854879665}
+  - component: {fileID: 8162514999548725074}
   m_Layer: 0
   m_Name: BasketTask
   m_TagString: Untagged
@@ -119,9 +120,31 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000001, y: 3.5, z: 3}
+  m_Size: {x: 3, y: 3.5, z: 3}
   m_Center: {x: 0.000000059604645, y: 1, z: -0.00000008940697}
+--- !u!64 &8162514999548725074
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745176479677535659}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
