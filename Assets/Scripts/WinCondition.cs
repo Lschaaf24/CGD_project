@@ -1,45 +1,53 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class WinCondition : MonoBehaviour
 {
-    UnityEvent QuotaReached;
-    UnityEvent TimeLimitReached;
 
-    private 
+    public event Action OnEndGame;
+    [Header("Refs")]
+    [SerializeField] private LevelDataSO levelData;
+    [SerializeField] private TimeChecker timeChecker;
+    [Header("Trackers")]
+    [SerializeField] private bool endGame = false;
+
+
 
 
     void Start()
     {
-        if (QuotaReached == null)
-        {
-            QuotaReached = new UnityEvent();
-        }
-
-        QuotaReached.AddListener(OnQuotaReached);
-
-        if (TimeLimitReached == null)
-        {
-            TimeLimitReached = new UnityEvent();
-        }
-
-        TimeLimitReached.AddListener(OnTimeLimitReached);
+        levelData = GameManager.instance?.GetLevelDataSO();
     }
 
-    private void OnTimeLimitReached()
-    {
-        Debug.Log("Time Limit Reached");
-    }
-
-    private void OnQuotaReached()
-    {
-        Debug.Log("Quota Reached");
-
-    }
+   
 
     void Update()
     {
-        
+        if (endGame)
+        {
+            OnEndGame?.Invoke();
+        }
+
     }
+
+    
+
+    void OnEnable()
+    {
+        timeChecker.OnTimeLimitReached += OnTimeReached;
+    }
+
+    private void OnTimeReached()
+    {
+        OnEndGame?.Invoke();
+    }
+
+    void OnDisable()
+    {
+        timeChecker.OnTimeLimitReached -= OnTimeReached;
+    }
+
+
 }
