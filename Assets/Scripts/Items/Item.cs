@@ -13,6 +13,8 @@ public class Item : MonoBehaviour
 
     [SerializeField] private ItemData itemType;
 
+  
+
     protected float throwSpeedMult;
 
     protected Rigidbody rb;
@@ -89,4 +91,7 @@ public class Item : MonoBehaviour
     {
         return weight;
     }
+
+
+  
 }
