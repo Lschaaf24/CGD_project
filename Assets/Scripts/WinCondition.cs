@@ -18,7 +18,7 @@ public class WinCondition : MonoBehaviour
 
     void Start()
     {
-        levelData = GameManager.instance?.GetLevelDataSO();
+        levelData = GameManager.instance.GetLevelDataSO();
     }
 
    
