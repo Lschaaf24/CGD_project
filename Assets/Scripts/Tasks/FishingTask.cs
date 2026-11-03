@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,14 +9,23 @@ public class FishingTask: Task
     [SerializeField] Slider reelUI;
     bool reeling = false;
 
-
     private void Awake()
     {
         reelUI.value = reelPercentage/100;
     }
     protected override void Update()
     {
-        base.Update();
+        if (taskReady == false && persistentTask && isCompleted == true)
+        {
+            elapsed_time += Time.deltaTime;
+            if (elapsed_time >= interval)
+            {
+                elapsed_time = 0.0f;
+                taskReady = true;
+                icon.SetActive(true);
+                EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, 1);
+            }
+        }
 
         if (!reeling) return;
 
@@ -29,6 +39,8 @@ public class FishingTask: Task
     protected override void EndTask() 
     {
         base.EndTask();
+        EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, -1);
+        EventManager.Instance.ChangeCounter(EventManager.SceneCounter.WeighingRequired, 1);
         reelUI.gameObject.SetActive(false);
         reelPercentage = 20;
         reeling = false;

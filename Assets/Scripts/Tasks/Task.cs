@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,7 +24,7 @@ public class Task : MonoBehaviour
     [SerializeField] protected int playersRequired = 1;
 
     [Tooltip("Will the task always persist or does it spawn temporarily")]
-    [SerializeField] private bool persistentTask = false;
+    [SerializeField] protected bool persistentTask = false;
 
     [Tooltip("Does the task require continous input?")]
     [SerializeField] private bool continuousTask = false;
@@ -53,7 +52,7 @@ public class Task : MonoBehaviour
     [Tooltip("Icon that appears when the task is ready")]
     [SerializeField] protected GameObject icon;
 
-    bool isCompleted = false;
+    protected bool isCompleted = true;
 
     int currentPlayers = 0;
     bool taskStarted = false;
@@ -61,10 +60,12 @@ public class Task : MonoBehaviour
 
     List<PlayerController> engaged_players = new List<PlayerController>();
 
-    float interval = 5.0f;
-    float elapsed_time = 0.0f;
+    protected float interval = 5.0f;
+    protected float elapsed_time = 0.0f;
 
     protected Item currentItem = null;
+
+    public event Action<Task> OnTaskCompleted;
 
 
 
@@ -81,7 +82,7 @@ public class Task : MonoBehaviour
     protected virtual void Update()
     {
     
-        if (taskReady == false && persistentTask) 
+        if (taskReady == false && persistentTask && isCompleted == true) 
         {
             elapsed_time += Time.deltaTime;
             if (elapsed_time >= interval) 
@@ -89,8 +90,6 @@ public class Task : MonoBehaviour
                 elapsed_time = 0.0f;
                 taskReady = true;
                 icon.SetActive(true);
-
-
             }
         }
     }
@@ -143,8 +142,9 @@ public class Task : MonoBehaviour
         }
         else 
         {
-            Destroy(this.gameObject);
+            Destroy(this);
         }
+        OnTaskCompleted?.Invoke(this);
     }
 
 

@@ -25,6 +25,8 @@ public class Item : MonoBehaviour
 
     private float weight;
 
+    private bool hasBeenWeighed = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,6 +49,7 @@ public class Item : MonoBehaviour
             charge = Mathf.Min(charge + Time.deltaTime, maxChargeTime);
             chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
         }
+
     }
 
     public virtual void BeginCharge()
@@ -92,6 +95,13 @@ public class Item : MonoBehaviour
         return weight;
     }
 
+    public bool GetHasBeenWeighed() 
+    {
+        return hasBeenWeighed;
+    }
 
-  
+    public void SetHasBeenWeighed(bool weighed) 
+    {
+        hasBeenWeighed = weighed;
+    }
 }

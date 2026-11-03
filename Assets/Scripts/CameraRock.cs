@@ -42,4 +42,9 @@ public class CameraRock : MonoBehaviour
         }
 
     }
+
+    public Quaternion GetStartRot() 
+    {
+        return startRot;
+    }
 }
