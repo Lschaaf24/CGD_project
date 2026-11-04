@@ -1774,6 +1774,10 @@ PrefabInstance:
       propertyPath: events.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1605801896487963931, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
+      propertyPath: 'events.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3809159116909821589, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: m_Name
       value: EventManager

@@ -13,7 +13,8 @@ public class Item : MonoBehaviour
 
     [SerializeField] private ItemData itemType;
 
-  
+
+
 
     protected float throwSpeedMult;
 
@@ -33,7 +34,7 @@ public class Item : MonoBehaviour
 
 
         weight = itemType.GenerateWeight();
-        
+   
     }
 
     protected virtual void Update()
@@ -104,4 +105,6 @@ public class Item : MonoBehaviour
     {
         hasBeenWeighed = weighed;
     }
+
+    
 }
