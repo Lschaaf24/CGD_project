@@ -20,6 +20,15 @@ public class WeighTask : Task
     protected override void EndTask()
     {
         base.EndTask();
+
+        if (currentItem == null) return;
+        if (!currentItem.GetHasBeenWeighed() && currentItem.GetItemType() == typeof(FishData)) 
+        {
+            currentItem.SetHasBeenWeighed(true);
+            EventManager.Instance.ChangeCounter(EventManager.SceneCounter.WeighingRequired, -1);
+            EventManager.Instance.ChangeCounter(EventManager.SceneCounter.SortingRequired, 1);
+        }
+
     }
 
     protected override void BeginTask()
@@ -30,6 +39,7 @@ public class WeighTask : Task
             string weight = currentItem.GetWeight().ToString("0.00");
 
             massDisplay.text = weight;
+
 
         }
         EndTask();
