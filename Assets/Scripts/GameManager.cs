@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
     [SerializeField] private WinCondition winChecker;
+    [SerializeField] private QuotaManager quotaManager;
 
 
     enum States
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        quotaManager.RandomGenerateQuota();
     }
 
 
@@ -92,11 +93,25 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         winChecker.OnEndGame += OnLevelFinished;
+        quotaManager.OnQuotaCompleted += HandleQuotaCompleted;
+        quotaManager.OnQuotaFailed += HandleQuotaFailed;
     }
+
 
     void OnDisable()
     {
         winChecker.OnEndGame -= OnLevelFinished;
+        quotaManager.OnQuotaCompleted -= HandleQuotaCompleted;
+        quotaManager.OnQuotaFailed -= HandleQuotaFailed;
+    }
+    private void HandleQuotaFailed(QuotaDataSO sO)
+    {
+        Debug.Log("Failed Quota");
+    }
+
+    private void HandleQuotaCompleted(QuotaDataSO sO)
+    {
+        Debug.Log("Completed Quota");
     }
 
     private void OnLevelFinished()

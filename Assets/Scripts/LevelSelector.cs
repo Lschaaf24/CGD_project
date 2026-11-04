@@ -90,8 +90,6 @@ public class LevelSelector : MonoBehaviour
     {
         SetCurrentLevel(level);
 
-        Debug.Log(GetCurrentLevel().GetLevelData().getLevelScene());
-
         currentLevelDataSO = currentLevel.GetLevelData();
         SceneManager.LoadScene(currentLevelDataSO.getLevelScene().name);
     }
