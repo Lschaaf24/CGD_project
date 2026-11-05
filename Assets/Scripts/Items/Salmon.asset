@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a2f74b74bdbf64482adfb48e7aa2d0, type: 3}
   m_Name: Salmon
   m_EditorClassIdentifier: Assembly-CSharp::FishData
+  itemWeight: 1
+  itemMesh: {fileID: 2959467708922500008, guid: dfbefb401e17d65449a58586add2bd1d, type: 3}
   minWeight: 1
   maxWeight: 12
+  isFish: 1
