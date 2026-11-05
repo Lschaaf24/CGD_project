@@ -1,5 +1,4 @@
 using System;
-using System.Data.Common;
 using UnityEngine;
 
 public class Quota : MonoBehaviour
@@ -12,6 +11,8 @@ public class Quota : MonoBehaviour
     private int progress;
     private float timeLeft;
     private bool finished;
+
+    public float TimeLeft => timeLeft;
 
     public void Init(QuotaDataSO data)
     {

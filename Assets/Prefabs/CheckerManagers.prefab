@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a1b3973fc5c4f4193158814b1dd980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuotaManager
+  basket: {fileID: 0}
   availableQuotas:
   - {fileID: 11400000, guid: 4f5322d9141e3a14a97ba80d0fdcf087, type: 2}
   quotaPrefab: {fileID: -2498387023340945179, guid: 2ec03455f9e4072489937bc085b1d067, type: 3}

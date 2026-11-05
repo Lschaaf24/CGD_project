@@ -1,11 +1,5 @@
-using System;
-using Unity.VisualScripting;
-using Unity.XR.OpenVR;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class GameManager : MonoBehaviour

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +9,8 @@ public class QuotaManager : MonoBehaviour
 
     public event Action<QuotaDataSO> OnQuotaCompleted;
     public event Action<QuotaDataSO> OnQuotaFailed;
+    public event Action<Quota> OnQuotaAdded;
+    public event Action<Quota> OnQuotaRemoved;
 
     [SerializeField] private BasketTask basket;
 
@@ -37,6 +38,7 @@ public class QuotaManager : MonoBehaviour
         quota.OnFailed += HandleFailed;
 
         activeQuotas.Add(quota);
+        OnQuotaAdded?.Invoke(quota);
         Debug.Log("HERE");
         return true;
     }
@@ -58,6 +60,7 @@ public class QuotaManager : MonoBehaviour
         quota.OnCompleted -= HandleCompleted;
         quota.OnFailed -= HandleFailed;
         activeQuotas.Remove(quota);
+        OnQuotaRemoved?.Invoke(quota);
         Destroy(quota.gameObject);
     }
 
