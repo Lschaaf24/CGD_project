@@ -18,12 +18,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float itemThrowHeight = 1f;
     //[SerializeField] private float itemThrowForce = 4f;
     [SerializeField] private float itemThrowSpeed = 10f;
+    [SerializeField] private float stunDuration = 2f;
+    [SerializeField] private GameObject stunParticlePrefab;
+
 
     private ThrowIndication throwIndication;
 
     private float slideTimer;
     private bool isSliding = false;
-    
+    private bool isStunned = false;
+
     private Item heldItem = null;
 
     private PlayerInput playerInput;
@@ -92,7 +96,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-
         //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
@@ -169,7 +172,7 @@ public class PlayerController : MonoBehaviour
     {
         InteractionDetection();
 
-        if (isSliding) return;
+        if (isSliding || isStunned) return;
         if (isChargingThrow)
         {
             throwIndication.gameObject.SetActive(true);
@@ -273,6 +276,27 @@ public class PlayerController : MonoBehaviour
 
 
     }   
+
+    public void stunPlayer()
+    {
+        if (!isStunned)
+        {
+            StartCoroutine(StunCoroutine(stunDuration));
+        }
+    }
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        float timer = 0f;
+        while (timer < duration)
+        {
+            isStunned = true;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        isStunned = false;
+    }
 
     public Item GetHeldItem() 
     {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -18,6 +19,7 @@ public class Item : MonoBehaviour
 
     private float weight;
     private bool hasBeenWeighed = false;
+    private bool canStun = false;
 
     private void Start()
     {
@@ -39,6 +41,14 @@ public class Item : MonoBehaviour
             chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
         }
 
+        if (rb.linearVelocity.magnitude > 0.6f)
+        {
+            canStun = true;
+        }
+        else
+        {
+            canStun = false;
+        }
     }
 
     public virtual void BeginCharge()
@@ -52,7 +62,6 @@ public class Item : MonoBehaviour
         isCharging = false;
         ThrowItem(direction, throwHeight, throwSpeed);
 
-        GetComponent<Collider>().enabled = true;
     }
 
     protected virtual void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed)
@@ -72,8 +81,29 @@ public class Item : MonoBehaviour
             Debug.Log("Throw Speed: " + throwVelocity);
             rb.AddForce(direction * throwVelocity, ForceMode.Impulse);
 
+            StartCoroutine(ThrowCollisionCheck(0.5f));
+
             charge = 0;
             chargeRatio = 0;
+        }
+    }
+
+    private IEnumerator ThrowCollisionCheck(float duration)
+    {
+        gameObject.GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(duration);
+        gameObject.GetComponent<Collider>().enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            if (playerController != null && canStun)
+            {
+                playerController.stunPlayer();
+            }
         }
     }
 
