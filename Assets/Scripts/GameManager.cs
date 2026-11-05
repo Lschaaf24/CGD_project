@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,12 +8,19 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+    [Header("Refs")]
     [SerializeField] private LevelSelector levelSelector;
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
     [SerializeField] private WinCondition winChecker;
     [SerializeField] private QuotaManager quotaManager;
 
+    [Header("Quota timing Settings")]
+    [SerializeField] private float startDelay = 2f; 
+    [SerializeField] private float minDelay = 8f; 
+    [SerializeField] private float maxDelay = 12f;
+
+    private Coroutine quotaRoutine;
 
     enum States
     {
@@ -29,7 +37,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        quotaManager.RandomGenerateQuota();
+        /*quotaManager.TryRandomGenerateQuota();
+        //quotaManager.TryRandomGenerateQuota();*/
+        StartQuotaRoutine();
     }
 
 
@@ -101,7 +111,7 @@ public class GameManager : MonoBehaviour
     private void HandleQuotaFailed(QuotaDataSO sO)
     {
         Debug.Log("Failed Quota");
-        quotaManager.RandomGenerateQuota();
+        //quotaManager.TryRandomGenerateQuota();
 
     }
 
@@ -109,7 +119,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogWarning("Completed Quota");
         //Debug.Log("Completed Quota");
-        quotaManager.RandomGenerateQuota();
+        //quotaManager.TryRandomGenerateQuota();
     }
 
     private void OnLevelFinished()
@@ -122,4 +132,35 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("LevelSelector");
         levelSelector.SetCurrentLevelData(null);
     }
+
+    private void StartQuotaRoutine()
+    {
+        if (quotaRoutine != null) return;
+
+        quotaRoutine = StartCoroutine(QuotaScheduleRoutine());
+
+    }
+
+    private void StopQuotaRoutine()
+    {
+        if(quotaRoutine == null) return;
+
+        StopCoroutine(QuotaScheduleRoutine());
+        quotaRoutine = null;
+    }
+
+    private IEnumerator QuotaScheduleRoutine()
+    {
+
+        yield return new WaitForSeconds(startDelay);
+
+        while (true)
+        {
+            quotaManager.TryRandomGenerateQuota();
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        }
+
+
+    }
+
 }

@@ -26,7 +26,7 @@ public class QuotaManager : MonoBehaviour
     {
         instance = this;
     }
-    public bool RandomGenerateQuota()
+    public bool TryRandomGenerateQuota()
     {
         if (activeQuotas.Count >= maxQuotas) return false;
 
