@@ -763,7 +763,7 @@ MonoBehaviour:
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
   particleSystem: {fileID: 0}
-  icon: {fileID: 4969586915964870413}
+  readyIcon: {fileID: 4969586915964870413}
   taskReady: 0
-  reelPercentage: 20
+  startReelPercentage: 20
   reelUI: {fileID: 6232571534535711697}
