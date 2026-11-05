@@ -92,14 +92,9 @@ public class PlayerController : MonoBehaviour
         Task task;
         if (interactedObject == null) 
         {
-
-
-
-
             task = closestObject.GetComponent<Task>();
             if (task && !inTask)
             {
-
                 if (task.EnterTask(this)) 
                 {
                     if (!task.isTaskCompleted()) 
@@ -108,7 +103,6 @@ public class PlayerController : MonoBehaviour
                         interactedObject = closestObject;
                     }
                 }
-                
             }
             else
             {
@@ -120,10 +114,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-
             return;
-
-
         }
       
         task = interactedObject.GetComponent<Task>();
@@ -133,9 +124,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
-
     public void OnSlide(InputValue value)
     {
         if (!isSliding && moveDirection.magnitude > 0.1f)
@@ -144,7 +132,6 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-
     private IEnumerator StartSlide()
     { 
 
@@ -176,7 +163,7 @@ public class PlayerController : MonoBehaviour
     {
         InteractionDetection();
 
-        if (isSliding) return; 
+        if (isSliding || isChargingThrow) return; 
 
         moveDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
         Vector3 walkingDirection = moveDirection * moveSpeed;
