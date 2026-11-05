@@ -19,6 +19,7 @@ public class QuotaManager : MonoBehaviour
     [SerializeField] private int maxQuotas = 5;
 
     private readonly List<Quota> activeQuotas = new();
+    private bool acceptingQuotas = true;
 
     public int ActiveCount => activeQuotas.Count;
 
@@ -28,6 +29,7 @@ public class QuotaManager : MonoBehaviour
     }
     public bool TryRandomGenerateQuota()
     {
+        if (!acceptingQuotas) return false;
         if (activeQuotas.Count >= maxQuotas) return false;
 
         var data = availableQuotas[Random.Range(0,availableQuotas.Count)];
@@ -66,7 +68,8 @@ public class QuotaManager : MonoBehaviour
 
     public void ClearAll()
     {
-        for(int i = activeQuotas.Count - 1; i >= 0;)
+        acceptingQuotas = false;
+        for(int i = activeQuotas.Count - 1; i >= 0;i--)
         {
             Remove(activeQuotas[i]);
         }

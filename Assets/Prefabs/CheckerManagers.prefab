@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1767216495858494342}
   - component: {fileID: 4154306988938650892}
   - component: {fileID: 27457347648164062}
+  - component: {fileID: 6388042685564423561}
   m_Layer: 0
   m_Name: CheckerManagers
   m_TagString: Untagged
@@ -48,7 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WinCondition
   levelData: {fileID: 0}
   timeChecker: {fileID: 4154306988938650892}
+  scoreChecker: {fileID: 0}
   endGame: 0
+  scoreReqReached: 0
 --- !u!114 &4154306988938650892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822892fd28f0c584f814c5f609fc7e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeChecker
-  TimerOff: 0
-  timeLimit: 10
+  TimerOff: 1
+  timeLimit: 30
+  timerText: {fileID: 0}
 --- !u!114 &27457347648164062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,3 +84,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f5322d9141e3a14a97ba80d0fdcf087, type: 2}
   quotaPrefab: {fileID: -2498387023340945179, guid: 2ec03455f9e4072489937bc085b1d067, type: 3}
   maxQuotas: 5
+--- !u!114 &6388042685564423561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226599496957578159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76212c7b59bbca43ab991377c0660d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreChecker
+  quotaManager: {fileID: 27457347648164062}
+  score: 0

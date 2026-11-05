@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,11 +15,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelDataSO currentLevel;
     [SerializeField] private WinCondition winChecker;
     [SerializeField] private QuotaManager quotaManager;
+    [SerializeField] private GameObject endScreen;
+    [SerializeField] private TMP_Text endScreen_text;
 
     [Header("Quota timing Settings")]
     [SerializeField] private float startDelay = 2f; 
     [SerializeField] private float minDelay = 8f; 
     [SerializeField] private float maxDelay = 12f;
+
+    //[Header("TrackerBools")]
 
     private Coroutine quotaRoutine;
 
@@ -127,10 +132,22 @@ public class GameManager : MonoBehaviour
         Debug.Log("level finish Reached");
         levelSelector.AddLevelToCompletedList(currentLevel);
 
+        StopQuotaRoutine();
+        quotaManager.ClearAll();
+        TimeChecker.Instance.SetTimerOff(false);
 
+        endScreen.SetActive(true);
+        if (winChecker.GetScoreReqReached())
+        {
+            endScreen_text.text = "WIN";
+        }
+        else
+        {
+            endScreen_text.text = "LOSE";
+        }
 
-        SceneManager.LoadScene("LevelSelector");
-        levelSelector.SetCurrentLevelData(null);
+        //SceneManager.LoadScene("LevelSelector");
+        //levelSelector.SetCurrentLevelData(null);
     }
 
     private void StartQuotaRoutine()

@@ -8,6 +8,7 @@ public class QuotaDataSO : ScriptableObject
     [SerializeField] private float WeightMax;
     [SerializeField] private int targetNum;
     [SerializeField] private float timeLimit;
+    [SerializeField] private int score;
 
     public float getWeightMin()
     {
@@ -25,6 +26,9 @@ public class QuotaDataSO : ScriptableObject
     {
         return timeLimit;
     }
-
+    public int getScore()
+    {
+        return score;
+    }
 
 }

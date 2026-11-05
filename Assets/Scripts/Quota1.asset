@@ -16,3 +16,4 @@ MonoBehaviour:
   WeightMax: 50
   targetNum: 3
   timeLimit: 1000
+  score: 100

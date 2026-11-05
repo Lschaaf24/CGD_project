@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &81434317 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 336985703001418475, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_PrefabInstance: {fileID: 873814674932823131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &301126785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -550,6 +561,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: endScreen
+      value: 
+      objectReference: {fileID: 873814674932823132}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: winChecker
       value: 
       objectReference: {fileID: 3443401794853619271}
@@ -561,6 +576,10 @@ PrefabInstance:
       propertyPath: quotaManager
       value: 
       objectReference: {fileID: 859311814}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: endScreen_text
+      value: 
+      objectReference: {fileID: 81434317}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -702,6 +721,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bec8ba4cdc946db44b5719a56c5e7515, type: 3}
+--- !u!114 &637187943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2801215245381541006, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_PrefabInstance: {fileID: 873814674932823131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &769246479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1763,6 +1793,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2020706212464193054, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7975675314302204627, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
       propertyPath: m_Name
       value: ManagerCanvas
@@ -1776,6 +1810,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+--- !u!1 &873814674932823132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2020706212464193054, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_PrefabInstance: {fileID: 873814674932823131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3039410196388760006
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1844,6 +1883,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed15238ef82e1c84bb1b30ef26b7e740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinCondition
+--- !u!114 &3443401794853619272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6388042685564423561, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+  m_PrefabInstance: {fileID: 5604475817985021614}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76212c7b59bbca43ab991377c0660d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreChecker
 --- !u!1001 &5604475817985021614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1856,6 +1906,14 @@ PrefabInstance:
       propertyPath: basket
       value: 
       objectReference: {fileID: 321139484}
+    - target: {fileID: 1767216495858494342, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: scoreChecker
+      value: 
+      objectReference: {fileID: 3443401794853619272}
+    - target: {fileID: 4154306988938650892, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 637187943}
     - target: {fileID: 4275838968407770049, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.14839
