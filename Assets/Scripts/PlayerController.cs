@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,16 +19,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float itemThrowForce = 4f;
     [SerializeField] private float itemThrowSpeed = 10f;
 
+    private ThrowIndication throwIndication;
 
     private float slideTimer;
     private bool isSliding = false;
     
-
     private Item heldItem = null;
 
     private PlayerInput playerInput;
     private InputAction throwAction;
-
 
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        throwIndication = GetComponentInChildren<ThrowIndication>();
     }
     private void OnEnable()
     {
@@ -163,7 +164,19 @@ public class PlayerController : MonoBehaviour
     {
         InteractionDetection();
 
-        if (isSliding || isChargingThrow) return; 
+        if (isSliding) return;
+        if (isChargingThrow)
+        {
+            throwIndication.gameObject.SetActive(true);
+            throwIndication.UpdateChargeMeter(heldItem.GetChargeRatio());
+            throwIndication.UpdateArrowDirection(lastMoveDirection);
+
+        }
+        else
+        {
+            throwIndication.gameObject.SetActive(false);
+            throwIndication.UpdateChargeMeter(0f);
+        }
 
         moveDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
         Vector3 walkingDirection = moveDirection * moveSpeed;

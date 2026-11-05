@@ -98,7 +98,6 @@ public class EventManager : MonoBehaviour
 
             yield return new WaitForSeconds(5);
 
-            Debug.Log("CHECK");
 
             List<GameEvent> elibgibleEvents = new();
 

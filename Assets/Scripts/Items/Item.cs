@@ -86,6 +86,10 @@ public class Item : MonoBehaviour
         }
     }
 
+    public float GetChargeRatio()
+    {
+        return chargeRatio;
+    }
     public Type GetItemType() 
     {
         return itemType.GetType();
