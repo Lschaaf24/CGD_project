@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
     private Vector3 lastMoveDirection;
+    private Vector3 throwDirection;
     private Rigidbody rb;
 
     private GameObject closestObject = null;
@@ -74,7 +75,11 @@ public class PlayerController : MonoBehaviour
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
-        heldItem.ReleaseCharge(lastMoveDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
+        if(throwDirection.sqrMagnitude < 0.01f)
+        {
+            throwDirection = throwIndication.GetCurrentDirection();
+        }
+        heldItem.ReleaseCharge(throwDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
 
@@ -145,7 +150,7 @@ public class PlayerController : MonoBehaviour
         slideTimer = 0.0f;
         while (slideTimer < slideDuration)
         {
-            Vector3 slideDirection = moveDirection * slideSpeed;
+            Vector3 slideDirection = lastMoveDirection * slideSpeed;
             Vector3 velocity = rb.linearVelocity;
             velocity = new Vector3(Mathf.Lerp(velocity.x, slideDirection.x, 12f * Time.fixedDeltaTime), velocity.y, Mathf.Lerp(velocity.z, slideDirection.z, 12f * Time.fixedDeltaTime));
             rb.linearVelocity = velocity;
@@ -169,8 +174,9 @@ public class PlayerController : MonoBehaviour
         {
             throwIndication.gameObject.SetActive(true);
             throwIndication.UpdateChargeMeter(heldItem.GetChargeRatio());
-            throwIndication.UpdateArrowDirection(lastMoveDirection);
-
+            throwIndication.UpdateArrowDirection(new Vector3(movementInput.x, 0, movementInput.y));
+            throwDirection = new Vector3(movementInput.x, 0, movementInput.y);
+            return;
         }
         else
         {
