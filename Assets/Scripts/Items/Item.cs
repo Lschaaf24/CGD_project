@@ -1,8 +1,5 @@
 using System;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-
 
 public class Item : MonoBehaviour
 {
@@ -13,28 +10,20 @@ public class Item : MonoBehaviour
 
     [SerializeField] private ItemData itemType;
 
-
-
-
     protected float throwSpeedMult;
-
     protected Rigidbody rb;
-
     private bool isCharging;
     private float charge = 0f;
     protected float chargeRatio;
 
     private float weight;
-
     private bool hasBeenWeighed = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-
         weight = itemType.GenerateWeight();
-   
     }
 
     protected virtual void Update()
@@ -42,7 +31,6 @@ public class Item : MonoBehaviour
         if(transform.parent != null)
         {
             transform.localPosition = new Vector3(0, 1, 0);
-
         }
 
         if (isCharging)
@@ -58,31 +46,34 @@ public class Item : MonoBehaviour
         isCharging = true;
     }
 
-    public virtual void ReleaseCharge(Vector3 direction, float throwSpeed)
+    public virtual void ReleaseCharge(Vector3 direction, float throwHeight, float throwSpeed)
     {
         Debug.Log("throw");
         isCharging = false;
-        ThrowItem(direction, throwSpeed);
+        ThrowItem(direction, throwHeight, throwSpeed);
 
         GetComponent<Collider>().enabled = true;
     }
 
-    protected virtual void ThrowItem(Vector3 direction, float throwSpeed)
+    protected virtual void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed)
     {
         transform.SetParent(null);
 
-        if(transform.parent == null)
+        direction.Normalize();
+
+        direction += Vector3.up * throwHeight;
+
+        if (transform.parent == null)
         {
-            Debug.Log(chargeRatio);
             throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
-            Debug.Log("throw speed mult" + throwSpeedMult);
+
             float throwVelocity = throwSpeed * throwSpeedMult;
 
             Debug.Log("Throw Speed: " + throwVelocity);
             rb.AddForce(direction * throwVelocity, ForceMode.Impulse);
 
             charge = 0;
-
+            chargeRatio = 0;
         }
     }
 

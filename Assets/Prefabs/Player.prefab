@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8506879610057930212}
   - component: {fileID: 6919628313742649776}
   - component: {fileID: 2368424933019385607}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Charge Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 5804665223641237709}
   - component: {fileID: 4241951362885355025}
   - component: {fileID: 3552965762614092665}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -189,8 +189,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.8481964, z: 1}
+  m_Center: {x: 0, y: -0.07590181, z: 0}
 --- !u!114 &5804665223641237709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +214,6 @@ MonoBehaviour:
   slideDuration: 0.1
   slideCooldown: 0.5
   itemThrowHeight: 2.5
-  itemThrowForce: 1.5
   itemThrowSpeed: 10
   inTask: 0
 --- !u!114 &4241951362885355025
@@ -368,7 +367,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &5477246486015862646
 GameObject:
@@ -383,7 +382,7 @@ GameObject:
   - component: {fileID: 1606629677128991401}
   - component: {fileID: 6179353854402162180}
   - component: {fileID: 741874410637375426}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +498,7 @@ GameObject:
   - component: {fileID: 7181405563972284936}
   - component: {fileID: 6909919545077732474}
   - component: {fileID: 7939958205283552919}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideCooldown = 0.5f;
 
     [SerializeField] private float itemThrowHeight = 1f;
-    [SerializeField] private float itemThrowForce = 4f;
+    //[SerializeField] private float itemThrowForce = 4f;
     [SerializeField] private float itemThrowSpeed = 10f;
 
     private ThrowIndication throwIndication;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         {
             throwDirection = throwIndication.GetCurrentDirection();
         }
-        heldItem.ReleaseCharge(throwDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
+        heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
 
