@@ -256,12 +256,8 @@ public class PlayerController : MonoBehaviour
             heldItem.transform.SetParent(senderTransform, false);
         }
 
-        Debug.Log("Held Item:" + heldItem);
-
         Item temp = heldItem;
         heldItem = item;
-
-        Debug.Log("Held Item:" + heldItem);
 
         return temp;
 

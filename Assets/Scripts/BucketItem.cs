@@ -10,7 +10,15 @@ public class BucketItem : Item
 
         throwSpeed = throwSpeed * throwSpeedMult;
 
-        Instantiate(puddle_task, transform.position + (direction * throwSpeed * 2.0f), Quaternion.identity);
+        Vector3 position = transform.position;
+        position.y = 0.01f;
+        direction.y = 0;
+
+        if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, 10f, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            Instantiate(puddle_task, position + (direction * throwSpeed), Quaternion.identity);
+        }
+
 
         Destroy(this.gameObject);
     }
