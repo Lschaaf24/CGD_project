@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class BasketTask : MonoBehaviour
 {
 
-  
+    public event Action<Item> OnFishCollected;
 
     void Awake()
     {
@@ -21,10 +23,12 @@ public class BasketTask : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Item>() == null) return;
-        if(other.gameObject.GetComponent<Item>().GetItemType() == typeof(FishData))
+        if (!other.gameObject.TryGetComponent(out Item item)) return;
+
+        if(item.GetItemType() == typeof(FishData))
         {
             Debug.Log("score");
+            OnFishCollected?.Invoke(item);
             Destroy(other.gameObject);
         }
         else

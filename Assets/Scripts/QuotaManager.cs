@@ -6,8 +6,12 @@ using Random = UnityEngine.Random;
 
 public class QuotaManager : MonoBehaviour
 {
+    public static QuotaManager instance;
+
     public event Action<QuotaDataSO> OnQuotaCompleted;
     public event Action<QuotaDataSO> OnQuotaFailed;
+
+    [SerializeField] private BasketTask basket;
 
     [SerializeField] private List<QuotaDataSO> availableQuotas;
     [SerializeField] private Quota quotaPrefab;
@@ -17,7 +21,10 @@ public class QuotaManager : MonoBehaviour
 
     public int ActiveCount => activeQuotas.Count;
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
     public bool RandomGenerateQuota()
     {
         if (activeQuotas.Count >= maxQuotas) return false;
@@ -59,6 +66,25 @@ public class QuotaManager : MonoBehaviour
         for(int i = activeQuotas.Count - 1; i >= 0;)
         {
             Remove(activeQuotas[i]);
+        }
+    }
+
+    void OnEnable()
+    {
+        basket.OnFishCollected += HandleFishCollected;
+    }
+
+
+    void OnDisable()
+    {
+        basket.OnFishCollected -= HandleFishCollected;
+    }
+    private void HandleFishCollected(Item item)
+    {
+        foreach(var quota in activeQuotas.ToArray())
+        {
+            if (quota.TryAddProgress(item))
+                break;
         }
     }
 

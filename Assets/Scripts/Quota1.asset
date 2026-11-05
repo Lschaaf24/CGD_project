@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c1153828e80cd44aedc83f043d7b77, type: 3}
   m_Name: Quota1
   m_EditorClassIdentifier: Assembly-CSharp::QuotaDataSO
-  WeightMin: 1.4
-  WeightMax: 2.8
+  WeightMin: 1
+  WeightMax: 50
   targetNum: 3
-  timeLimit: 5
+  timeLimit: 1000

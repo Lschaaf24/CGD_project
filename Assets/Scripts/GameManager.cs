@@ -107,11 +107,15 @@ public class GameManager : MonoBehaviour
     private void HandleQuotaFailed(QuotaDataSO sO)
     {
         Debug.Log("Failed Quota");
+        quotaManager.RandomGenerateQuota();
+
     }
 
     private void HandleQuotaCompleted(QuotaDataSO sO)
     {
-        Debug.Log("Completed Quota");
+        Debug.LogWarning("Completed Quota");
+        //Debug.Log("Completed Quota");
+        quotaManager.RandomGenerateQuota();
     }
 
     private void OnLevelFinished()

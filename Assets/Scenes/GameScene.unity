@@ -204,6 +204,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78dd48954fbdd8a49a21e96e3253f612, type: 3}
+--- !u!114 &321139484 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1300537552409307895, guid: e8650cef3dfa90840a4d5d09a7988c4e, type: 3}
+  m_PrefabInstance: {fileID: 1927189247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f63015d69a0c645be81936b8c6a4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasketTask
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,6 +1751,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 27457347648164062, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: basket
+      value: 
+      objectReference: {fileID: 321139484}
     - target: {fileID: 4275838968407770049, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.14839
