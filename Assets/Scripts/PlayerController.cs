@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,23 +16,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideCooldown = 0.5f;
 
     [SerializeField] private float itemThrowHeight = 1f;
-    [SerializeField] private float itemThrowForce = 4f;
+    //[SerializeField] private float itemThrowForce = 4f;
     [SerializeField] private float itemThrowSpeed = 10f;
+    [SerializeField] private float stunDuration = 2f;
+    [SerializeField] private GameObject stunParticlePrefab;
 
+
+    private ThrowIndication throwIndication;
 
     private float slideTimer;
     private bool isSliding = false;
-    
+    private bool isStunned = false;
 
     private Item heldItem = null;
 
     private PlayerInput playerInput;
     private InputAction throwAction;
 
-
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
     private Vector3 lastMoveDirection;
+    private Vector3 throwDirection;
     private Rigidbody rb;
 
     private GameObject closestObject = null;
@@ -46,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        throwIndication = GetComponentInChildren<ThrowIndication>();
     }
     private void OnEnable()
     {
@@ -73,7 +79,11 @@ public class PlayerController : MonoBehaviour
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
-        heldItem.ReleaseCharge(lastMoveDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
+        if(throwDirection.sqrMagnitude < 0.01f)
+        {
+            throwDirection = throwIndication.GetCurrentDirection();
+        }
+        heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
 
@@ -86,20 +96,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-
         //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
         if (interactedObject == null) 
         {
-
-
-
-
             task = closestObject.GetComponent<Task>();
             if (task && !inTask)
             {
-
                 if (task.EnterTask(this)) 
                 {
                     if (!task.isTaskCompleted()) 
@@ -108,7 +112,6 @@ public class PlayerController : MonoBehaviour
                         interactedObject = closestObject;
                     }
                 }
-                
             }
             else
             {
@@ -120,10 +123,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-
             return;
-
-
         }
       
         task = interactedObject.GetComponent<Task>();
@@ -133,9 +133,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
-
     public void OnSlide(InputValue value)
     {
         if (!isSliding && moveDirection.magnitude > 0.1f)
@@ -144,7 +141,6 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-
     private IEnumerator StartSlide()
     { 
 
@@ -157,7 +153,7 @@ public class PlayerController : MonoBehaviour
         slideTimer = 0.0f;
         while (slideTimer < slideDuration)
         {
-            Vector3 slideDirection = moveDirection * slideSpeed;
+            Vector3 slideDirection = lastMoveDirection * slideSpeed;
             Vector3 velocity = rb.linearVelocity;
             velocity = new Vector3(Mathf.Lerp(velocity.x, slideDirection.x, 12f * Time.fixedDeltaTime), velocity.y, Mathf.Lerp(velocity.z, slideDirection.z, 12f * Time.fixedDeltaTime));
             rb.linearVelocity = velocity;
@@ -176,7 +172,20 @@ public class PlayerController : MonoBehaviour
     {
         InteractionDetection();
 
-        if (isSliding) return; 
+        if (isSliding || isStunned) return;
+        if (isChargingThrow)
+        {
+            throwIndication.gameObject.SetActive(true);
+            throwIndication.UpdateChargeMeter(heldItem.GetChargeRatio());
+            throwIndication.UpdateArrowDirection(new Vector3(movementInput.x, 0, movementInput.y));
+            throwDirection = new Vector3(movementInput.x, 0, movementInput.y);
+            return;
+        }
+        else
+        {
+            throwIndication.gameObject.SetActive(false);
+            throwIndication.UpdateChargeMeter(0f);
+        }
 
         moveDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
         Vector3 walkingDirection = moveDirection * moveSpeed;
@@ -263,6 +272,27 @@ public class PlayerController : MonoBehaviour
 
 
     }   
+
+    public void stunPlayer()
+    {
+        if (!isStunned)
+        {
+            StartCoroutine(StunCoroutine(stunDuration));
+        }
+    }
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        float timer = 0f;
+        while (timer < duration)
+        {
+            isStunned = true;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        isStunned = false;
+    }
 
     public Item GetHeldItem() 
     {

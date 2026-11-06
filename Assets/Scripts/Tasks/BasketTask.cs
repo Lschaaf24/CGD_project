@@ -19,17 +19,19 @@ public class BasketTask : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.GetComponent<Item>() == null) return;
-        if(collision.gameObject.GetComponent<Item>().GetItemType() == typeof(FishData))
+        if (other.gameObject.GetComponent<Item>() == null) return;
+        if(other.gameObject.GetComponent<Item>().GetItemType() == typeof(FishData))
         {
             Debug.Log("score");
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
         }
         else
         {
             Debug.Log("No");
         }
     }
+
+   
 }

@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputManager
   playerPrefab: {fileID: 2261078998125207099, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
-  spawnPoint: {fileID: 1173646882}
+  spawnPoint: {fileID: 1626963145}
 --- !u!1 &1626963144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,7 +1556,7 @@ Transform:
   m_GameObject: {fileID: 1626963144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.83, z: -0}
+  m_LocalPosition: {x: 0, y: 2, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1613,6 +1613,14 @@ PrefabInstance:
     - target: {fileID: 3745176479677535659, guid: e8650cef3dfa90840a4d5d09a7988c4e, type: 3}
       propertyPath: m_Name
       value: BasketTask
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699123226854879665, guid: e8650cef3dfa90840a4d5d09a7988c4e, type: 3}
+      propertyPath: m_Size.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699123226854879665, guid: e8650cef3dfa90840a4d5d09a7988c4e, type: 3}
+      propertyPath: m_Center.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1757,6 +1765,10 @@ PrefabInstance:
     - target: {fileID: 1605801896487963931, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: events.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1605801896487963931, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
+      propertyPath: 'events.Array.data[0]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3809159116909821589, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: m_Name
