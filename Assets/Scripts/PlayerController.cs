@@ -305,4 +305,9 @@ public class PlayerController : MonoBehaviour
         heldItem = null;
         return item;
     }
+
+    public bool GetIsStunned() 
+    {
+        return isStunned;
+    }
 }
