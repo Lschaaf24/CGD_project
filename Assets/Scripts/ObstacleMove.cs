@@ -31,6 +31,9 @@ public class ObstacleMove : MonoBehaviour
 
     [SerializeField] bool canFall = false;
 
+    bool slidePaused = false;
+    float lastAcceleration = 0;
+
     void Start()
     {
         direction = (endTrans.position - startTrans.position).normalized;
@@ -38,6 +41,7 @@ public class ObstacleMove : MonoBehaviour
 
     void Update()
     {
+     
         float rawAngle = Camera.main.transform.eulerAngles.z;
         if (rawAngle > 180f) rawAngle -= 360f;
         angle = rawAngle;
@@ -70,9 +74,24 @@ public class ObstacleMove : MonoBehaviour
                 netAcceleration = 0f;
             }
         }
-        currentSpeed += netAcceleration * Time.deltaTime;
 
-        transform.position += direction * currentSpeed * Time.deltaTime;
+
+        if (slidePaused)
+        {
+            if(Mathf.Sign(lastAcceleration) != Mathf.Sign(netAcceleration)) 
+            {
+                slidePaused = false;
+            }
+            else
+            {
+                lastAcceleration = netAcceleration;
+                return;
+            }
+        }
+
+        lastAcceleration = netAcceleration;
+        currentSpeed += netAcceleration * Time.deltaTime;
+        transform.position += direction * currentSpeed  * Time.deltaTime;
 
         if (!canFall) 
         {
@@ -113,6 +132,12 @@ public class ObstacleMove : MonoBehaviour
             player.stunPlayer();
         }
 
+    }
+
+    public void PauseSlide() 
+    {
+        slidePaused = true;
+        currentSpeed = 0;
     }
 
 

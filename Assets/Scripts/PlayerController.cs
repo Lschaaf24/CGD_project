@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     private GameObject closestObject = null;
     private GameObject interactedObject = null;
-    private GameObject itemObject = null;
 
     private bool isChargingThrow;
 
@@ -99,10 +98,22 @@ public class PlayerController : MonoBehaviour
         //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
+        Item item;
+        ObstacleMove box;
         if (interactedObject == null) 
         {
             task = closestObject.GetComponent<Task>();
-            if (task && !inTask)
+            item = closestObject.GetComponent<Item>();
+            box = closestObject.GetComponent<ObstacleMove>();
+            if (box) 
+            {
+                box.PauseSlide();
+            }
+            else if(item)
+            {
+                 ReceiveItem(item);
+            }
+            else if (task && !inTask)
             {
                 if (task.EnterTask(this)) 
                 {
@@ -111,15 +122,6 @@ public class PlayerController : MonoBehaviour
                         inTask = true;
                         interactedObject = closestObject;
                     }
-                }
-            }
-            else
-            {
-                if (itemObject != null)
-                {
-                    Debug.Log("pickup");
-                    ReceiveItem(itemObject.GetComponent<Item>());
-
                 }
             }
 
@@ -209,12 +211,6 @@ public class PlayerController : MonoBehaviour
             currentlyOverlapping = true;
 
             closestObject = collider.gameObject;
-
-            if (collider.gameObject.GetComponent<Item>() != null)
-            {
-                itemObject = collider.gameObject;
-            }
-
             break;
         }
 
