@@ -52,7 +52,7 @@ public class FishingTask: Task
 
         float inputsPerSecond = inputCount / (Time.time - startTime);
         Debug.Log(inputsPerSecond);
-        float lossValue = lossRate * Mathf.Lerp(2f, 0.8f, inputsPerSecond / 8) * playersRequired * Time.deltaTime; //The faster the player presses, the easier it is to reel
+        float lossValue = lossRate * Mathf.Lerp(2f, 0.8f, inputsPerSecond / 6) * playersRequired * Time.deltaTime; //The faster the player presses, the easier it is to reel
         if (reelPercentage >= lossValue) 
         {
             reelPercentage -= lossValue;
