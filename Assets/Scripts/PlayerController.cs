@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -205,22 +206,50 @@ public class PlayerController : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius, interactionLayers);
 
-        bool currentlyOverlapping = false;
-        foreach (Collider collider in colliders)
-        {
-            currentlyOverlapping = true;
+        GameObject newClosest = null;
+        float shortestDistancesSqr = float.MaxValue;
+        int highestPriority = -1;
 
-            closestObject = collider.gameObject;
-            break;
+        foreach(Collider collider in colliders) 
+        {
+            GameObject obj = collider.gameObject;
+            float sqrDist = (obj.transform.position - transform.position).sqrMagnitude;
+
+            int priority = 0;
+            if(obj.GetComponent<ObstacleMove>() != null) 
+            {
+                priority = 2;
+            }
+            else if(obj.GetComponent<Item>()!= null) 
+            {
+                priority = 1;
+            }
+            else if(obj.GetComponent<Task>() != null) 
+            {
+                priority = 0;
+            }
+
+            if(priority > highestPriority) 
+            {
+                highestPriority = priority;
+                shortestDistancesSqr = sqrDist;
+                newClosest = obj;
+            }
+            else if(priority == highestPriority) 
+            {
+                if(sqrDist < shortestDistancesSqr) 
+                {
+                    shortestDistancesSqr = sqrDist;
+                    newClosest = obj;
+                }
+            }
         }
 
-        if (!currentlyOverlapping)
+        closestObject = newClosest;
+
+        if(closestObject == null && inTask && interactedObject != null) 
         {
-            closestObject = null;
-            if (inTask)
-            {
-                interactedObject.GetComponent<Task>().LeaveTask(this);
-            }
+            interactedObject.GetComponent<Task>()?.LeaveTask(this);
         }
     }
 
@@ -255,14 +284,20 @@ public class PlayerController : MonoBehaviour
         if (item != null) 
         {
             item.transform.SetParent(transform, false);
+            item.GetComponent<Collider>().enabled = false;
         }
         if (heldItem != null) 
         {
             heldItem.transform.SetParent(senderTransform, false);
+            heldItem.GetComponent<Collider>().enabled = true;
         }
 
         Item temp = heldItem;
         heldItem = item;
+        
+
+
+
 
         return temp;
 

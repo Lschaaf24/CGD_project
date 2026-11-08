@@ -68,9 +68,9 @@ public class Item : MonoBehaviour
     {
         transform.SetParent(null);
 
-        direction.Normalize();
 
         direction += Vector3.up * throwHeight;
+        direction.Normalize();
 
         if (transform.parent == null)
         {
@@ -79,6 +79,7 @@ public class Item : MonoBehaviour
             float throwVelocity = throwSpeed * throwSpeedMult;
 
             Debug.Log("Throw Speed: " + throwVelocity);
+            rb.linearVelocity = Vector3.zero;
             rb.AddForce(direction * throwVelocity, ForceMode.Impulse);
 
             StartCoroutine(ThrowCollisionCheck(0.5f));

@@ -31,6 +31,8 @@ public class Task : MonoBehaviour
 
     [Tooltip("The item the player gains from completing the task")]
     [SerializeField] protected GameObject reward;
+    [SerializeField] bool ejectItem;
+    [SerializeField] private Transform ejectPoint;
 
 
     [Tooltip("Will the task take the players item?")]
@@ -104,7 +106,7 @@ public class Task : MonoBehaviour
         if (takeItem)
         {
             Debug.Log("current item:" + currentItem);
-            currentItem = player.SwapItem(currentItem, transform);
+            currentItem = player.SwapItem(currentItem, base.transform);
             if (currentItem == null) return false;
         }
         else if (player.GetHeldItem() != null)
@@ -130,7 +132,17 @@ public class Task : MonoBehaviour
         Debug.Log("TASK COMPLETED");
         if(reward != null) 
         {
-            engagedPlayers[0].ReceiveItem(Instantiate(reward).GetComponent<Item>());
+            Vector3 ejectDirection = (transform.up * 10) - (transform.forward * 3);
+            GameObject item = Instantiate(reward, null);
+            if (ejectItem) 
+            {
+                item.transform.position = ejectPoint.position;
+                item.GetComponent<Rigidbody>().AddForce(ejectDirection.normalized * 500.0f);
+            }
+            else
+            {
+                engagedPlayers[0].ReceiveItem(item.GetComponent<Item>());
+            }
         }
         foreach (var player in engagedPlayers)
         {
