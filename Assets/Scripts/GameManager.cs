@@ -146,6 +146,8 @@ public class GameManager : MonoBehaviour
             endScreen_text.text = "LOSE";
         }
 
+        StartCoroutine(LoadLevelSelector());
+
         //SceneManager.LoadScene("LevelSelector");
         //levelSelector.SetCurrentLevelData(null);
     }
@@ -177,6 +179,16 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
         }
 
+
+    }
+
+    private IEnumerator LoadLevelSelector()
+    {
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene("LevelSelector");
+
+        yield return null;
 
     }
 
