@@ -34,6 +34,8 @@ public class ObstacleMove : MonoBehaviour
     bool slidePaused = false;
     float lastAcceleration = 0;
 
+
+
     void Start()
     {
         direction = (endTrans.position - startTrans.position).normalized;
