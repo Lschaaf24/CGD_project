@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
         {
             throwDirection = throwIndication.GetCurrentDirection();
         }
+        heldItem.GetComponent<Collider>().enabled = true;
+        heldItem.SetThrower(this);
         heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
@@ -143,7 +145,6 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator StartSlide()
     { 
-
         isSliding = true;
 
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
@@ -247,6 +248,8 @@ public class PlayerController : MonoBehaviour
             heldItem.GetComponent<Collider>().enabled = true;
 
         }
+
+        item.ResetThrowerCollision();
 
         item.transform.SetParent(transform, false);
         heldItem = item;

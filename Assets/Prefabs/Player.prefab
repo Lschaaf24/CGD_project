@@ -213,7 +213,7 @@ MonoBehaviour:
   slideSpeed: 10
   slideDuration: 0.1
   slideCooldown: 0.5
-  itemThrowHeight: 2.5
+  itemThrowHeight: 2
   itemThrowSpeed: 10
   stunDuration: 2
   stunParticlePrefab: {fileID: 7210609657887504560, guid: cdc54b65a550bed4e931997abe2ab6cf, type: 3}
