@@ -50,7 +50,7 @@ public class Task : MonoBehaviour
     [SerializeField] private ParticleSystem particleSystem;
 
     [Tooltip("Icon that appears when the task is ready")]
-    [SerializeField] protected GameObject icon;
+    [SerializeField] protected GameObject readyIcon;
 
     protected bool isCompleted = true;
 
@@ -58,7 +58,7 @@ public class Task : MonoBehaviour
     bool taskStarted = false;
     [SerializeField] protected bool taskReady = false;
 
-    List<PlayerController> engaged_players = new List<PlayerController>();
+    protected List<PlayerController> engagedPlayers = new List<PlayerController>();
 
     protected float interval = 5.0f;
     protected float elapsed_time = 0.0f;
@@ -81,7 +81,7 @@ public class Task : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-    
+        
         if (taskReady == false && persistentTask && isCompleted == true) 
         {
             elapsed_time += Time.deltaTime;
@@ -89,7 +89,10 @@ public class Task : MonoBehaviour
             {
                 elapsed_time = 0.0f;
                 taskReady = true;
-                icon.SetActive(true);
+                if(readyIcon  != null)
+                {
+                    readyIcon.SetActive(true);
+                }
             }
         }
     }
@@ -102,6 +105,7 @@ public class Task : MonoBehaviour
         {
             Debug.Log("current item:" + currentItem);
             currentItem = player.SwapItem(currentItem, transform);
+            if (currentItem == null) return false;
         }
         else if (player.GetHeldItem() != null)
         {
@@ -111,7 +115,7 @@ public class Task : MonoBehaviour
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 
         {
-            engaged_players.Add(player);
+            engagedPlayers.Add(player);
             currentPlayers++;
             if(currentPlayers == playersRequired) 
             {
@@ -126,19 +130,18 @@ public class Task : MonoBehaviour
         Debug.Log("TASK COMPLETED");
         if(reward != null) 
         {
-            engaged_players[0].ReceiveItem(Instantiate(reward).GetComponent<Item>());
+            engagedPlayers[0].ReceiveItem(Instantiate(reward).GetComponent<Item>());
         }
-        foreach (var player in engaged_players)
+        foreach (var player in engagedPlayers)
         {
             player.TaskEject();
         }
         taskReady = false;
-        isCompleted = true;
 
         if (persistentTask) 
         {
             currentPlayers = 0;
-            engaged_players.Clear();
+            engagedPlayers.Clear();
         }
         else 
         {
@@ -152,8 +155,11 @@ public class Task : MonoBehaviour
     public virtual void TaskAction() { }
 
     protected virtual void BeginTask()  
-    { 
-        icon.SetActive(false);
+    {
+        if (readyIcon) 
+        {
+            readyIcon.SetActive(false);
+        }
         taskReady = false;
         isCompleted = false;
     }
@@ -168,11 +174,10 @@ public class Task : MonoBehaviour
     {
         player.TaskEject();
         currentPlayers -= 1;
-        engaged_players.Remove(player);
+        engagedPlayers.Remove(player);
        
         taskReady = true;
         Debug.Log("FAILED TASK");
-       
     }
 
 

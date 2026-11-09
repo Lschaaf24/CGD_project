@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4410958674168688481}
   - component: {fileID: 2214030823641906037}
   - component: {fileID: 6832014398681273113}
-  - component: {fileID: 1273378985258037496}
+  - component: {fileID: 4158092145520233242}
   m_Layer: 6
   m_Name: Bucket
   m_TagString: Untagged
@@ -254,7 +254,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1273378985258037496
+--- !u!114 &4158092145520233242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,10 +263,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7405823279860287245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16f215495317f4f83b1e0081fd932b, type: 3}
+  m_Script: {fileID: 11500000, guid: 10dc6c97bc382de41b831e8ee18a028c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BucketItem
-  maxChargeTime: 2
+  maxChargeTime: 1.2
   minSpeedMult: 0.5
   maxSpeedMult: 1
   itemType: {fileID: 11400000, guid: f0a8d0d56f4b4a140a4fe64a9feb56c8, type: 2}

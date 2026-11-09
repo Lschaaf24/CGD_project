@@ -26,7 +26,10 @@ public class FishingTask: Task
             {
                 elapsed_time = 0.0f;
                 taskReady = true;
-                icon.SetActive(true);
+                if (readyIcon) 
+                {
+                    readyIcon.SetActive(true);
+                }
                 EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, 1);
             }
         }
@@ -64,6 +67,7 @@ public class FishingTask: Task
         reelPercentage += 5.0f;
         if(reelPercentage >= 100) 
         {
+            isCompleted = true;
             EndTask();
         }
     }
@@ -75,7 +79,11 @@ public class FishingTask: Task
         {
             reeling = false;
             reelUI.gameObject.SetActive(false);
-            icon.gameObject.SetActive(true);
+            if (readyIcon) 
+            {
+                readyIcon.gameObject.SetActive(true);
+            }
+
             reelPercentage = startReelPercentage;
         }
 
