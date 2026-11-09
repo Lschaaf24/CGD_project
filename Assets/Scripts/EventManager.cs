@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
@@ -12,7 +13,10 @@ public class EventManager : MonoBehaviour
     float currentIntensity = 0;
 
 
-
+    [SerializeField] TMPro.TextMeshProUGUI intensityText;
+    [SerializeField] TMPro.TextMeshProUGUI pressureText;
+    [SerializeField] TMPro.TextMeshProUGUI budgetText;
+    [SerializeField] TMPro.TextMeshProUGUI maxBudgetText;
 
 
     [SerializeField] List<GameEvent> events = new();
@@ -66,15 +70,33 @@ public class EventManager : MonoBehaviour
 
         float pressure = CalculatePressure();
 
+        if (pressureText) 
+        {
+            pressureText.text = $"Pressure: {pressure}";
+        }
+
         targetIntensity = Mathf.Clamp01(pressure / 100f);
 
         float changeSpeed = targetIntensity > currentIntensity ? 0.15f : 0.05f;
 
         currentIntensity = Mathf.MoveTowards(currentIntensity, targetIntensity, Time.deltaTime * changeSpeed);
 
+        if (intensityText)
+        {
+            intensityText.text = $"Intensity: {currentIntensity}";
+        }
 
 
         UpdateBudget();
+
+        if (budgetText) 
+        {
+            budgetText.text = $"Budget: {currentBudget}";
+        }
+        if (maxBudgetText) 
+        {
+            maxBudgetText.text = $"Max Budget: {maxBudget}";
+        }
     }
 
     public void ChangeCounter(SceneCounter counter, int amount) 
@@ -98,7 +120,6 @@ public class EventManager : MonoBehaviour
 
             yield return new WaitForSeconds(5);
 
-            Debug.Log("CHECK");
 
             List<GameEvent> elibgibleEvents = new();
 

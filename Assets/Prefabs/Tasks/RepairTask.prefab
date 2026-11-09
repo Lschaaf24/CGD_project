@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 7015080325355732025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.92, y: 0.2, z: 2.08}
+  m_LocalPosition: {x: -1.92, y: 0.01, z: 2.08}
   m_LocalScale: {x: 0.31956658, y: 0.31956658, z: 0.31956658}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -300,7 +300,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8541bda26cc8384795f1b1065e80d44, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -371,6 +371,8 @@ MonoBehaviour:
   persistentTask: 0
   continuousTask: 0
   reward: {fileID: 7405823279860287245, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+  ejectItem: 0
+  ejectPoint: {fileID: 0}
   takeItem: 0
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
