@@ -1,11 +1,7 @@
-using System;
-using Unity.VisualScripting;
-using Unity.XR.OpenVR;
+using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class GameManager : MonoBehaviour
@@ -13,11 +9,23 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+    [Header("Refs")]
     [SerializeField] private LevelSelector levelSelector;
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
     [SerializeField] private WinCondition winChecker;
+    [SerializeField] private QuotaManager quotaManager;
+    [SerializeField] private GameObject endScreen;
+    [SerializeField] private TMP_Text endScreen_text;
 
+    [Header("Quota timing Settings")]
+    [SerializeField] private float startDelay = 2f; 
+    [SerializeField] private float minDelay = 8f; 
+    [SerializeField] private float maxDelay = 12f;
+
+    //[Header("TrackerBools")]
+
+    private Coroutine quotaRoutine;
 
     enum States
     {
@@ -34,7 +42,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        /*quotaManager.TryRandomGenerateQuota();
+        //quotaManager.TryRandomGenerateQuota();*/
+        StartQuotaRoutine();
     }
 
 
@@ -92,11 +102,29 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         winChecker.OnEndGame += OnLevelFinished;
+        quotaManager.OnQuotaCompleted += HandleQuotaCompleted;
+        quotaManager.OnQuotaFailed += HandleQuotaFailed;
     }
+
 
     void OnDisable()
     {
         winChecker.OnEndGame -= OnLevelFinished;
+        quotaManager.OnQuotaCompleted -= HandleQuotaCompleted;
+        quotaManager.OnQuotaFailed -= HandleQuotaFailed;
+    }
+    private void HandleQuotaFailed(QuotaDataSO sO)
+    {
+        Debug.Log("Failed Quota");
+        //quotaManager.TryRandomGenerateQuota();
+
+    }
+
+    private void HandleQuotaCompleted(QuotaDataSO sO)
+    {
+        Debug.LogWarning("Completed Quota");
+        //Debug.Log("Completed Quota");
+        //quotaManager.TryRandomGenerateQuota();
     }
 
     private void OnLevelFinished()
@@ -104,9 +132,64 @@ public class GameManager : MonoBehaviour
         Debug.Log("level finish Reached");
         levelSelector.AddLevelToCompletedList(currentLevel);
 
+        StopQuotaRoutine();
+        quotaManager.ClearAll();
+        TimeChecker.Instance.SetTimerOff(false);
 
+        endScreen.SetActive(true);
+        if (winChecker.GetScoreReqReached())
+        {
+            endScreen_text.text = "WIN";
+        }
+        else
+        {
+            endScreen_text.text = "LOSE";
+        }
+
+        StartCoroutine(LoadLevelSelector());
+
+        //SceneManager.LoadScene("LevelSelector");
+        //levelSelector.SetCurrentLevelData(null);
+    }
+
+    private void StartQuotaRoutine()
+    {
+        if (quotaRoutine != null) return;
+
+        quotaRoutine = StartCoroutine(QuotaScheduleRoutine());
+
+    }
+
+    private void StopQuotaRoutine()
+    {
+        if(quotaRoutine == null) return;
+
+        StopCoroutine(QuotaScheduleRoutine());
+        quotaRoutine = null;
+    }
+
+    private IEnumerator QuotaScheduleRoutine()
+    {
+
+        yield return new WaitForSeconds(startDelay);
+
+        while (true)
+        {
+            quotaManager.TryRandomGenerateQuota();
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        }
+
+
+    }
+
+    private IEnumerator LoadLevelSelector()
+    {
+        yield return new WaitForSeconds(3f);
 
         SceneManager.LoadScene("LevelSelector");
-        levelSelector.SetCurrentLevelData(null);
+
+        yield return null;
+
     }
+
 }

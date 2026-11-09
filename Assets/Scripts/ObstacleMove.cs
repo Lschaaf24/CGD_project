@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.EditorTools;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Timeline;
 using UnityEngine.UIElements;
 
 public class ObstacleMove : MonoBehaviour
@@ -29,6 +31,11 @@ public class ObstacleMove : MonoBehaviour
 
     [SerializeField] bool canFall = false;
 
+    bool slidePaused = false;
+    float lastAcceleration = 0;
+
+
+
     void Start()
     {
         direction = (endTrans.position - startTrans.position).normalized;
@@ -36,6 +43,7 @@ public class ObstacleMove : MonoBehaviour
 
     void Update()
     {
+     
         float rawAngle = Camera.main.transform.eulerAngles.z;
         if (rawAngle > 180f) rawAngle -= 360f;
         angle = rawAngle;
@@ -68,9 +76,24 @@ public class ObstacleMove : MonoBehaviour
                 netAcceleration = 0f;
             }
         }
-        currentSpeed += netAcceleration * Time.deltaTime;
 
-        transform.position += direction * currentSpeed * Time.deltaTime;
+
+        if (slidePaused)
+        {
+            if(Mathf.Sign(lastAcceleration) != Mathf.Sign(netAcceleration)) 
+            {
+                slidePaused = false;
+            }
+            else
+            {
+                lastAcceleration = netAcceleration;
+                return;
+            }
+        }
+
+        lastAcceleration = netAcceleration;
+        currentSpeed += netAcceleration * Time.deltaTime;
+        transform.position += direction * currentSpeed  * Time.deltaTime;
 
         if (!canFall) 
         {
@@ -95,6 +118,58 @@ public class ObstacleMove : MonoBehaviour
         {
             transform.position = endTrans.position;
             currentSpeed = 0f;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+        if (player == null) return;
+        if (player.GetIsStunned()) return;
+
+        Vector3 displacement = player.transform.position - transform.position;
+        float dot = Vector3.Dot(displacement.normalized, direction * Mathf.Sign(currentSpeed));
+        if(dot > 0.7071f) 
+        {
+            player.stunPlayer();
+        }
+
+    }
+
+    public void PauseSlide() 
+    {
+        slidePaused = true;
+        currentSpeed = 0;
+    }
+
+
+    IEnumerator LerpSquash(GameObject player) 
+    {
+        float timeElapsed = 0;
+        player.GetComponent<Collider>().isTrigger = true;
+        Vector3 startScale = player.transform.localScale;
+        Vector3 startPosition = player.transform.position;
+        while (timeElapsed < 0.2f) 
+        {
+            player.transform.localScale = Vector3.Lerp(startScale, new Vector3(2, 0.02f, 2), timeElapsed / 0.2f);
+            player.transform.position = Vector3.Lerp(startPosition, new Vector3(startPosition.x, 0, startPosition.z), timeElapsed/ 0.2f);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator LerpUnsquash(GameObject player) 
+    {
+        float timeElapsed = 0;
+        player.GetComponent<Collider>().isTrigger = false;
+        Vector3 startScale = player.transform.localScale;
+        Vector3 startPosition = player.transform.position;
+        while (timeElapsed < 0.2f)
+        {
+            player.transform.localScale = Vector3.Lerp(startScale, new Vector3(1, 1, 1), timeElapsed / 0.2f);
+            player.transform.position = Vector3.Lerp(startPosition, new Vector3(startPosition.x, 0.5f, startPosition.z), timeElapsed / 0.2f);
+            timeElapsed += Time.deltaTime;
+            yield return null;
         }
     }
 }
