@@ -70,7 +70,10 @@ public class EventManager : MonoBehaviour
 
         float pressure = CalculatePressure();
 
-        pressureText.text = $"Pressure: {pressure}";
+        if (pressureText) 
+        {
+            pressureText.text = $"Pressure: {pressure}";
+        }
 
         targetIntensity = Mathf.Clamp01(pressure / 100f);
 
@@ -78,14 +81,22 @@ public class EventManager : MonoBehaviour
 
         currentIntensity = Mathf.MoveTowards(currentIntensity, targetIntensity, Time.deltaTime * changeSpeed);
 
-        intensityText.text = $"Intensity: {currentIntensity}";
-
+        if (intensityText)
+        {
+            intensityText.text = $"Intensity: {currentIntensity}";
+        }
 
 
         UpdateBudget();
 
-        budgetText.text = $"Budget: {currentBudget}";
-        maxBudgetText.text = $"Max Budget: {maxBudget}";
+        if (budgetText) 
+        {
+            budgetText.text = $"Budget: {currentBudget}";
+        }
+        if (maxBudgetText) 
+        {
+            maxBudgetText.text = $"Max Budget: {maxBudget}";
+        }
     }
 
     public void ChangeCounter(SceneCounter counter, int amount) 
