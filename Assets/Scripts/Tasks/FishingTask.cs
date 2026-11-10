@@ -14,6 +14,7 @@ public class FishingTask: Task
     [SerializeField] float maxInterval = 9.0f;
     [SerializeField] float minLossRate = 8.0f;
     [SerializeField] float maxLossRate = 12.0f;
+    [SerializeField] float pulseSpeed = 500.0f;
     float lossRate = 10.0f;
 
     [SerializeField] Slider reelUI;
@@ -115,21 +116,30 @@ public class FishingTask: Task
 
     public void PulseIconScale(GameObject handle) 
     {
-        if (!reeling) return; 
+        if (!reeling) return;
+
+        float frameError = Time.deltaTime * pulseSpeed;
         if(handle.transform.localScale.x > 2) 
         {
-            handle.transform.localScale -= (Vector3.one / 20);
+            handle.transform.localScale -= (Vector3.one / 20) * frameError;
         }
-        if (difference > 0) 
+        else if (difference > 0) 
         {
-            handle.transform.localScale += (Vector3.one / 1.6f);
+            handle.transform.localScale += (Vector3.one / 1.6f) * frameError;
         }
         else
         {
+            Debug.Log("Error: " + frameError);
             float smooth = Mathf.Lerp(0, 1, (Time.time - lastInputTime) / 0.8f);
-            handle.GetComponent<RectTransform>().anchoredPosition = new Vector2(Mathf.Sin(reelPercentage * 180 * Mathf.Deg2Rad) * smooth , handle.GetComponent<RectTransform>().anchoredPosition.y);
-            handle.transform.eulerAngles = new Vector3(0, 0, Mathf.Sin(reelPercentage * 90 * Mathf.Deg2Rad) * 10f * smooth);
+
+            float offsetX = Mathf.Sin(reelPercentage * 180f * Mathf.Deg2Rad) * smooth;
+            float angleZ = Mathf.Sin(reelPercentage * 90f * Mathf.Deg2Rad) * 10f * smooth;
+
+            RectTransform rect = handle.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(offsetX, rect.anchoredPosition.y);
+            handle.transform.eulerAngles = new Vector3(0f, 0f, angleZ);
         }
+        handle.transform.localScale = Vector3.one * Mathf.Clamp(handle.transform.localScale.x, 2, 3);
     }
 
     
