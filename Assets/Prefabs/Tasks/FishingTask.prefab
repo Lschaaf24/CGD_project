@@ -756,8 +756,8 @@ MonoBehaviour:
   startReelPercentage: 20
   minInterval: 1
   maxInterval: 9
-  minLossRate: 20
-  maxLossRate: 30
+  minLossRate: 15
+  maxLossRate: 20
   reelUI: {fileID: 6232571534535711697}
 --- !u!1001 &1608310762516664489
 PrefabInstance:
