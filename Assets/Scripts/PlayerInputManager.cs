@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerInputManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject playerPrefab;
 
     [SerializeField] private Transform spawnPoint;

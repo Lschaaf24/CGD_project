@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         throwAction.started -= OnThrowStarted;
         throwAction.canceled -= OnThrowCanceled;
+        
     }
 
     private void OnThrowStarted(InputAction.CallbackContext context)
@@ -79,10 +80,12 @@ public class PlayerController : MonoBehaviour
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
-        if(throwDirection.sqrMagnitude < 0.01f)
+        if (throwDirection.sqrMagnitude < 0.01f)
         {
             throwDirection = throwIndication.GetCurrentDirection();
         }
+        heldItem.GetComponent<Collider>().enabled = true;
+        heldItem.SetThrower(this);
         heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
         heldItem = null;
     }
@@ -138,7 +141,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnSlide(InputValue value)
     {
-        if (!isSliding && moveDirection.magnitude > 0.1f)
+        if (!isSliding && moveDirection.magnitude > 0.1f && !isChargingThrow)
         {
             StartCoroutine(StartSlide());
         }
@@ -146,7 +149,6 @@ public class PlayerController : MonoBehaviour
     
     private IEnumerator StartSlide()
     { 
-
         isSliding = true;
 
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
@@ -174,8 +176,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         InteractionDetection();
-
         if (isSliding || isStunned) return;
+
         if (isChargingThrow)
         {
             throwIndication.gameObject.SetActive(true);
@@ -272,6 +274,8 @@ public class PlayerController : MonoBehaviour
             heldItem.GetComponent<Collider>().enabled = true;
 
         }
+
+        item.ResetThrowerCollision();
 
         item.transform.SetParent(transform, false);
         heldItem = item;

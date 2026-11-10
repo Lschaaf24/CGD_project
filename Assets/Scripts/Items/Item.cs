@@ -16,10 +16,11 @@ public class Item : MonoBehaviour
     private bool isCharging;
     private float charge = 0f;
     protected float chargeRatio;
-
     private float weight;
     private bool hasBeenWeighed = false;
     private bool canStun = false;
+
+    private PlayerController thrower;
 
     private void Start()
     {
@@ -39,6 +40,7 @@ public class Item : MonoBehaviour
         {
             charge = Mathf.Min(charge + Time.deltaTime, maxChargeTime);
             chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
+
         }
 
         if (rb.linearVelocity.magnitude > 0.6f)
@@ -60,40 +62,44 @@ public class Item : MonoBehaviour
     {
         Debug.Log("throw");
         isCharging = false;
+        Debug.Log("Direction: " + direction);
         ThrowItem(direction, throwHeight, throwSpeed);
-
     }
 
     protected virtual void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed)
     {
+        Debug.Log("Charge Ratio: " + chargeRatio);
         transform.SetParent(null);
 
 
-        direction += Vector3.up * throwHeight;
-        direction.Normalize();
+        direction.y = throwHeight;
 
-        if (transform.parent == null)
+        Debug.Log("Direction: " + direction);
+
+        throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
+
+        Debug.Log("ThrowSpeedMult: " + throwSpeedMult);
+
+        float throwVelocity = throwSpeed * throwSpeedMult;
+        Debug.Log("Throw Speed: " + throwVelocity);
+
+        if(thrower != null)
         {
-            throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
+            Collider itemCollider = GetComponent<Collider>();
+            Collider[] playerColliders = thrower.GetComponentsInChildren<Collider>();
 
-            float throwVelocity = throwSpeed * throwSpeedMult;
-
-            Debug.Log("Throw Speed: " + throwVelocity);
-            rb.linearVelocity = Vector3.zero;
-            rb.AddForce(direction * throwVelocity, ForceMode.Impulse);
-
-            StartCoroutine(ThrowCollisionCheck(0.5f));
-
-            charge = 0;
-            chargeRatio = 0;
+            foreach (Collider playerCollider in playerColliders)
+            {
+                Physics.IgnoreCollision(itemCollider, playerCollider, true);
+            }
         }
-    }
 
-    private IEnumerator ThrowCollisionCheck(float duration)
-    {
-        gameObject.GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(duration);
-        gameObject.GetComponent<Collider>().enabled = true;
+        rb.linearVelocity = new Vector3(0, 0, 0);
+        rb.AddForce(direction * throwVelocity, ForceMode.Impulse);
+
+        charge = 0;
+        chargeRatio = 0;
+         
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -106,6 +112,25 @@ public class Item : MonoBehaviour
                 playerController.stunPlayer();
             }
         }
+    }
+
+    public void SetThrower(PlayerController player)
+    {
+        thrower = player;
+    }
+
+    public void ResetThrowerCollision()
+    {
+        if (thrower != null)
+        {
+            Collider itemCollider = GetComponent<Collider>();
+            Collider[] playerColliders = thrower.GetComponentsInChildren<Collider>();
+            foreach (Collider playerCollider in playerColliders)
+            {
+                Physics.IgnoreCollision(itemCollider, playerCollider, false);
+            }
+        }
+        thrower = null; 
     }
 
     public float GetChargeRatio()
@@ -131,6 +156,5 @@ public class Item : MonoBehaviour
     {
         hasBeenWeighed = weighed;
     }
-
     
 }
