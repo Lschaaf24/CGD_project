@@ -10,6 +10,7 @@ public class BasketTask : MonoBehaviour
     public event Action<Item> OnFishCollected;
     [SerializeField] private ParticleSystem basketParticle;
     [SerializeField] private TMP_Text basketText;
+    [SerializeField] private Canvas canvas;
 
     private int weight;
 
@@ -51,21 +52,25 @@ public class BasketTask : MonoBehaviour
 
     private IEnumerator ShowText()
     {
-        //Instantiate(basketText, transform.position, Quaternion.identity);
+       
        
         basketText.text = weight.ToString();
+        TMP_Text text = Instantiate(basketText, canvas.transform);
+
         if(weight > 5f)
         {
-            basketText.color = Color.green;
+            text.color = Color.green;
         }
         else
         {
-            basketText.color = Color.red;
+            text.color = Color.red;
         }
         
-        basketText.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
-        basketText.gameObject.SetActive(false);
+        Destroy(text.gameObject);
+       
+
 
     }
    
