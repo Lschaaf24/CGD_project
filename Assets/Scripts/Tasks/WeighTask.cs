@@ -124,7 +124,7 @@ public class WeighTask : Task
         currentItem.GetComponent<Collider>().enabled = true;
         currentItem.GetComponent<Rigidbody>().isKinematic = false;
 
-        Vector3 ejectDirection = Vector3.back + (Vector3.up * 2);
+        Vector3 ejectDirection = -transform.forward + (Vector3.up * 2);
         currentItem.GetComponent<Rigidbody>().AddForce(ejectDirection * 100.0f);
         currentItem = null;
     }

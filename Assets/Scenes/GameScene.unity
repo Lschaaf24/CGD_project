@@ -1968,6 +1968,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3443401794853619272}
     - target: {fileID: 4154306988938650892, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: timeLimit
+      value: 259.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154306988938650892, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
       propertyPath: timerText
       value: 
       objectReference: {fileID: 637187943}
