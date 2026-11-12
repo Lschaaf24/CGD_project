@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -17,6 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private QuotaManager quotaManager;
     [SerializeField] private GameObject endScreen;
     [SerializeField] private TMP_Text endScreen_text;
+    [SerializeField] private Image endScreen_image;
+    [SerializeField] private Sprite endScreen_winSprite;
+    [SerializeField] private Sprite endScreen_loseSprite;
+
 
     [Header("Quota timing Settings")]
     [SerializeField] private float startDelay = 2f; 
@@ -140,10 +145,13 @@ public class GameManager : MonoBehaviour
         if (winChecker.GetScoreReqReached())
         {
             endScreen_text.text = "WIN";
+            endScreen_image.sprite = endScreen_winSprite;
         }
         else
         {
             endScreen_text.text = "LOSE";
+            endScreen_image.sprite = endScreen_loseSprite;
+
         }
 
         StartCoroutine(LoadLevelSelector());
