@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -33,7 +34,11 @@ public class Task : MonoBehaviour
     [Tooltip("The item the player gains from completing the task")]
     [SerializeField] protected GameObject reward;
     [SerializeField] bool ejectItem;
+
     [SerializeField] private Transform ejectPoint;
+    [SerializeField] private Transform peakPoint;
+    [SerializeField] private Transform targetPoint;
+
     [SerializeField] private ItemData requiredItem;
 
 
@@ -149,7 +154,7 @@ public class Task : MonoBehaviour
             if (ejectItem) 
             {
                 item.transform.position = ejectPoint.position;
-                item.GetComponent<Rigidbody>().AddForce(ejectDirection.normalized * 500.0f);
+                StartCoroutine(EjectItem(item));
             }
             else
             {
@@ -204,7 +209,37 @@ public class Task : MonoBehaviour
         Debug.Log("FAILED TASK");
     }
 
+    IEnumerator EjectItem(GameObject item) 
+    {
+        float timeElapsed = 0;
+        float duration = 1;
 
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            item.transform.position = Bezier(ejectPoint.position, peakPoint.position,targetPoint.position, timeElapsed / duration); 
+            yield return null;
+        }
+
+        item.transform.position = targetPoint.position;
+        
+    }
+
+
+    Vector3 Bezier(Vector3 a, Vector3 b, float t)
+    {
+        return Vector3.Lerp(a, b, t);
+    }
+
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
+    {
+        return Vector3.Lerp(Bezier(a, b, t), Bezier(b, c, t), t);
+    }
+
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float t)
+    {
+        return Vector3.Lerp(Bezier(a, b, c, t), Bezier(b, c, d, t), t);
+    }
 
 
 
