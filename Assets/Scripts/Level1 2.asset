@@ -16,4 +16,4 @@ MonoBehaviour:
   QuotaLimit: 1
   ScoreReq: 200
   BoatRoll_Intensty: 0
-  LevelScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  LevelScene: {fileID: 102900000, guid: cf140e085029588479fb7dd47c7a6e5d, type: 3}
