@@ -51,8 +51,6 @@ public class BasketTask : MonoBehaviour
             OnFishCollected?.Invoke(item);
             Destroy(other.gameObject);
             basketParticle.Play();
-           // weight = (int)other.GetComponent<Item>().GetWeight();
-            //StartCoroutine(ShowText());
             SpawnScoreText((int)item.GetWeight());
         }
         else
@@ -104,18 +102,6 @@ public class BasketTask : MonoBehaviour
             velocity.y -= gravity * dt;
             t.anchoredPosition += velocity * dt;
 
-            // float y = launchSpeedY * time - 0.5f * gravity * time * time;
-            // if(time > peakTime)
-            // {
-            //     float ease = Mathf.Clamp01((time - peakTime) / 0.15f);
-            //     xOffset += dir * launchSpeedX * ease * dt;
-            // }
-           // float easeOut = 1f - Mathf.Pow(1f - p, 3f);
-            //t.position = Vector3.Lerp(startPos, endPos, easeOut);
-            // velocity.y -= gravity * dt;
-            // t.position += (Vector3)(velocity * dt);
-
-           // t.anchoredPosition = startPos + new Vector2(xOffset, y);
 
             float scale;
             if(time < popDuration)
@@ -144,21 +130,7 @@ public class BasketTask : MonoBehaviour
 
         Destroy(text.gameObject);
 
-        // basketText.text = weight.ToString();
-        // TMP_Text text = Instantiate(basketText, canvas.transform);
-
-        // if(weight > 5f)
-        // {
-        //     text.color = Color.green;
-        // }
-        // else
-        // {
-        //     text.color = Color.red;
-        // }
-        
-        // text.gameObject.SetActive(true);
-        // yield return new WaitForSeconds(2f);
-        // Destroy(text.gameObject);
+      
        
 
 
