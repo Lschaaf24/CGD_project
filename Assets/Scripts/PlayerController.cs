@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float stunDuration = 2f;
     [SerializeField] private GameObject stunParticlePrefab;
 
+    [SerializeField] private GameObject hat;
+
 
     private ThrowIndication throwIndication;
 
@@ -344,5 +346,10 @@ public class PlayerController : MonoBehaviour
     public bool GetIsStunned() 
     {
         return isStunned;
+    }
+
+    public MeshRenderer GetHatRenderer() 
+    {
+        return hat.GetComponent<MeshRenderer>();
     }
 }
