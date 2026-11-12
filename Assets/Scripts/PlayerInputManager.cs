@@ -35,7 +35,10 @@ public class PlayerInputManager : MonoBehaviour
 
     private void AssignHatColour(PlayerController player) 
     {
-        MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+        if (!player.GetHatRenderer()) return;
+
+
+            MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
         if (playerCount < hatColors.Count)
         {
             propertyBlock.SetColor("_BaseColor", hatColors[playerCount]);
@@ -45,6 +48,8 @@ public class PlayerInputManager : MonoBehaviour
         {
             propertyBlock.SetColor("_BaseColor", Random.ColorHSV());
         }
+      
         player.GetHatRenderer().SetPropertyBlock(propertyBlock);
+        
     }
 }

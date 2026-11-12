@@ -89,7 +89,11 @@ public class PlayerController : MonoBehaviour
         heldItem.GetComponent<Collider>().enabled = true;
         heldItem.SetThrower(this);
         heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
-        heldItem = null;
+
+        if(heldItem.GetItemData().itemName != "Bucket") 
+        {
+            heldItem = null;
+        }
     }
 
 
@@ -350,6 +354,7 @@ public class PlayerController : MonoBehaviour
 
     public MeshRenderer GetHatRenderer() 
     {
+        if (hat == null) return null;
         return hat.GetComponent<MeshRenderer>();
     }
 }

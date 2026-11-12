@@ -60,28 +60,28 @@ public class Item : MonoBehaviour
 
     public virtual void ReleaseCharge(Vector3 direction, float throwHeight, float throwSpeed)
     {
-        Debug.Log("throw");
+        //Debug.Log("throw");
         isCharging = false;
-        Debug.Log("Direction: " + direction);
+        //Debug.Log("Direction: " + direction);
         ThrowItem(direction, throwHeight, throwSpeed);
     }
 
     protected virtual void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed)
     {
-        Debug.Log("Charge Ratio: " + chargeRatio);
+        //Debug.Log("Charge Ratio: " + chargeRatio);
         transform.SetParent(null);
 
 
         direction.y = throwHeight;
 
-        Debug.Log("Direction: " + direction);
+       // Debug.Log("Direction: " + direction);
 
         throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
 
-        Debug.Log("ThrowSpeedMult: " + throwSpeedMult);
+        //Debug.Log("ThrowSpeedMult: " + throwSpeedMult);
 
         float throwVelocity = throwSpeed * throwSpeedMult;
-        Debug.Log("Throw Speed: " + throwVelocity);
+        //Debug.Log("Throw Speed: " + throwVelocity);
 
         if(thrower != null)
         {
@@ -137,9 +137,9 @@ public class Item : MonoBehaviour
     {
         return chargeRatio;
     }
-    public Type GetItemType() 
+    public ItemData GetItemData() 
     {
-        return itemType.GetType();
+        return itemType;
     }
 
     public float GetWeight() 

@@ -25,7 +25,7 @@ public class BasketTask : MonoBehaviour
     {
         if (!other.gameObject.TryGetComponent(out Item item)) return;
 
-        if(item.GetItemType() == typeof(FishData))
+        if(item.GetItemData().GetType() == typeof(FishData))
         {
             Debug.Log("score");
             OnFishCollected?.Invoke(item);

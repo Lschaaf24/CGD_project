@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,6 +34,7 @@ public class Task : MonoBehaviour
     [SerializeField] protected GameObject reward;
     [SerializeField] bool ejectItem;
     [SerializeField] private Transform ejectPoint;
+    [SerializeField] private ItemData requiredItem;
 
 
     [Tooltip("Will the task take the players item?")]
@@ -103,16 +105,26 @@ public class Task : MonoBehaviour
     {
         if (!taskReady) return false;
 
+        Item heldItem = player.GetHeldItem();
+        if(requiredItem != null) 
+        {
+            if(heldItem == null || heldItem.GetItemData() != requiredItem) 
+            {
+                return false;
+            }
+        }
+        else if (heldItem != null)
+        {
+            return false;
+        }
+
         if (takeItem)
         {
             Debug.Log("current item:" + currentItem);
             currentItem = player.SwapItem(currentItem, base.transform);
             if (currentItem == null) return false;
         }
-        else if (player.GetHeldItem() != null)
-        {
-            return false;
-        }
+
 
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 

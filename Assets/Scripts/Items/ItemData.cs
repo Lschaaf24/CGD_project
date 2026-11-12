@@ -6,6 +6,7 @@ public class ItemData : ScriptableObject
 {
     [SerializeField] private float itemWeight = 1f;
     [SerializeField] private Mesh itemMesh;
+    public string itemName;
 
     virtual public float GenerateWeight()
     {

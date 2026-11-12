@@ -4,8 +4,18 @@ using UnityEngine;
 public class BucketItem : Item
 {
     [SerializeField] GameObject puddle_task;
+    [SerializeField] GameObject water;
+
+    bool isFull = false;
     protected override void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed) 
     {
+        Debug.Log("THROW");
+        if (!isFull)
+        {
+            base.ThrowItem(direction, throwHeight, throwSpeed);
+            return;
+        }
+
         throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
 
         throwSpeed = throwSpeed * throwSpeedMult;
@@ -20,6 +30,19 @@ public class BucketItem : Item
         }
 
 
-        Destroy(this.gameObject);
+        SetFill(false);
+    }
+
+    public void SetFill(bool fill) 
+    {
+        isFull = fill;
+        if (isFull)
+        {
+            water.GetComponent<MeshRenderer>().material.color = Color.blue;    
+        }
+        else 
+        {
+            water.GetComponent<MeshRenderer>().material.color = Color.black;
+        }
     }
 }
