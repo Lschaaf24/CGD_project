@@ -22,6 +22,8 @@ public class Item : MonoBehaviour
 
     private PlayerController thrower;
 
+    private float signOfCharge = 1f;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -38,12 +40,24 @@ public class Item : MonoBehaviour
 
         if (isCharging)
         {
-            charge = Mathf.Min(charge + Time.deltaTime, maxChargeTime);
-            chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
+            if(charge <= maxChargeTime)
+            {
+                charge = Mathf.Min(charge + Time.deltaTime * signOfCharge, maxChargeTime);
 
+                chargeRatio = Mathf.Clamp01(charge / maxChargeTime);
+            }
+            if(charge == maxChargeTime)
+            {
+                signOfCharge = -signOfCharge;
+            }
+            if(charge <= 0f)
+            {
+                signOfCharge = -signOfCharge;
+            }
+            
         }
 
-        if (rb.linearVelocity.magnitude > 0.6f)
+        if (rb.linearVelocity.magnitude > 0.6f && thrower != null)
         {
             canStun = true;
         }
