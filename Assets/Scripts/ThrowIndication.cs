@@ -6,7 +6,7 @@ public class ThrowIndication : MonoBehaviour
     [SerializeField] private Image chargeMeter;
     [SerializeField] private RectTransform arrow;
 
-    private float arrowDistance = 300f;
+    [SerializeField] private float arrowDistance = 300f;
 
     private Vector3 currentDirection = Vector3.forward;
 
