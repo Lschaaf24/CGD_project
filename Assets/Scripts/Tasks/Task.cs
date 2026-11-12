@@ -118,7 +118,7 @@ public class Task : MonoBehaviour
                 return false;
             }
         }
-        else if (heldItem != null)
+        else if (heldItem != null && !takeItem)
         {
             return false;
         }
@@ -127,6 +127,7 @@ public class Task : MonoBehaviour
         {
             Debug.Log("current item:" + currentItem);
             currentItem = player.SwapItem(currentItem, base.transform);
+           
             if (currentItem == null) return false;
         }
 

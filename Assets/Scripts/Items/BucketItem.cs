@@ -24,11 +24,12 @@ public class BucketItem : Item
         position.y = 0.01f;
         direction.y = 0;
 
-        if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, 10f, 1 << LayerMask.NameToLayer("Ground")))
-        {
-            Instantiate(puddle_task, position + (direction * throwSpeed), Quaternion.identity);
-        }
 
+        RaycastHit hit;
+        if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            Instantiate(puddle_task, new Vector3(position.x + (direction * throwSpeed).x, hit.point.y, position.z + (direction * throwSpeed).z), Quaternion.identity);
+        }
 
         SetFill(false);
     }
@@ -44,5 +45,10 @@ public class BucketItem : Item
         {
             water.GetComponent<MeshRenderer>().material.color = Color.black;
         }
+    }
+
+    public bool GetIsFull() 
+    {
+        return isFull;
     }
 }

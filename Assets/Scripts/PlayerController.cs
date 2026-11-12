@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnThrowCanceled(InputAction.CallbackContext context)
     {
+
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
@@ -86,14 +87,26 @@ public class PlayerController : MonoBehaviour
         {
             throwDirection = throwIndication.GetCurrentDirection();
         }
-        heldItem.GetComponent<Collider>().enabled = true;
+
+        BucketItem bucket = heldItem.GetComponent<BucketItem>();
+        bool keepHeldItem = (bucket != null && bucket.GetIsFull());
+
+        if (!keepHeldItem)
+        {
+            heldItem.GetComponent<Collider>().enabled = true;
+        }
+
         heldItem.SetThrower(this);
         heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
 
-        if(heldItem.GetItemData().itemName != "Bucket") 
+        if (!keepHeldItem)
         {
             heldItem = null;
         }
+        
+      
+        
+
     }
 
 
