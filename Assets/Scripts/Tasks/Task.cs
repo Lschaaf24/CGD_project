@@ -132,7 +132,7 @@ public class Task : MonoBehaviour
         Debug.Log("TASK COMPLETED");
         if(reward != null) 
         {
-            Vector3 ejectDirection = (transform.up * 10) - (transform.forward * 3);
+            Vector3 ejectDirection = Vector3.zero;//(transform.up * 10) - (transform.forward * 3);
             GameObject item = Instantiate(reward, null);
             if (ejectItem) 
             {
