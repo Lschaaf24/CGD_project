@@ -2015,6 +2015,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6388042685564423561, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: sustainableMult
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388042685564423561, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: sustainableMultIncrease
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7226599496957578159, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
       propertyPath: m_Name
       value: CheckerManagers

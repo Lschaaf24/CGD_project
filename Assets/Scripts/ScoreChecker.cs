@@ -6,12 +6,14 @@ public class ScoreChecker : MonoBehaviour
     public event Action<int> OnScoreChanged;
 
 
-
+    [Header("refs")]
     [SerializeField] private QuotaManager quotaManager;
-    [SerializeField]private int score;
+    [Header("Score settings")]
+    [SerializeField] private int score;
 
     private void Start()
     {
+
     }
     private void OnEnable()
     {
