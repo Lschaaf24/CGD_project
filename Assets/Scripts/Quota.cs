@@ -6,6 +6,8 @@ public class Quota : MonoBehaviour
     public event Action<Quota> OnCompleted;
     public event Action<Quota> OnFailed;
     public event Action<int, int> OnProgressChanged;
+    public event Action OnSDGFailed;
+    public event Action OnSDGPassed;
 
     public QuotaDataSO Data { get; private set; }
     private int progress;
@@ -33,11 +35,14 @@ public class Quota : MonoBehaviour
         if(finished) return false;
         
         float weight = item.GetWeight();
-        if (weight <= Data.getWeightMin() || weight >= Data.getWeightMax()) return false;
+        if (weight <= Data.getWeightMin() || weight >= Data.getWeightMax())
+        {
+            OnSDGFailed?.Invoke();
+        }
 
         progress++;
         OnProgressChanged?.Invoke(progress, Data.getTargetNum());
-
+        OnSDGPassed?.Invoke();
         if(progress >= Data.getTargetNum())
         {
             finished = true;

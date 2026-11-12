@@ -10,6 +10,11 @@ public class ScoreChecker : MonoBehaviour
     [SerializeField] private QuotaManager quotaManager;
     [Header("Score settings")]
     [SerializeField] private int score;
+    [SerializeField] private float sustainableMult = 1.0f;
+    [SerializeField] private float sustainableMultIncrease = 0.3f;
+    [SerializeField] private float sustainableMultDecrease = 0.5f;
+    [SerializeField] private int sustainableScore = 0;
+    
 
     private void Start()
     {
@@ -19,6 +24,18 @@ public class ScoreChecker : MonoBehaviour
     {
         quotaManager.OnQuotaCompleted += HandleScoreAdded;
         quotaManager.OnQuotaFailed += HandleScoreSubtracted;
+        quotaManager.OnQuotaSDGPassed += HandleSDGScoreAdded;
+        quotaManager.OnQuotaSDGFailed += HandleSDGScoreSubtracted;
+    }
+
+    private void HandleSDGScoreSubtracted()
+    {
+        sustainableMult -= sustainableMultDecrease;
+    }
+
+    private void HandleSDGScoreAdded()
+    {
+        sustainableMult += sustainableMultIncrease;
     }
 
     private void HandleScoreSubtracted(QuotaDataSO obj)
@@ -37,6 +54,15 @@ public class ScoreChecker : MonoBehaviour
     {
         quotaManager.OnQuotaCompleted -= HandleScoreAdded;
         quotaManager.OnQuotaFailed -= HandleScoreSubtracted;
+        quotaManager.OnQuotaSDGPassed -= HandleSDGScoreAdded;
+        quotaManager.OnQuotaSDGFailed -= HandleSDGScoreSubtracted;
+    }
+
+    public void AddSustainableScore()
+    {
+        sustainableScore = (int)(score * sustainableMult);
+        score += sustainableScore;
+        OnScoreChanged(score);
     }
 
 }

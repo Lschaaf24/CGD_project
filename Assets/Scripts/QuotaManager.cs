@@ -11,6 +11,8 @@ public class QuotaManager : MonoBehaviour
     public event Action<QuotaDataSO> OnQuotaFailed;
     public event Action<Quota> OnQuotaAdded;
     public event Action<Quota> OnQuotaRemoved;
+    public event Action OnQuotaSDGFailed;
+    public event Action OnQuotaSDGPassed;
 
     [SerializeField] private BasketTask basket;
 
@@ -42,12 +44,22 @@ public class QuotaManager : MonoBehaviour
 
         quota.OnCompleted += HandleCompleted;
         quota.OnFailed += HandleFailed;
-
+        quota.OnSDGPassed += HandleSDGPass;
+        quota.OnSDGFailed += HandleSDGFail;
         activeQuotas.Add(quota);
         OnQuotaAdded?.Invoke(quota);
         return true;
     }
 
+    private void HandleSDGFail()
+    {
+        OnQuotaSDGFailed?.Invoke();
+    }
+
+    private void HandleSDGPass()
+    {
+        OnQuotaSDGPassed?.Invoke();
+    }
 
     private void HandleCompleted(Quota quota)
     {
@@ -64,6 +76,8 @@ public class QuotaManager : MonoBehaviour
     {
         quota.OnCompleted -= HandleCompleted;
         quota.OnFailed -= HandleFailed;
+        quota.OnSDGPassed -= HandleSDGPass;
+        quota.OnSDGFailed -= HandleSDGFail;
         activeQuotas.Remove(quota);
         OnQuotaRemoved?.Invoke(quota);
         Destroy(quota.gameObject);
