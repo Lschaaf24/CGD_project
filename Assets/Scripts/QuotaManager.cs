@@ -27,6 +27,10 @@ public class QuotaManager : MonoBehaviour
     {
         instance = this;
     }
+    private void Start()
+    {
+        maxQuotas = GameManager.instance.GetLevelDataSO().getQuotaLimit();
+    }
     public bool TryRandomGenerateQuota()
     {
         if (!acceptingQuotas) return false;
@@ -41,7 +45,6 @@ public class QuotaManager : MonoBehaviour
 
         activeQuotas.Add(quota);
         OnQuotaAdded?.Invoke(quota);
-        Debug.Log("HERE");
         return true;
     }
 
