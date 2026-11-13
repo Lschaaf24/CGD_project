@@ -9,6 +9,7 @@ public class BasketTask : MonoBehaviour
 
     public event Action<Item> OnFishCollected;
     [SerializeField] private ParticleSystem basketParticle;
+    [SerializeField] private ParticleSystem basketParticle_2;
     [SerializeField] private TMP_Text textPrefab;
     [SerializeField] private Canvas canvas;
 
@@ -51,6 +52,7 @@ public class BasketTask : MonoBehaviour
             OnFishCollected?.Invoke(item);
             Destroy(other.gameObject);
             basketParticle.Play();
+            basketParticle_2.Play();
             SpawnScoreText((int)item.GetWeight());
         }
         else
