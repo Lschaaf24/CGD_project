@@ -142,9 +142,9 @@ Material:
     - _LightingHardness: 0.8
     - _LightingSmoothness: 0.86
     - _Metallic: 0
-    - _NormalsScale: 0.06
+    - _NormalsScale: 0.05
     - _NormalsSpeed: 0.08
-    - _NormalsStrength: 0.25
+    - _NormalsStrength: 0.1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
@@ -174,7 +174,7 @@ Material:
     - _DeepColour: {r: 0.05, g: 0.32, b: 0.68, a: 0.9019608}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColour: {r: 0.88, g: 0.97999996, b: 1, a: 0.21960784}
-    - _HorizonColour: {r: 0.62, g: 0.88, b: 0.98, a: 0.8509804}
+    - _HorizonColour: {r: 0.05345905, g: 0.7324995, b: 1, a: 1}
     - _IntersectionFoamColour: {r: 0.86, g: 0.99, b: 1, a: 0.9019608}
     - _ScrollSpeed: {r: 0.39, g: 0.01, b: 0, a: 0}
     - _ScrollSpeed1: {r: 0.1, g: 0.1, b: 0, a: 0}

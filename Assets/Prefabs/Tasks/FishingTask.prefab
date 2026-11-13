@@ -821,6 +821,7 @@ MonoBehaviour:
   readyIcon: {fileID: 4969586915964870413}
   taskReady: 0
   startReelPercentage: 20
+  reelGain: 7.5
   minInterval: 1
   maxInterval: 9
   minLossRate: 10

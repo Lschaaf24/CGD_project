@@ -373,6 +373,8 @@ MonoBehaviour:
   reward: {fileID: 0}
   ejectItem: 0
   ejectPoint: {fileID: 0}
+  peakPoint: {fileID: 0}
+  targetPoint: {fileID: 0}
   requiredItem: {fileID: 11400000, guid: f0a8d0d56f4b4a140a4fe64a9feb56c8, type: 2}
   takeItem: 0
   animation: {fileID: 0}
