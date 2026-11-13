@@ -62,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IntersectionFoamTexture:
-        m_Texture: {fileID: 2800000, guid: a3ec92e629a00f1418f9b7a43bc0b3f7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 09b28647d6d71624fae5627577ee0eaa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -94,7 +94,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SurfaceFoamTexture:
-        m_Texture: {fileID: 2800000, guid: 14c20bdeb5e2b6c4a8068219f46d7225, type: 3}
+        m_Texture: {fileID: 2800000, guid: 529a28198890121428af74bd8eb616bd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -121,36 +121,36 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthFadeDistance: 0.33
+    - _DepthFadeDistance: 3.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FoamBlend: 0.5
-    - _FresnelPower: 2.71
+    - _FoamBlend: 0.6
+    - _FresnelPower: 4.5
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _IntersectionFoamBlend: 0.35
-    - _IntersectionFoamCutoff: 0.25
-    - _IntersectionFoamDepth: 0.35
+    - _IntersectionFoamCutoff: 1
+    - _IntersectionFoamDepth: 0.5
     - _IntersectionFoamDirection: 45
     - _IntersectionFoamFade: 0.75
-    - _IntersectionFoamSpeed: 0.05
-    - _IntersectionFoamTiling: 10
-    - _LightingHardness: 0.254
-    - _LightingSmoothness: 0.428
+    - _IntersectionFoamSpeed: 0.08
+    - _IntersectionFoamTiling: 25
+    - _LightingHardness: 0.8
+    - _LightingSmoothness: 0.86
     - _Metallic: 0
-    - _NormalsScale: 0.2
-    - _NormalsSpeed: 0.01
-    - _NormalsStrength: 0.2
+    - _NormalsScale: 0.06
+    - _NormalsSpeed: 0.08
+    - _NormalsStrength: 0.25
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionScale: 0.35
-    - _RefractionSpeed: 0.4
+    - _RefractionScale: 0.45
+    - _RefractionSpeed: 0.35
     - _RefractionStrength: 0.02
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -160,8 +160,8 @@ Material:
     - _Steepness: 0
     - _Surface: 0
     - _SurfaceFoamDirection: 45
-    - _SurfaceFoamDistortion: 0.2
-    - _SurfaceFoamSpeed: 0.01
+    - _SurfaceFoamDistortion: 0.5
+    - _SurfaceFoamSpeed: 0.04
     - _SurfaceFoamTiling: 10
     - _SurfaceNoiseCutoff: 0.377
     - _WorkflowMode: 1
@@ -171,17 +171,17 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DeepColor: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepColour: {r: 0.09014649, g: 0.3947848, b: 0.66666657, a: 0.8}
+    - _DeepColour: {r: 0.05, g: 0.32, b: 0.68, a: 0.9019608}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColour: {r: 1, g: 1, b: 1, a: 0.043137256}
-    - _HorizonColour: {r: 0.9490196, g: 0.7950116, b: 0.6, a: 1}
-    - _IntersectionFoamColour: {r: 0.84, g: 0.98, b: 1, a: 0.8509804}
+    - _FoamColour: {r: 0.88, g: 0.97999996, b: 1, a: 0.21960784}
+    - _HorizonColour: {r: 0.62, g: 0.88, b: 0.98, a: 0.8509804}
+    - _IntersectionFoamColour: {r: 0.86, g: 0.99, b: 1, a: 0.9019608}
     - _ScrollSpeed: {r: 0.39, g: 0.01, b: 0, a: 0}
     - _ScrollSpeed1: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _ScrollSpeed2: {r: -0.11, g: 0.1, b: 0, a: 0}
     - _ShallowColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColour: {r: 0, g: 0.7273411, b: 1, a: 0.2}
+    - _ShallowColour: {r: 0.2, g: 0.8, b: 0.88, a: 0.2509804}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 1, g: 0.98, b: 0.92, a: 0.8509804}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
