@@ -33,7 +33,7 @@ public class Quota : MonoBehaviour
         if(finished) return false;
         
         float weight = item.GetWeight();
-        if (weight <= Data.getWeightMin() && weight >= Data.getWeightMax()) return false;
+        if (weight <= Data.getWeightMin() || weight >= Data.getWeightMax()) return false;
 
         progress++;
         OnProgressChanged?.Invoke(progress, Data.getTargetNum());

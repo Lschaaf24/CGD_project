@@ -32,6 +32,11 @@ public class RepairTask: Task
 
     protected override void BeginTask() 
     {
+        BucketItem bucket = engagedPlayers[0].GetHeldItem().GetComponent<BucketItem>();
+        if (bucket != null)
+        {
+            bucket.SetFill(true);
+        }
         EndTask();
 
     }

@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15901f5b7126b5e42b15271baecc2613, type: 3}
   m_Name: Bucket
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemWeight: 1
+  itemMesh: {fileID: 0}
+  itemName: Bucket

@@ -241,15 +241,23 @@ MonoBehaviour:
   persistentTask: 1
   continuousTask: 0
   reward: {fileID: 0}
+  ejectItem: 0
+  ejectPoint: {fileID: 0}
+  peakPoint: {fileID: 0}
+  targetPoint: {fileID: 0}
+  requiredItem: {fileID: 0}
   takeItem: 1
   animation: {fileID: 0}
   soundEffect: {fileID: 0}
   particleSystem: {fileID: 0}
   readyIcon: {fileID: 0}
-  taskReady: 0
+  taskReady: 1
   massDisplay: {fileID: 5245512130425867741}
   hookPoint: {fileID: 492477034330112033}
   hook: {fileID: 1048529389189191785}
+  correctLight: {fileID: 2100000, guid: cea976f92c8048f49809d95e2a536533, type: 2}
+  wrongLight: {fileID: 2100000, guid: dd6dd055a0561bb4fb79ec36f5e112c7, type: 2}
+  lightMesh: {fileID: 8328377534377692608}
 --- !u!1 &1048529389189191785
 GameObject:
   m_ObjectHideFlags: 0

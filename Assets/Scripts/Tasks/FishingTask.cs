@@ -10,6 +10,7 @@ public class FishingTask: Task
 {
     float reelPercentage = 20;
     [SerializeField] float startReelPercentage = 20;
+    [SerializeField] float reelGain = 7.5f;
     [SerializeField] float minInterval = 1.0f;
     [SerializeField] float maxInterval = 9.0f;
     [SerializeField] float minLossRate = 8.0f;
@@ -86,7 +87,7 @@ public class FishingTask: Task
     public override void TaskAction() 
     {
         if (!reeling) return;
-        reelPercentage += 5.0f;
+        reelPercentage += reelGain;
         inputCount++;
         lastInputTime = Time.time;
         if(reelPercentage >= 100) 

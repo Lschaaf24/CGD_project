@@ -20,6 +20,11 @@ public class DeathBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag != "Player")
+        {
+            Destroy(other.gameObject);
+            return;
+        }
         objectToRespawn = other.GetComponent<Transform>();
 
         StartCoroutine(RespawnObject(objectToRespawn));

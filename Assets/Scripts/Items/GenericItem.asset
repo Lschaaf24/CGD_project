@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: GenericItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemWeight: 1
+  itemMesh: {fileID: 0}
+  itemName: Item

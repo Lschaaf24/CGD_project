@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,7 +34,12 @@ public class Task : MonoBehaviour
     [Tooltip("The item the player gains from completing the task")]
     [SerializeField] protected GameObject reward;
     [SerializeField] bool ejectItem;
+
     [SerializeField] private Transform ejectPoint;
+    [SerializeField] private Transform peakPoint;
+    [SerializeField] private Transform targetPoint;
+
+    [SerializeField] private ItemData requiredItem;
 
 
     [Tooltip("Will the task take the players item?")]
@@ -103,16 +110,27 @@ public class Task : MonoBehaviour
     {
         if (!taskReady) return false;
 
+        Item heldItem = player.GetHeldItem();
+        if(requiredItem != null) 
+        {
+            if(heldItem == null || heldItem.GetItemData() != requiredItem) 
+            {
+                return false;
+            }
+        }
+        else if (heldItem != null && !takeItem)
+        {
+            return false;
+        }
+
         if (takeItem)
         {
             Debug.Log("current item:" + currentItem);
             currentItem = player.SwapItem(currentItem, base.transform);
+           
             if (currentItem == null) return false;
         }
-        else if (player.GetHeldItem() != null)
-        {
-            return false;
-        }
+
 
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 
@@ -132,12 +150,12 @@ public class Task : MonoBehaviour
         Debug.Log("TASK COMPLETED");
         if(reward != null) 
         {
-            Vector3 ejectDirection = (transform.up * 10) - (transform.forward * 3);
+            Vector3 ejectDirection = Vector3.zero;//(transform.up * 10) - (transform.forward * 3);
             GameObject item = Instantiate(reward, null);
             if (ejectItem) 
             {
                 item.transform.position = ejectPoint.position;
-                item.GetComponent<Rigidbody>().AddForce(ejectDirection.normalized * 500.0f);
+                StartCoroutine(EjectItem(item));
             }
             else
             {
@@ -192,7 +210,37 @@ public class Task : MonoBehaviour
         Debug.Log("FAILED TASK");
     }
 
+    IEnumerator EjectItem(GameObject item) 
+    {
+        float timeElapsed = 0;
+        float duration = 1;
 
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            item.transform.position = Bezier(ejectPoint.position, peakPoint.position,targetPoint.position, timeElapsed / duration); 
+            yield return null;
+        }
+
+        item.transform.position = targetPoint.position;
+        
+    }
+
+
+    Vector3 Bezier(Vector3 a, Vector3 b, float t)
+    {
+        return Vector3.Lerp(a, b, t);
+    }
+
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
+    {
+        return Vector3.Lerp(Bezier(a, b, t), Bezier(b, c, t), t);
+    }
+
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float t)
+    {
+        return Vector3.Lerp(Bezier(a, b, c, t), Bezier(b, c, d, t), t);
+    }
 
 
 

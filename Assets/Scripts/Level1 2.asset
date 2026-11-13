@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bcca7559c917b4f9a868531ef53e34, type: 3}
   m_Name: Level1 2
   m_EditorClassIdentifier: Assembly-CSharp::LevelDataSO
-  TimeLimit: 0
-  QuotaLimit: 0
-  ScoreReq: 0
+  TimeLimit: 100
+  QuotaLimit: 1
+  ScoreReq: 200
   BoatRoll_Intensty: 0
-  LevelScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  LevelScene: {fileID: 102900000, guid: cf140e085029588479fb7dd47c7a6e5d, type: 3}

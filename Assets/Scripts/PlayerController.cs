@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float stunDuration = 2f;
     [SerializeField] private GameObject stunParticlePrefab;
 
+    [SerializeField] private GameObject hat;
+
 
     private ThrowIndication throwIndication;
 
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnThrowCanceled(InputAction.CallbackContext context)
     {
+
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
@@ -84,10 +87,26 @@ public class PlayerController : MonoBehaviour
         {
             throwDirection = throwIndication.GetCurrentDirection();
         }
-        heldItem.GetComponent<Collider>().enabled = true;
+
+        BucketItem bucket = heldItem.GetComponent<BucketItem>();
+        bool keepHeldItem = (bucket != null && bucket.GetIsFull());
+
+        if (!keepHeldItem)
+        {
+            heldItem.GetComponent<Collider>().enabled = true;
+        }
+
         heldItem.SetThrower(this);
         heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
-        heldItem = null;
+
+        if (!keepHeldItem)
+        {
+            heldItem = null;
+        }
+        
+      
+        
+
     }
 
 
@@ -344,5 +363,11 @@ public class PlayerController : MonoBehaviour
     public bool GetIsStunned() 
     {
         return isStunned;
+    }
+
+    public MeshRenderer GetHatRenderer() 
+    {
+        if (hat == null) return null;
+        return hat.GetComponent<MeshRenderer>();
     }
 }

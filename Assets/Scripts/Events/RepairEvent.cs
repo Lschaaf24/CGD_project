@@ -7,11 +7,15 @@ public class RepairEvent : GameEvent
 {
     [SerializeField] private GameObject repairTask;
 
+    [SerializeField] List<Transform> spawnPoints = new();
+    
     private List<Task> tasks = new();
     
     public override void StartEvent()
     {
         GameObject taskObject = Instantiate(repairTask);
+        int i = UnityEngine.Random.Range(0, spawnPoints.Count - 1);
+        taskObject.transform.position = spawnPoints[i].position;
         Task task = taskObject.GetComponent<Task>();
 
         if (task == null) 
