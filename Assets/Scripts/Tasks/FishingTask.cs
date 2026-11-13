@@ -16,6 +16,7 @@ public class FishingTask: Task
     [SerializeField] float minLossRate = 8.0f;
     [SerializeField] float maxLossRate = 12.0f;
     [SerializeField] float pulseSpeed = 500.0f;
+    [SerializeField] GameObject waitingIcon;
     float lossRate = 10.0f;
 
     [SerializeField] Slider reelUI;
@@ -45,6 +46,7 @@ public class FishingTask: Task
                 if (readyIcon) 
                 {
                     readyIcon.SetActive(true);
+                    waitingIcon.SetActive(false);
                 }
                 EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, 1);
             }
@@ -73,6 +75,7 @@ public class FishingTask: Task
         reeling = false;
         inputCount = 0;
         interval = UnityEngine.Random.Range(minInterval, maxInterval);
+        waitingIcon.SetActive(true);
     }
 
     protected override void BeginTask() 
