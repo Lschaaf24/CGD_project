@@ -14,6 +14,7 @@ public class ObstacleMove : MonoBehaviour
     [SerializeField] private Transform startTrans;
     [SerializeField] private Transform endTrans;
 
+    [SerializeField] private LayerMask cargoLayer;
 
 
     Vector3 direction;
@@ -33,6 +34,8 @@ public class ObstacleMove : MonoBehaviour
 
     [SerializeField] bool slidePaused = false;
     float lastAcceleration = 0;
+
+    float lastContactTime;
 
 
 
@@ -120,8 +123,9 @@ public class ObstacleMove : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (slidePaused) return;
-        if(collision.gameObject.layer == LayerMask.GetMask("Cargo")) 
+        if ((cargoLayer.value & (1 << collision.gameObject.layer)) != 0 && Time.time - lastContactTime > 0.2f)
         {
+            lastContactTime = Time.time;
             PauseSlide();
             return;
         }
