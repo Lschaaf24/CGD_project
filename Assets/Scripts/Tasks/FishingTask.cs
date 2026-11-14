@@ -10,11 +10,13 @@ public class FishingTask: Task
 {
     float reelPercentage = 20;
     [SerializeField] float startReelPercentage = 20;
+    [SerializeField] float reelGain = 7.5f;
     [SerializeField] float minInterval = 1.0f;
     [SerializeField] float maxInterval = 9.0f;
     [SerializeField] float minLossRate = 8.0f;
     [SerializeField] float maxLossRate = 12.0f;
     [SerializeField] float pulseSpeed = 500.0f;
+    [SerializeField] GameObject waitingIcon;
     float lossRate = 10.0f;
 
     [SerializeField] Slider reelUI;
@@ -44,6 +46,7 @@ public class FishingTask: Task
                 if (readyIcon) 
                 {
                     readyIcon.SetActive(true);
+                    waitingIcon.SetActive(false);
                 }
                 EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, 1);
             }
@@ -72,6 +75,8 @@ public class FishingTask: Task
         reeling = false;
         inputCount = 0;
         interval = UnityEngine.Random.Range(minInterval, maxInterval);
+        waitingIcon.SetActive(true);
+        particleSystem.Play();
     }
 
     protected override void BeginTask() 
@@ -86,7 +91,7 @@ public class FishingTask: Task
     public override void TaskAction() 
     {
         if (!reeling) return;
-        reelPercentage += 5.0f;
+        reelPercentage += reelGain;
         inputCount++;
         lastInputTime = Time.time;
         if(reelPercentage >= 100) 

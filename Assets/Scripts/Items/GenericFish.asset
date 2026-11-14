@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: GenericFish
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   itemWeight: 1
+  itemMesh: {fileID: 0}
+  itemName: Fish
   minWeight: 1
   maxWeight: 12
   isFish: 1

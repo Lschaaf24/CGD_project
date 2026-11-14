@@ -31,7 +31,7 @@ public class ObstacleMove : MonoBehaviour
 
     [SerializeField] bool canFall = false;
 
-    bool slidePaused = false;
+    [SerializeField] bool slidePaused = false;
     float lastAcceleration = 0;
 
 
@@ -58,20 +58,16 @@ public class ObstacleMove : MonoBehaviour
 
         if (Mathf.Abs(currentSpeed) > 0.01f)
         {
-            // If moving, friction pushes purely against the current direction of movement
             netAcceleration = gravityAcceleration - (Mathf.Sign(currentSpeed) * maxFrictionAcceleration);
         }
         else
         {
-            // If standing still, gravity must overcome static friction to start moving
             if (Mathf.Abs(gravityAcceleration) > maxFrictionAcceleration)
             {
-                // Object breaks free! It accelerates in the direction gravity is pulling
                 netAcceleration = gravityAcceleration - (Mathf.Sign(gravityAcceleration) * maxFrictionAcceleration);
             }
             else
             {
-                // Friction wins; the object stays completely still
                 currentSpeed = 0f;
                 netAcceleration = 0f;
             }
@@ -123,13 +119,19 @@ public class ObstacleMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (slidePaused) return;
+        if(collision.gameObject.layer == LayerMask.GetMask("Cargo")) 
+        {
+            PauseSlide();
+            return;
+        }
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player == null) return;
         if (player.GetIsStunned()) return;
 
         Vector3 displacement = player.transform.position - transform.position;
         float dot = Vector3.Dot(displacement.normalized, direction * Mathf.Sign(currentSpeed));
-        if(dot > 0.7071f) 
+        if(dot > 0.7071f && MathF.Abs(currentSpeed) > 0.75f) 
         {
             player.stunPlayer();
         }

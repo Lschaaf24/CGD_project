@@ -44,11 +44,12 @@ public class WeighTask : Task
         base.BeginTask();
         if (currentItem != null)
         {
+            currentItem.transform.localPosition = Vector3.zero;
             currentItem.transform.SetParent(hookPoint.transform, false);
             currentItem.GetComponent<Rigidbody>().isKinematic = true;
             currentItem.GetComponent<Collider>().enabled = false;
-            actualWeight = currentItem.GetWeight();
             StartCoroutine(WeighFish());
+            actualWeight = currentItem.GetWeight();
 
             if(actualWeight > targetWeight) 
             {
@@ -77,7 +78,7 @@ public class WeighTask : Task
     {
         float timeElapsed = 0;
         float currentWeight = 0f;
-
+        currentItem.transform.localPosition = Vector3.zero;
         while (timeElapsed < duration)
         {
 

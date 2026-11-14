@@ -1,5 +1,7 @@
 using System.Collections;
+using TMPro;
 using Unity.IO.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -49,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private bool inTask = false;
 
+    [SerializeField] private GameObject weightDisplay;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -79,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnThrowCanceled(InputAction.CallbackContext context)
     {
+
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
@@ -86,10 +91,26 @@ public class PlayerController : MonoBehaviour
         {
             throwDirection = throwIndication.GetCurrentDirection();
         }
-        heldItem.GetComponent<Collider>().enabled = true;
+
+        BucketItem bucket = heldItem.GetComponent<BucketItem>();
+        bool keepHeldItem = (bucket != null && bucket.GetIsFull());
+
+        if (!keepHeldItem)
+        {
+            heldItem.GetComponent<Collider>().enabled = true;
+        }
+
         heldItem.SetThrower(this);
         heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
-        heldItem = null;
+
+        if (!keepHeldItem)
+        {
+            heldItem = null;
+        }
+        
+      
+        
+
     }
 
 
@@ -117,7 +138,8 @@ public class PlayerController : MonoBehaviour
             }
             else if(item)
             {
-                 ReceiveItem(item);
+                ReceiveItem(item);
+               
             }
             else if (task && !inTask)
             {
@@ -283,6 +305,15 @@ public class PlayerController : MonoBehaviour
         heldItem = item;
         heldItem.GetComponent<Collider>().enabled = false;
 
+
+        if (heldItem.GetItemData().GetType() == typeof(FishData))
+        {
+            weightDisplay.SetActive(true);
+            int weight = (int)heldItem.GetItemData().GetWeight();
+            weightDisplay.GetComponentInChildren<TMP_Text>().text = weight.ToString("0");
+            StartCoroutine(WeightIconTimer(2));
+        }
+
     }
 
     public Item SwapItem(Item item, Transform senderTransform) 
@@ -350,6 +381,13 @@ public class PlayerController : MonoBehaviour
 
     public MeshRenderer GetHatRenderer() 
     {
+        if (hat == null) return null;
         return hat.GetComponent<MeshRenderer>();
+    }
+
+    IEnumerator WeightIconTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        weightDisplay.SetActive(false);       
     }
 }
