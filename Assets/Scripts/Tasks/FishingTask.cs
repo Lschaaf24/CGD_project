@@ -76,6 +76,7 @@ public class FishingTask: Task
         inputCount = 0;
         interval = UnityEngine.Random.Range(minInterval, maxInterval);
         waitingIcon.SetActive(true);
+        particleSystem.Play();
     }
 
     protected override void BeginTask() 

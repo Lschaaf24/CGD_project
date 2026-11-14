@@ -56,7 +56,7 @@ public class Task : MonoBehaviour
     [SerializeField] private AudioClip soundEffect;
 
     [Tooltip("Particle Effect to be played when the task is ready")]
-    [SerializeField] private ParticleSystem particleSystem;
+    [SerializeField] protected ParticleSystem particleSystem;
 
     [Tooltip("Icon that appears when the task is ready")]
     [SerializeField] protected GameObject readyIcon;
