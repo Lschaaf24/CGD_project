@@ -29,6 +29,7 @@ public class TipEvent : GameEvent
     {
         isActive = false;
         warningText.SetActive(false);
+        cameraRock.enabled = true;
 
     }
 
