@@ -48,12 +48,13 @@ public class BasketTask : MonoBehaviour
 
         if(item.GetItemData().GetType() == typeof(FishData))
         {
+            bool matchesQuota = QuotaManager.instance.MatchesActiveQuotas(item);
             Debug.Log("score");
             OnFishCollected?.Invoke(item);
             Destroy(other.gameObject);
             basketParticle.Play();
             basketParticle_2.Play();
-            SpawnScoreText((int)item.GetWeight());
+            SpawnScoreText((int)item.GetWeight(),matchesQuota);
         }
         else
         {
@@ -62,11 +63,11 @@ public class BasketTask : MonoBehaviour
     }
 
 
-    private void SpawnScoreText(int weight)
+    private void SpawnScoreText(int weight,bool matchesQuota)
     {
         TMP_Text text = Instantiate(textPrefab, canvas.transform);
         text.text = weight.ToString();
-        text.color = weight > 5f ? Color.green : Color.red;
+        text.color = matchesQuota ? Color.green : Color.red;
 
         RectTransform rt = text.rectTransform;
         rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
