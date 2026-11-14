@@ -10,10 +10,17 @@ public class FishData : ItemData
 
     override public float GenerateWeight()
     {
-        return Random.Range(minWeight, maxWeight);
+        itemWeight = Random.Range(minWeight, maxWeight);
+        return itemWeight;
+    }
+
+    public override float GetWeight()
+    {
+        return base.GetWeight();
     }
 
 
 
-   
+
+
 }
