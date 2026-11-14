@@ -8,11 +8,12 @@ public class TipEvent : GameEvent
     GameObject camera;
 
     [SerializeField] private float amptitude = 0.5f;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed = 2.5f;
     [SerializeField] private float curve = 0.3f;
 
     [SerializeField] float tipDegrees;
     [SerializeField] float holdTime = 0;
+    [SerializeField] GameObject warningText;
     public override void StartEvent()
     {
         isActive = true;
@@ -20,16 +21,20 @@ public class TipEvent : GameEvent
         cameraRock = camera.GetComponent<CameraRock>();
         cameraRock.enabled = false;
         StartCoroutine(LerpTip(tipDegrees));
+        warningText.SetActive(true);
     }
 
 
     public override void EndEvent()
     {
         isActive = false;
+        warningText.SetActive(false);
+
     }
 
     IEnumerator LerpTip(float degrees) 
     {
+        yield return new WaitForSeconds(2.0f);
         float elapsedTime = 0.0f;
         Quaternion startRot = camera.transform.rotation;
         Vector3 startPos = camera.transform.position;

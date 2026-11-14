@@ -39,11 +39,11 @@ public class BucketItem : Item
         isFull = fill;
         if (isFull)
         {
-            water.GetComponent<MeshRenderer>().material.color = Color.blue;    
+            water.GetComponent<MeshRenderer>().enabled = true;  
         }
         else 
         {
-            water.GetComponent<MeshRenderer>().material.color = Color.black;
+            water.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 
