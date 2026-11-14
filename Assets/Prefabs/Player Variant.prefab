@@ -206,6 +206,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7704942256355235784, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
     - {fileID: 4072114103359506448, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
+    - {fileID: 3951740447484553978, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5360917651808823092, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
@@ -214,8 +215,39 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5360917651808823092, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2373224711292357799}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2261078998125207099, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8502993611297524351}
   m_SourcePrefab: {fileID: 100100000, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
+--- !u!1 &2790241037408114468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2261078998125207099, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
+  m_PrefabInstance: {fileID: 4168110243428223263}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &8502993611297524351
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790241037408114468}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.34061813
+  m_Height: 2.0150776
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.1399889, z: 0.14462852}
 --- !u!4 &8340055309168635435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5360917651808823092, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
