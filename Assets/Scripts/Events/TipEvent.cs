@@ -34,7 +34,7 @@ public class TipEvent : GameEvent
 
     IEnumerator LerpTip(float degrees) 
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         float elapsedTime = 0.0f;
         Quaternion startRot = camera.transform.rotation;
         Vector3 startPos = camera.transform.position;

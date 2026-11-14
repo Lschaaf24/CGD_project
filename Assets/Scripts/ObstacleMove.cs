@@ -31,7 +31,7 @@ public class ObstacleMove : MonoBehaviour
 
     [SerializeField] bool canFall = false;
 
-    bool slidePaused = false;
+    [SerializeField] bool slidePaused = false;
     float lastAcceleration = 0;
 
 
@@ -119,13 +119,19 @@ public class ObstacleMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (slidePaused) return;
+        if(collision.gameObject.layer == LayerMask.GetMask("Cargo")) 
+        {
+            PauseSlide();
+            return;
+        }
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player == null) return;
         if (player.GetIsStunned()) return;
 
         Vector3 displacement = player.transform.position - transform.position;
         float dot = Vector3.Dot(displacement.normalized, direction * Mathf.Sign(currentSpeed));
-        if(dot > 0.7071f) 
+        if(dot > 0.7071f && MathF.Abs(currentSpeed) > 0.75f) 
         {
             player.stunPlayer();
         }
