@@ -309,7 +309,8 @@ public class PlayerController : MonoBehaviour
         if (heldItem.GetItemData().GetType() == typeof(FishData))
         {
             weightDisplay.SetActive(true);
-            weightDisplay.GetComponentInChildren<TMP_Text>().text = heldItem.GetItemData().GetWeight().ToString("0");
+            int weight = (int)heldItem.GetItemData().GetWeight();
+            weightDisplay.GetComponentInChildren<TMP_Text>().text = weight.ToString("0");
             StartCoroutine(WeightIconTimer(2));
         }
 
