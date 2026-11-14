@@ -126,7 +126,7 @@ RectTransform:
   m_Father: {fileID: 6651666022977612217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.0000076293945}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 5662385354075077782}
   - component: {fileID: 846669359784215382}
   - component: {fileID: 7562239959909714153}
-  - component: {fileID: 2319123638822565385}
+  - component: {fileID: 6318131296447879830}
   m_Layer: 5
   m_Name: FishCaughtIcon
   m_TagString: Untagged
@@ -270,15 +270,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2884280164051784263}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.92}
-  m_LocalScale: {x: 0.040272012, y: 0.040272012, z: 0.040272012}
+  m_LocalPosition: {x: 0, y: 0, z: -0.32535872}
+  m_LocalScale: {x: 0.0064676097, y: 0.00646761, z: 0.00646761}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6432724035951051084}
+  m_Father: {fileID: 5816427506413590239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.05}
+  m_AnchoredPosition: {x: 0, y: 0.84469986}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &846669359784215382
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2319123638822565385
+--- !u!114 &6318131296447879830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,9 +328,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2884280164051784263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aa8dac0eec42dd4f82443d48483ffe6, type: 3}
+  m_Script: {fileID: 11500000, guid: e6d5352af9acce24e9bffa64814b9d5b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BillboardUI
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenSpaceIcon
+  targetObject: {fileID: 5816427506413590239}
+  worldOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &3134889775923711284
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,8 +401,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 271601071044629610}
-  - {fileID: 4924504764299507951}
-  - {fileID: 5662385354075077782}
   m_Father: {fileID: 5816427506413590239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -481,13 +481,14 @@ GameObject:
   m_Component:
   - component: {fileID: 271601071044629610}
   - component: {fileID: 6232571534535711697}
+  - component: {fileID: 8659748965274042444}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &271601071044629610
 RectTransform:
   m_ObjectHideFlags: 0
@@ -497,7 +498,7 @@ RectTransform:
   m_GameObject: {fileID: 4394206040153867280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.00000029003}
-  m_LocalScale: {x: 0.12756544, y: 0.12756544, z: 0.12756544}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8066503768095251596}
@@ -508,7 +509,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0000029691, y: 4.75}
-  m_SizeDelta: {x: 160, y: 20}
+  m_SizeDelta: {x: 360, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6232571534535711697
 MonoBehaviour:
@@ -573,6 +574,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8659748965274042444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4394206040153867280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d5352af9acce24e9bffa64814b9d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenSpaceIcon
+  targetObject: {fileID: 5816427506413590239}
+  worldOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &4713860974197661769
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +599,7 @@ GameObject:
   - component: {fileID: 4924504764299507951}
   - component: {fileID: 7226781504890255637}
   - component: {fileID: 3073286532707813738}
-  - component: {fileID: 6138039514536478689}
+  - component: {fileID: 780989696160837430}
   m_Layer: 5
   m_Name: WaitingIcon
   m_TagString: Untagged
@@ -600,16 +615,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4713860974197661769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.92}
-  m_LocalScale: {x: 0.024177004, y: 0.024177004, z: 0.024177004}
+  m_LocalPosition: {x: 0, y: 0, z: -0.32535872}
+  m_LocalScale: {x: 0.0038827816, y: 0.0038827816, z: 0.0038827816}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6432724035951051084}
+  m_Father: {fileID: 5816427506413590239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.05}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0.84469986}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7226781504890255637
 CanvasRenderer:
@@ -649,7 +664,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6138039514536478689
+--- !u!114 &780989696160837430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -658,9 +673,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4713860974197661769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aa8dac0eec42dd4f82443d48483ffe6, type: 3}
+  m_Script: {fileID: 11500000, guid: e6d5352af9acce24e9bffa64814b9d5b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BillboardUI
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenSpaceIcon
+  targetObject: {fileID: 5816427506413590239}
+  worldOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &7177091844199739574
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +711,7 @@ RectTransform:
   m_Father: {fileID: 1152218929040140378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -808,6 +825,8 @@ Transform:
   - {fileID: 4127813124161702237}
   - {fileID: 5617044919707425691}
   - {fileID: 4009514270325754229}
+  - {fileID: 4924504764299507951}
+  - {fileID: 5662385354075077782}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5835351637723095200

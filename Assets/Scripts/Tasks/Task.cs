@@ -175,6 +175,7 @@ public class Task : MonoBehaviour
         }
         else 
         {
+            Destroy(readyIcon);
             Destroy(this.gameObject);
         }
         OnTaskCompleted?.Invoke(this);
