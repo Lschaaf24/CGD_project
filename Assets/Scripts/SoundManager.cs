@@ -1,60 +1,57 @@
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-
+using FMODUnity;
 
 public enum SoundType
 {
-     Footsteps,
+    FishPickup,
      RunningWater, 
 }
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
-
     public static SoundManager instance;
-    private AudioSource audioSource;
-    [SerializeField] SoundList[] soundlist;
 
+    [SerializeField] SoundList[] soundlist;
 
     private void OnEnable()
     {
         string[] audionames = Enum.GetNames(typeof(SoundType));
+
         if (soundlist == null || soundlist.Length != audionames.Length)
         {
             Array.Resize(ref soundlist, audionames.Length);
         }
+
         for (int i = 0; i < audionames.Length; i++)
         {
             soundlist[i].name = audionames[i];
-        }     
+        }
     }
-    
+
     void Awake()
     {
-
         instance = this;
-        audioSource = GetComponent<AudioSource>();
-    }
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
     }
 
     [Serializable]
     public struct SoundList
     {
         [HideInInspector] public string name;
-         public AudioClip[] sounds;
+        public EventReference[] sounds;
     }
 
     public static void PlaySound(SoundType sound, float volume = 1)
     {
         int index = (int)sound;
-        AudioClip[] clips = instance.soundlist[index].sounds;
-        instance.audioSource.PlayOneShot(clips[0], Mathf.Clamp01(volume));
-    }
 
-   
+        EventReference[] events = instance.soundlist[index].sounds;
+
+        if (events.Length == 0)
+            return;
+
+        RuntimeManager.PlayOneShot(events[0]);
+    }
 }

@@ -1,17 +1,23 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using FMODUnity;
+
 
 public class FishingTask: Task
 {
     [SerializeField] float reelPercentage = 20;
     [SerializeField] Slider reelUI;
+    [SerializeField] private EventReference fishPickupSound;
+
     bool reeling = false;
 
 
     private void Awake()
     {
         reelUI.value = reelPercentage/100;
+      
+
     }
     protected override void Update()
     {
@@ -39,6 +45,8 @@ public class FishingTask: Task
         base.BeginTask();
         reeling = true;
         reelUI.gameObject.SetActive(true); 
+           RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
+        SoundManager.PlaySound(SoundType.FishPickup);
     }
 
     public override void TaskAction() 
@@ -48,7 +56,8 @@ public class FishingTask: Task
         if(reelPercentage >= 100) 
         {
             EndTask();
-           
+            RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
+          
         }
     }
 
