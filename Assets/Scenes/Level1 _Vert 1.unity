@@ -1682,16 +1682,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 722906794519275705, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+      propertyPath: scalingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 722906794519275705, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4158092145520233242, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
       propertyPath: throwWater
       value: 
       objectReference: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+    - target: {fileID: 4412908485597111581, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+      propertyPath: m_MotionVectors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6832014398681273113, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 7405823279860287245, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
       propertyPath: m_Name
       value: Bucket
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5970283049949263879, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}

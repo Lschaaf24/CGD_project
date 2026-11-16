@@ -5,24 +5,15 @@ public class BucketItem : Item
 {
     [SerializeField] GameObject puddle_task;
     [SerializeField] GameObject water;
-    [SerializeField] private GameObject throwWater;
+    [SerializeField] private ParticleSystem throwWater;
 
     bool isFull = false;
-    private ParticleSystem throwWaterParticle;
-
-    private void Start()
-    {
-        throwWaterParticle = throwWater.GetComponent<ParticleSystem>();
-    }
-
     protected override void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed) 
     {
         Debug.Log("THROW");
         if (!isFull)
         {
             base.ThrowItem(direction, throwHeight, throwSpeed);
-            throwWater.transform.eulerAngles = direction;
-            throwWaterParticle.Play();
             return;
         }
 
@@ -34,6 +25,7 @@ public class BucketItem : Item
         position.y = 0.01f;
         direction.y = 0;
 
+        Instantiate(throwWater,this.transform.position, Quaternion.LookRotation(direction));
 
         RaycastHit hit;
         if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
@@ -41,8 +33,11 @@ public class BucketItem : Item
             Instantiate(puddle_task, new Vector3(position.x + (direction * throwSpeed).x, hit.point.y, position.z + (direction * throwSpeed).z), Quaternion.identity);
         }
 
+   
         SetFill(false);
     }
+
+
 
     public void SetFill(bool fill) 
     {
