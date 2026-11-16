@@ -1857,7 +1857,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1605801896487963931, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: events.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1605801896487963931, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: 'events.Array.data[0]'
@@ -1869,7 +1869,7 @@ PrefabInstance:
       objectReference: {fileID: 1450155614}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: cooldown
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: duration
@@ -1893,7 +1893,7 @@ PrefabInstance:
       objectReference: {fileID: 107197436}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: minIntensity
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3574153838672367978, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: cooldown

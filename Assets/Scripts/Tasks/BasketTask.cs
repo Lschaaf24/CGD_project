@@ -51,8 +51,11 @@ public class BasketTask : MonoBehaviour
             Debug.Log("score");
             OnFishCollected?.Invoke(item);
             Destroy(other.gameObject);
-            basketParticle.Play();
-            basketParticle_2.Play();
+            if (matchesQuota)
+            {
+                basketParticle.Play();
+                basketParticle_2.Play();
+            }
             SpawnScoreText(item.GetWeight(),matchesQuota);
         }
         else
