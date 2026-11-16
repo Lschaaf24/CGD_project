@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bcca7559c917b4f9a868531ef53e34, type: 3}
   m_Name: Level1 2
   m_EditorClassIdentifier: Assembly-CSharp::LevelDataSO
-  TimeLimit: 5
+  TimeLimit: 100
   QuotaLimit: 1
   ScoreReq: 200
   BoatRoll_Intensty: 0

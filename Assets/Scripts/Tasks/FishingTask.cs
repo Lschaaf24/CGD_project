@@ -89,7 +89,7 @@ public class FishingTask: Task
         reelUI.gameObject.SetActive(true);
         lossRate = UnityEngine.Random.Range(minLossRate, maxLossRate);
         startTime = Time.time; 
-           RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
+           //RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
         SoundManager.PlaySound(SoundType.FishPickup);
     }
 
@@ -103,8 +103,9 @@ public class FishingTask: Task
         {
             isCompleted = true;
             EndTask();
-            RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
-          
+            //RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
+            SoundManager.PlaySound(SoundType.FishPickup);
+
         }
     }
 

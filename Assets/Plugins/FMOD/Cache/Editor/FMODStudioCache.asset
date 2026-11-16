@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD_Integration/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639303712299079313
+  lastModified: 639304280778092203
   FileSizes: []
   Exists: 1
 --- !u!114 &-4069038018526390602
@@ -124,7 +124,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 7530224467276975905}
   cacheVersion: 131861
-  cacheTime: 639303712302223959
+  cacheTime: 639304280778112241
   SerializableEventsDict:
   - key: event:/New Event
     index: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   Path: FMOD_Integration/Desktop/FMODSound.bank
   Name: FMODSound
   StudioPath: bank:/FMODSound
-  lastModified: 639303712302223959
+  lastModified: 639304280778082133
   FileSizes: []
   Exists: 1
 --- !u!114 &5008857989160110035
@@ -219,7 +219,7 @@ MonoBehaviour:
   Path: FMOD_Integration/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639303712299471148
+  lastModified: 639304280778112241
   FileSizes:
   - Name: 
     Value: 878
