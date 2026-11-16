@@ -5,14 +5,24 @@ public class BucketItem : Item
 {
     [SerializeField] GameObject puddle_task;
     [SerializeField] GameObject water;
+    [SerializeField] private GameObject throwWater;
 
     bool isFull = false;
+    private ParticleSystem throwWaterParticle;
+
+    private void Start()
+    {
+        throwWaterParticle = throwWater.GetComponent<ParticleSystem>();
+    }
+
     protected override void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed) 
     {
         Debug.Log("THROW");
         if (!isFull)
         {
             base.ThrowItem(direction, throwHeight, throwSpeed);
+            throwWater.transform.eulerAngles = direction;
+            throwWaterParticle.Play();
             return;
         }
 

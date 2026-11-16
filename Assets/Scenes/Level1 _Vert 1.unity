@@ -1056,6 +1056,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4158092145520233242, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
+      propertyPath: throwWater
+      value: 
+      objectReference: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
     - target: {fileID: 7405823279860287245, guid: fd43cccc33eb9b04796f5355d57c0b66, type: 3}
       propertyPath: m_Name
       value: Bucket
