@@ -21,7 +21,7 @@ public class FishingTask: Task
     float lossRate = 10.0f;
 
     [SerializeField] Slider reelUI;
-    [SerializeField] private EventReference fishPickupSound;
+    //[SerializeField] private EventReference fishPickupSound;
 
     bool reeling = false;
 
@@ -91,6 +91,7 @@ public class FishingTask: Task
         startTime = Time.time; 
            //RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
         SoundManager.PlaySound(SoundType.FishPickup);
+        
     }
 
     public override void TaskAction() 
@@ -105,7 +106,7 @@ public class FishingTask: Task
             EndTask();
             //RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
             SoundManager.PlaySound(SoundType.FishPickup);
-
+            
         }
     }
 

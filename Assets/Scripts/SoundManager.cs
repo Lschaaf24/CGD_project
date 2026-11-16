@@ -7,9 +7,10 @@ public enum SoundType
 {
     FishPickup,
      RunningWater, 
+     FishStart,
 }
 
-[RequireComponent(typeof(AudioSource))]
+//[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
