@@ -69,4 +69,10 @@ public class WinCondition : MonoBehaviour
     {
         return scoreReqReached;
     }
+
+    public int GetScore()
+    {
+        return scoreChecker.GetScoreFromScoreChecker();
+
+    }
 }
