@@ -145,12 +145,12 @@ public class GameManager : MonoBehaviour
         if (winChecker.GetScoreReqReached())
         {
             endScreen_text.text = "WIN";
-            endScreen_image.sprite = endScreen_winSprite;
+            //endScreen_image.sprite = endScreen_winSprite;
         }
         else
         {
             endScreen_text.text = "LOSE";
-            endScreen_image.sprite = endScreen_loseSprite;
+            //endScreen_image.sprite = endScreen_loseSprite;
 
         }
 

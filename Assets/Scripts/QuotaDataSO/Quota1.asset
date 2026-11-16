@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quota1
   m_EditorClassIdentifier: Assembly-CSharp::QuotaDataSO
   WeightMin: 1
-  WeightMax: 50
+  WeightMax: 6
   targetNum: 3
   timeLimit: 1000
   score: 100

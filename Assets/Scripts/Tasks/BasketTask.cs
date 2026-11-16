@@ -54,7 +54,7 @@ public class BasketTask : MonoBehaviour
             Destroy(other.gameObject);
             basketParticle.Play();
             basketParticle_2.Play();
-            SpawnScoreText((int)item.GetWeight(),matchesQuota);
+            SpawnScoreText(item.GetWeight(),matchesQuota);
         }
         else
         {
