@@ -20,7 +20,7 @@ public class Item : MonoBehaviour
     private bool hasBeenWeighed = false;
     private bool canStun = false;
 
-    private PlayerController thrower;
+    protected PlayerController thrower;
 
     private float signOfCharge = 1f;
 

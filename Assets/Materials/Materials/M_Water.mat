@@ -174,7 +174,7 @@ Material:
     - _DeepColour: {r: 0.05, g: 0.32, b: 0.68, a: 0.9019608}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColour: {r: 0.88, g: 0.97999996, b: 1, a: 0.21960784}
-    - _HorizonColour: {r: 0.18377632, g: 0.5345911, b: 0, a: 1}
+    - _HorizonColour: {r: 0, g: 0.8805031, b: 0.87149423, a: 1}
     - _IntersectionFoamColour: {r: 0.86, g: 0.99, b: 1, a: 0.9019608}
     - _ScrollSpeed: {r: 0.39, g: 0.01, b: 0, a: 0}
     - _ScrollSpeed1: {r: 0.1, g: 0.1, b: 0, a: 0}
