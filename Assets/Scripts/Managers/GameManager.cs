@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
         else
         {
             endScreen_text.text = "LOSE";
-            //endScreen_image.sprite = endScreen_loseSprite;
+           // endScreen_image.sprite = endScreen_loseSprite;
 
         }
 
