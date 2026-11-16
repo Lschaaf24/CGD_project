@@ -80,7 +80,7 @@ public class LevelSelector : MonoBehaviour
     {
         if (currentLevel == null)
             return null;
-        return currentLevel.GetLevelData().getLevelScene().name;
+        return currentLevel.GetLevelData().getLevelScene();
     }
 
 
@@ -89,7 +89,7 @@ public class LevelSelector : MonoBehaviour
         SetCurrentLevel(level);
 
         currentLevelDataSO = currentLevel.GetLevelData();
-        SceneManager.LoadScene(currentLevelDataSO.getLevelScene().name);
+        SceneManager.LoadScene(currentLevelDataSO.getLevelScene());
     }
 
     private void OnDestroy()

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEditor.Progress;
 using TMPro;
 using System.Collections;
 
