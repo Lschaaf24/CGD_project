@@ -15,6 +15,8 @@ public class CameraRock : MonoBehaviour
 
     private Material skyboxMat;
 
+    float elapsedTime = 0;
+
     void Start()
     {
         startPos = transform.position;
@@ -26,7 +28,8 @@ public class CameraRock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float s = Mathf.Sin(Time.time * speed);
+        elapsedTime += Time.deltaTime;
+        float s = Mathf.Sin(elapsedTime * speed);
         float x = amptitude * s;
         float y = curve * x * x;
 
@@ -41,6 +44,12 @@ public class CameraRock : MonoBehaviour
             skyboxMat.SetMatrix("_CamCounterRotation", Matrix4x4.Rotate(inverseCamRot));
         }
 
+    }
+
+    private void OnEnable()
+    {
+        //startPos = transform.position;
+        //startRot = transform.rotation;
     }
 
     public Quaternion GetStartRot() 

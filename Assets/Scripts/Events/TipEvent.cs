@@ -14,6 +14,7 @@ public class TipEvent : GameEvent
     [SerializeField] float tipDegrees;
     [SerializeField] float holdTime = 0;
     [SerializeField] GameObject warningText;
+
     public override void StartEvent()
     {
         isActive = true;
