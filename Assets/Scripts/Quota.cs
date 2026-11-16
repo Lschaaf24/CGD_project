@@ -30,11 +30,9 @@ public class Quota : MonoBehaviour
 
     public bool TryAddProgress(Item item)
     {
-        if(finished) return false;
-        
-        float weight = item.GetWeight();
-        if (weight <= Data.getWeightMin() || weight >= Data.getWeightMax()) return false;
+        if (!Accepts(item)) return false;
 
+        Debug.Log("scored");
         progress++;
         OnProgressChanged?.Invoke(progress, Data.getTargetNum());
 
@@ -46,6 +44,19 @@ public class Quota : MonoBehaviour
 
         return true;
     
+    }
+
+
+    public bool Accepts(Item item)
+    {
+        Debug.Log("scored");
+
+        if (finished) return false;
+
+        float weight = item.GetWeight();
+        if (weight <= Data.getWeightMin() || weight >= Data.getWeightMax()) return false;
+
+        return true;
     }
 
     // Update is called once per frame
