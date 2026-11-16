@@ -12,12 +12,16 @@ public class GameManager : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] private LevelSelector levelSelector;
+    [SerializeField] private GameObject feedbackUI;
+    [SerializeField] private GameObject quotaPanel;
+    [SerializeField] private GameObject timerText;
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
     [SerializeField] private WinCondition winChecker;
     [SerializeField] private QuotaManager quotaManager;
     [SerializeField] private GameObject endScreen;
     [SerializeField] private TMP_Text endScreen_text;
+    [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Image endScreen_image;
     [SerializeField] private Sprite endScreen_winSprite;
     [SerializeField] private Sprite endScreen_loseSprite;
@@ -137,24 +141,29 @@ public class GameManager : MonoBehaviour
         Debug.Log("level finish Reached");
         levelSelector.AddLevelToCompletedList(currentLevel);
 
+        feedbackUI.SetActive(false);
+        quotaPanel.SetActive(false);
+        timerText.SetActive(false);
         StopQuotaRoutine();
         quotaManager.ClearAll();
         TimeChecker.Instance.SetTimerOff(false);
 
         endScreen.SetActive(true);
+
+        scoreText.text =  winChecker.GetScore().ToString();
+
         if (winChecker.GetScoreReqReached())
         {
             endScreen_text.text = "WIN";
-            //endScreen_image.sprite = endScreen_winSprite;
+            endScreen_image.sprite = endScreen_winSprite;
         }
         else
         {
             endScreen_text.text = "LOSE";
-           // endScreen_image.sprite = endScreen_loseSprite;
+            endScreen_image.sprite = endScreen_loseSprite;
 
         }
 
-        StartCoroutine(LoadLevelSelector());
 
         //SceneManager.LoadScene("LevelSelector");
         //levelSelector.SetCurrentLevelData(null);
@@ -190,14 +199,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private IEnumerator LoadLevelSelector()
+    public void ExitButtonPressed()
     {
-        yield return new WaitForSeconds(3f);
-
         SceneManager.LoadScene("LevelSelector");
-
-        yield return null;
-
     }
 
 }
