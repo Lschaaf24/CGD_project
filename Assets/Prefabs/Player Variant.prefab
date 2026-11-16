@@ -427,6 +427,10 @@ PrefabInstance:
       propertyPath: weightDisplay
       value: 
       objectReference: {fileID: 6714258565171190624}
+    - target: {fileID: 5804665223641237709, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
+      propertyPath: slideParticleEffect
+      value: 
+      objectReference: {fileID: 4184481392627098331, guid: 110175fc12a75e049a85f24e038d4f43, type: 3}
     - target: {fileID: 7181405563972284936, guid: 9f3163585b5094742ab7cedce80ae828, type: 3}
       propertyPath: m_SizeDelta.x
       value: 541.1

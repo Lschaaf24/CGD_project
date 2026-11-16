@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideDuration = 1.0f;
     [SerializeField] private float slideCooldown = 0.5f;
 
+    [SerializeField] private GameObject slideParticleEffect;
+
     [SerializeField] private float itemThrowHeight = 1f;
     //[SerializeField] private float itemThrowForce = 4f;
     [SerializeField] private float itemThrowSpeed = 10f;
@@ -175,6 +177,8 @@ public class PlayerController : MonoBehaviour
     { 
         isSliding = true;
 
+        GameObject slideEffect = Instantiate(slideParticleEffect, transform.position, Quaternion.LookRotation(-moveDirection.normalized));
+
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(0.2f);
@@ -194,6 +198,9 @@ public class PlayerController : MonoBehaviour
 
         
         yield return new WaitForSeconds(slideCooldown);
+
+        Destroy(slideEffect);
+
         isSliding = false;
     }
 
