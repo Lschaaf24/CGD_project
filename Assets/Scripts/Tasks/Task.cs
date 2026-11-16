@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,10 +26,24 @@ public class Task : MonoBehaviour
     [SerializeField] protected int playersRequired = 1;
 
     [Tooltip("Will the task always persist or does it spawn temporarily")]
-    [SerializeField] private bool persistentTask = false;
+    [SerializeField] protected bool persistentTask = false;
 
     [Tooltip("Does the task require continous input?")]
     [SerializeField] private bool continuousTask = false;
+
+    [Tooltip("The item the player gains from completing the task")]
+    [SerializeField] protected GameObject reward;
+    [SerializeField] bool ejectItem;
+
+    [SerializeField] private Transform ejectPoint;
+    [SerializeField] private Transform peakPoint;
+    [SerializeField] private Transform targetPoint;
+
+    [SerializeField] private ItemData requiredItem;
+
+
+    [Tooltip("Will the task take the players item?")]
+    [SerializeField] bool takeItem = false;
 
     [Space(15)]
 
@@ -39,50 +56,86 @@ public class Task : MonoBehaviour
     [SerializeField] private AudioClip soundEffect;
 
     [Tooltip("Particle Effect to be played when the task is ready")]
-    [SerializeField] private ParticleSystem particleSystem;
+    [SerializeField] protected ParticleSystem particleSystem;
 
     [Tooltip("Icon that appears when the task is ready")]
-    [SerializeField] private GameObject icon;
+    [SerializeField] protected GameObject readyIcon;
 
-    bool isCompleted = false;
+    protected bool isCompleted = true;
+
     int currentPlayers = 0;
     bool taskStarted = false;
-    bool taskReady = false;
+    [SerializeField] protected bool taskReady = false;
 
-    List<PlayerController> engaged_players = new List<PlayerController>();
+    protected List<PlayerController> engagedPlayers = new List<PlayerController>();
 
-    float interval = 5.0f;
-    float elapsed_time = 0.0f;
+    protected float interval = 5.0f;
+    protected float elapsed_time = 0.0f;
+
+    protected Item currentItem = null;
+
+    public event Action<Task> OnTaskCompleted;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-      
+        if (!persistentTask) 
+        {
+            taskReady = true; 
+        }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-    
-        if (taskReady == false) 
+        
+        if (taskReady == false && persistentTask && isCompleted == true) 
         {
             elapsed_time += Time.deltaTime;
             if (elapsed_time >= interval) 
             {
-                taskReady = true;
                 elapsed_time = 0.0f;
-                icon.SetActive(true);
+                taskReady = true;
+                if(readyIcon  != null)
+                {
+                    readyIcon.SetActive(true);
+                }
             }
-        }   
+        }
     }
 
     public bool EnterTask(PlayerController player) 
     {
         if (!taskReady) return false;
+
+        Item heldItem = player.GetHeldItem();
+        if(requiredItem != null) 
+        {
+            if(heldItem == null || heldItem.GetItemData() != requiredItem) 
+            {
+                return false;
+            }
+        }
+        else if (heldItem != null && !takeItem)
+        {
+            return false;
+        }
+
+        if (takeItem)
+        {
+            Debug.Log("current item:" + currentItem);
+            currentItem = player.SwapItem(currentItem, base.transform);
+           
+            if (currentItem == null) return false;
+        }
+
+
         Debug.Log("ENTERED");
         if(currentPlayers < playersRequired) 
         {
-            engaged_players.Add(player);
+            engagedPlayers.Add(player);
             currentPlayers++;
             if(currentPlayers == playersRequired) 
             {
@@ -95,21 +148,37 @@ public class Task : MonoBehaviour
     protected virtual void EndTask()
     {
         Debug.Log("TASK COMPLETED");
+        if(reward != null) 
+        {
+            Vector3 ejectDirection = Vector3.zero;//(transform.up * 10) - (transform.forward * 3);
+            GameObject item = Instantiate(reward, null);
+            if (ejectItem) 
+            {
+                item.transform.position = ejectPoint.position;
+                StartCoroutine(EjectItem(item));
+            }
+            else
+            {
+                engagedPlayers[0].ReceiveItem(item.GetComponent<Item>());
+            }
+        }
+        foreach (var player in engagedPlayers)
+        {
+            player.TaskEject();
+        }
+        taskReady = false;
+
         if (persistentTask) 
         {
-            taskReady = false;
-            isCompleted = true;
             currentPlayers = 0;
-            foreach(var player in engaged_players) 
-            {
-                player.TaskEject();
-            }
-            engaged_players.Clear();
+            engagedPlayers.Clear();
         }
         else 
         {
+            Destroy(readyIcon);
             Destroy(this.gameObject);
         }
+        OnTaskCompleted?.Invoke(this);
     }
 
 
@@ -117,8 +186,61 @@ public class Task : MonoBehaviour
     public virtual void TaskAction() { }
 
     protected virtual void BeginTask()  
-    { 
-        icon.SetActive(false); 
+    {
+        if (readyIcon) 
+        {
+            readyIcon.SetActive(false);
+        }
+        taskReady = false;
+        isCompleted = false;
+    }
+
+    public bool isTaskCompleted() 
+    {
+        if(isCompleted) return true;
+        return false;
+    }
+
+    public virtual void LeaveTask(PlayerController player) 
+    {
+        player.TaskEject();
+        currentPlayers -= 1;
+        engagedPlayers.Remove(player);
+       
+        taskReady = true;
+        Debug.Log("FAILED TASK");
+    }
+
+    IEnumerator EjectItem(GameObject item) 
+    {
+        float timeElapsed = 0;
+        float duration = 1;
+
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+            item.transform.position = Bezier(ejectPoint.position, peakPoint.position,targetPoint.position, timeElapsed / duration); 
+            yield return null;
+        }
+
+        item.transform.position = targetPoint.position;
+        
+    }
+
+
+    Vector3 Bezier(Vector3 a, Vector3 b, float t)
+    {
+        return Vector3.Lerp(a, b, t);
+    }
+
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
+    {
+        return Vector3.Lerp(Bezier(a, b, t), Bezier(b, c, t), t);
+    }
+
+    Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, Vector3 d, float t)
+    {
+        return Vector3.Lerp(Bezier(a, b, c, t), Bezier(b, c, d, t), t);
     }
 
 
