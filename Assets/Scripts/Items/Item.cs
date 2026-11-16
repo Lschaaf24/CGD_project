@@ -11,12 +11,14 @@ public class Item : MonoBehaviour
 
     [SerializeField] private ItemData itemType;
 
+    [SerializeField] private int itemWeight;
+
     protected float throwSpeedMult;
     protected Rigidbody rb;
     private bool isCharging;
     private float charge = 0f;
     protected float chargeRatio;
-    private float weight;
+    private int weight;
     private bool hasBeenWeighed = false;
     private bool canStun = false;
 
@@ -29,6 +31,7 @@ public class Item : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         weight = itemType.GenerateWeight();
+        itemWeight = weight;
     }
 
     protected virtual void Update()
@@ -156,7 +159,7 @@ public class Item : MonoBehaviour
         return itemType;
     }
 
-    public float GetWeight() 
+    public int GetWeight() 
     {
         return weight;
     }

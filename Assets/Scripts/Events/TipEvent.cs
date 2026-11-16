@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,7 +22,9 @@ public class TipEvent : GameEvent
         camera = Camera.main.gameObject;
         cameraRock = camera.GetComponent<CameraRock>();
         cameraRock.enabled = false;
-        StartCoroutine(LerpTip(tipDegrees));
+
+
+        StartCoroutine(LerpTip(tipDegrees * Mathf.Sign(UnityEngine.Random.Range(-2, 1))));
         warningText.SetActive(true);
     }
 

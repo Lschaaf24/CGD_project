@@ -6,6 +6,7 @@ public class BucketItem : Item
 {
     [SerializeField] GameObject waterProjectile;
     [SerializeField] GameObject water;
+    [SerializeField] private ParticleSystem throwWater;
 
     bool isFull = false;
     protected override void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed) 
@@ -27,6 +28,10 @@ public class BucketItem : Item
         var proj = Instantiate(waterProjectile, transform.position, Quaternion.identity);
 
         if (thrower != null)
+        Instantiate(throwWater,this.transform.position, Quaternion.LookRotation(direction));
+
+        RaycastHit hit;
+        if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
         {
             Collider itemCollider = proj.GetComponent<Collider>();
             Collider[] playerColliders = thrower.GetComponentsInChildren<Collider>();
@@ -39,8 +44,11 @@ public class BucketItem : Item
  
         proj.GetComponent<Rigidbody>().AddForce(direction * throwVelocity, ForceMode.Impulse);
 
+   
         SetFill(false);
     }
+
+
 
     public void SetFill(bool fill) 
     {

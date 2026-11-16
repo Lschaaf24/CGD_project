@@ -1,12 +1,7 @@
 using System;
 using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.EditorTools;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.UIElements;
+
 
 public class ObstacleMove : MonoBehaviour
 {

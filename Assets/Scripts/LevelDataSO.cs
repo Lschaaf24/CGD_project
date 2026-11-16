@@ -9,7 +9,7 @@ public class LevelDataSO : ScriptableObject
     [SerializeField] private int QuotaLimit;
     [SerializeField] private uint ScoreReq;
     [SerializeField] private int BoatRoll_Intensty;
-    [SerializeField] private SceneAsset LevelScene;
+    [SerializeField] private string LevelScene;
 
 
     public int getTimeLimit()
@@ -29,7 +29,7 @@ public class LevelDataSO : ScriptableObject
     {
         return BoatRoll_Intensty;
     }
-    public SceneAsset getLevelScene()
+    public string getLevelScene()
     {
         return LevelScene;
     }

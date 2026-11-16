@@ -53,8 +53,8 @@ public class Quota : MonoBehaviour
 
         if (finished) return false;
 
-        float weight = item.GetWeight();
-        if (weight <= Data.getWeightMin() || weight >= Data.getWeightMax()) return false;
+        int weight = item.GetWeight();
+        if (weight < Data.getWeightMin() || weight > Data.getWeightMax()) return false;
 
         return true;
     }

@@ -1,34 +1,35 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class PlayerInputManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
 
-    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private List<Transform> spawnPoints;
 
     private HashSet<Gamepad> joinedGamePads = new HashSet<Gamepad>();
 
     [SerializeField] List<Color> hatColors;
     int playerCount = 0;
+    private int spawn;
 
     void Update()
     {
         foreach (var gamepad in Gamepad.all)
         {
-            if (gamepad.buttonSouth.wasPressedThisFrame && !joinedGamePads.Contains(gamepad))
+            if (gamepad.buttonSouth.wasPressedThisFrame && spawn < spawnPoints.Count && !joinedGamePads.Contains(gamepad))
             {
                 var player = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: gamepad);
 
                 AssignHatColour(player.GetComponent<PlayerController>());
                 
 
-                player.transform.position = spawnPoint.position;
+                player.transform.position = spawnPoints[spawn].position;
                 player.SwitchCurrentActionMap("Player");
                 joinedGamePads.Add(gamepad);
-
+                spawn++;
             }
         }
     }
@@ -46,7 +47,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         else
         {
-            propertyBlock.SetColor("_BaseColor", Random.ColorHSV());
+            propertyBlock.SetColor("_BaseColor", UnityEngine.Random.ColorHSV());
         }
       
         player.GetHatRenderer().SetPropertyBlock(propertyBlock);

@@ -89,7 +89,11 @@ PrefabInstance:
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: endScreen
       value: 
-      objectReference: {fileID: 9041666183374473767}
+      objectReference: {fileID: 2470710960850876359}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 2547532366220210233}
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: winChecker
       value: 
@@ -105,7 +109,19 @@ PrefabInstance:
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: endScreen_text
       value: 
-      objectReference: {fileID: 7340225634727104210}
+      objectReference: {fileID: 8517011967211540679}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: endScreen_image
+      value: 
+      objectReference: {fileID: 3301592906929416558}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: endScreen_winSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b0081d974b1ef846a4d9c29be0b4f1d, type: 3}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: endScreen_loseSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ed693a22402a82c479d1fe17f2f8ac3b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -116,6 +132,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2749952229524163615, guid: 59115f5bc645c9940bed09494978e949, type: 3}
   m_PrefabInstance: {fileID: 1221295257669607067}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4900000685972234225 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+  m_PrefabInstance: {fileID: 1221295257669607067}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1355e5aded2e80a488f0454a7c5ce49c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
 --- !u!1001 &4486297725105624673
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,6 +258,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8465390981955853370}
     m_Modifications:
+    - target: {fileID: 446850577654714495, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_Name
+      value: ScoreText
+      objectReference: {fileID: 0}
     - target: {fileID: 1095559955511463528, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -311,9 +342,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.4862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.4862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.3137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4900000685972234225}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitButtonPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611912025262492780, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2020706212464193054, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612870220668183498, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 413
+      objectReference: {fileID: 0}
+    - target: {fileID: 2949260251172874267, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2949260251172874267, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2949260251172874267, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 13.349998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2949260251172874267, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.79319
       objectReference: {fileID: 0}
     - target: {fileID: 2960472494264618132, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
       propertyPath: m_Color.a
@@ -330,6 +413,26 @@ PrefabInstance:
     - target: {fileID: 2960472494264618132, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
       propertyPath: m_Color.r
       value: 0.5566038
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847838570557435534, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847838570557435534, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847838570557435534, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 13.349998
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847838570557435534, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -19.707191
+      objectReference: {fileID: 0}
+    - target: {fileID: 4843960471684305918, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7046401077018770516, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
       propertyPath: m_LocalScale.y
@@ -348,9 +451,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
---- !u!114 &5165457839883876535 stripped
+--- !u!1 &2470710960850876359 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4843960471684305918, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_PrefabInstance: {fileID: 7021268934224045113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2547532366220210233 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2801215245381541006, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4767669153395201024, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
   m_PrefabInstance: {fileID: 7021268934224045113}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -359,9 +467,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &7340225634727104210 stripped
+--- !u!114 &3301592906929416558 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 336985703001418475, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5521716215956032855, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+  m_PrefabInstance: {fileID: 7021268934224045113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &5165457839883876535 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2801215245381541006, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
   m_PrefabInstance: {fileID: 7021268934224045113}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -375,8 +494,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1095559955511463528, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
   m_PrefabInstance: {fileID: 7021268934224045113}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9041666183374473767 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2020706212464193054, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
+--- !u!114 &8517011967211540679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1675919223107220734, guid: 294c44ab75ea4ad43ac5233f721cb1d9, type: 3}
   m_PrefabInstance: {fileID: 7021268934224045113}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
