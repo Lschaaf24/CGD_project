@@ -1,12 +1,7 @@
 using System;
 using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.EditorTools;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.UIElements;
+
 
 public class ObstacleMove : MonoBehaviour
 {
@@ -14,6 +9,7 @@ public class ObstacleMove : MonoBehaviour
     [SerializeField] private Transform startTrans;
     [SerializeField] private Transform endTrans;
 
+    [SerializeField] private LayerMask cargoLayer;
 
 
     Vector3 direction;
@@ -31,8 +27,10 @@ public class ObstacleMove : MonoBehaviour
 
     [SerializeField] bool canFall = false;
 
-    bool slidePaused = false;
+    [SerializeField] bool slidePaused = false;
     float lastAcceleration = 0;
+
+    float lastContactTime;
 
 
 
@@ -119,13 +117,20 @@ public class ObstacleMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (slidePaused) return;
+        if ((cargoLayer.value & (1 << collision.gameObject.layer)) != 0 && Time.time - lastContactTime > 0.2f)
+        {
+            lastContactTime = Time.time;
+            PauseSlide();
+            return;
+        }
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player == null) return;
         if (player.GetIsStunned()) return;
 
         Vector3 displacement = player.transform.position - transform.position;
         float dot = Vector3.Dot(displacement.normalized, direction * Mathf.Sign(currentSpeed));
-        if(dot > 0.7071f) 
+        if(dot > 0.7071f && MathF.Abs(currentSpeed) > 0.75f) 
         {
             player.stunPlayer();
         }

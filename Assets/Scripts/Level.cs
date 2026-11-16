@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class Level : MonoBehaviour
     public void OnClick()
     {
         LevelSelector.Instance.LoadLevel(this);
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("Menu Screen");
     }
 
 }

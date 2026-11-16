@@ -4,14 +4,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Objects/ItemData")]
 public class ItemData : ScriptableObject
 {
-    [SerializeField] private float itemWeight = 1f;
+    [SerializeField] protected int itemWeight = 1;
     [SerializeField] private Mesh itemMesh;
     public string itemName;
 
-    virtual public float GenerateWeight()
+    virtual public int GenerateWeight()
     {
         return itemWeight;
     }
+
+    virtual public int GetWeight() { return itemWeight; }
 
     virtual public Mesh GetItemMesh() 
     {

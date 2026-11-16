@@ -78,6 +78,15 @@ public class QuotaManager : MonoBehaviour
         }
     }
 
+    public bool MatchesActiveQuotas(Item item)
+    {
+        foreach(var quota in activeQuotas.ToArray())
+        {
+            if(quota.Accepts(item)) return true;
+        }
+        return false;
+    }
+
     void OnEnable()
     {
         basket.OnFishCollected += HandleFishCollected;

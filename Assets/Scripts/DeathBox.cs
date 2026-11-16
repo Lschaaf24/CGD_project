@@ -20,7 +20,7 @@ public class DeathBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player")
+        if (other.tag != "Player" && !other.GetComponent<BucketItem>())
         {
             Destroy(other.gameObject);
             return;

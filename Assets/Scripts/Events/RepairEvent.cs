@@ -9,14 +9,22 @@ public class RepairEvent : GameEvent
 
     [SerializeField] List<Transform> spawnPoints = new();
     
-    private List<Task> tasks = new();
+    private Dictionary<Task, Transform> activeTaskPoints = new();
+    
     
     public override void StartEvent()
     {
-        GameObject taskObject = Instantiate(repairTask);
-        int i = UnityEngine.Random.Range(0, spawnPoints.Count - 1);
-        taskObject.transform.position = spawnPoints[i].position;
-        Task task = taskObject.GetComponent<Task>();
+        if (spawnPoints.Count <= 0) return;
+        
+            GameObject taskObject = Instantiate(repairTask);
+            int i = UnityEngine.Random.Range(0, spawnPoints.Count - 1);
+            Transform spawnPoint = spawnPoints[i];
+            taskObject.transform.position = spawnPoint.position;
+            Task task = taskObject.GetComponent<Task>();
+            activeTaskPoints[task] = spawnPoint;
+            spawnPoints.Remove(spawnPoint);
+        
+
 
         if (task == null) 
         {
@@ -25,7 +33,6 @@ public class RepairEvent : GameEvent
         }
 
         task.OnTaskCompleted += HandleTaskCompleted;
-        tasks.Add(task);
 
         intensityModifier += 0.1f;
 
@@ -34,7 +41,7 @@ public class RepairEvent : GameEvent
     private void HandleTaskCompleted(Task task) 
     {
         task.OnTaskCompleted -= HandleTaskCompleted;
-        tasks.Remove(task);
+        spawnPoints.Add(activeTaskPoints[task]);
 
         intensityModifier -= 0.1f;
     }

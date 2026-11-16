@@ -128,9 +128,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   startTrans: {fileID: 7683670559632239327}
   endTrans: {fileID: 6464213916990685755}
+  cargoLayer:
+    serializedVersion: 2
+    m_Bits: 512
   gravity: 9.81
   frictionCoefficient: 0.03
   canFall: 0
+  slidePaused: 0
 --- !u!54 &3288855164309613096
 Rigidbody:
   m_ObjectHideFlags: 0

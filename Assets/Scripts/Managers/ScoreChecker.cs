@@ -39,4 +39,9 @@ public class ScoreChecker : MonoBehaviour
         quotaManager.OnQuotaFailed -= HandleScoreSubtracted;
     }
 
+    public int GetScoreFromScoreChecker()
+    {
+        return score;
+    }
+
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,11 +6,12 @@ using UnityEngine.UI;
 
 public class RepairTask: Task
 {
-
+    Vector3 targetScale;
     private void OnEnable()
     {
-
+        targetScale = transform.localScale;
         EventManager.Instance.ChangeCounter(EventManager.SceneCounter.RepairCount, 1);
+        StartCoroutine(LerpIn());
 
     }
 
@@ -45,4 +47,21 @@ public class RepairTask: Task
     {
         Debug.Log("CLEAN");
     }
+
+    IEnumerator LerpIn() 
+    {
+        float timeElapsed = 0;
+
+        while (timeElapsed < 1.0f)
+        {
+
+            transform.localScale = Vector3.Lerp(Vector3.zero, targetScale, timeElapsed / 1.0f);
+            timeElapsed += Time.deltaTime;
+          
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+    }
 }
+
