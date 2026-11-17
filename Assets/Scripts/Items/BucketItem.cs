@@ -1,10 +1,12 @@
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class BucketItem : Item
 {
-    [SerializeField] GameObject puddle_task;
+    [SerializeField] GameObject waterProjectile;
     [SerializeField] GameObject water;
+    [SerializeField] private ParticleSystem throwWater;
 
     bool isFull = false;
     protected override void ThrowItem(Vector3 direction, float throwHeight, float throwSpeed) 
@@ -17,23 +19,39 @@ public class BucketItem : Item
             return;
         }
 
+        direction.y = throwHeight;
+
         throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
 
-        throwSpeed = throwSpeed * throwSpeedMult;
+        //throwSpeed = throwSpeed * throwSpeedMult;
+        float throwVelocity = throwSpeed * throwSpeedMult;
 
-        Vector3 position = transform.position;
-        position.y = 0.01f;
-        direction.y = 0;
+        var proj = Instantiate(waterProjectile, transform.position + Vector3.up, Quaternion.identity);
 
+        if (thrower != null)
+        Instantiate(throwWater,this.transform.position, Quaternion.LookRotation(direction));
 
         RaycastHit hit;
-        if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
+        if (Physics.Raycast(this.transform.position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
         {
-            Instantiate(puddle_task, new Vector3(position.x + (direction * throwSpeed).x, hit.point.y, position.z + (direction * throwSpeed).z), Quaternion.identity);
+            Collider itemCollider = proj.GetComponent<Collider>();
+            Collider[] playerColliders = thrower.GetComponentsInChildren<Collider>();
+
+            foreach (Collider playerCollider in playerColliders)
+            {
+                Physics.IgnoreCollision(itemCollider, playerCollider, true);
+            }
         }
         SoundManager.PlaySound(SoundType.Splash);
+
+        rb.linearVelocity = new Vector3(0, 0, 0);
+        proj.GetComponent<Rigidbody>().AddForce(direction * throwVelocity, ForceMode.Impulse);
+
+   
         SetFill(false);
     }
+
+
 
     public void SetFill(bool fill) 
     {

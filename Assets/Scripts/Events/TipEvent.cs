@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,13 +15,16 @@ public class TipEvent : GameEvent
     [SerializeField] float tipDegrees;
     [SerializeField] float holdTime = 0;
     [SerializeField] GameObject warningText;
+
     public override void StartEvent()
     {
         isActive = true;
         camera = Camera.main.gameObject;
         cameraRock = camera.GetComponent<CameraRock>();
         cameraRock.enabled = false;
-        StartCoroutine(LerpTip(tipDegrees));
+
+
+        StartCoroutine(LerpTip(tipDegrees * Mathf.Sign(UnityEngine.Random.Range(-2, 1))));
         warningText.SetActive(true);
     }
 

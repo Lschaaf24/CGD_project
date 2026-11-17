@@ -570,7 +570,7 @@ Transform:
   m_GameObject: {fileID: 7405823279860287245}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.89, y: 1, z: 0.76}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -580,6 +580,7 @@ Transform:
   - {fileID: 311346208159250550}
   - {fileID: 48930070750039616}
   - {fileID: 8877694317342573648}
+  - {fileID: 6476171908321516234}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6831840334695803437
@@ -703,5 +704,93 @@ MonoBehaviour:
   minSpeedMult: 0.5
   maxSpeedMult: 1
   itemType: {fileID: 11400000, guid: f0a8d0d56f4b4a140a4fe64a9feb56c8, type: 2}
-  puddle_task: {fileID: 7015080325355732025, guid: 70c0698f17132b741931f1e446b400e8, type: 3}
+  itemWeight: 0
+  waterProjectile: {fileID: 3779141347178682206, guid: a72817ac2b25b56418eeb4f83f51523b, type: 3}
   water: {fileID: 6130832141976445233}
+  throwWater: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+--- !u!1001 &2947360771055815833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 300014858277085388}
+    m_Modifications:
+    - target: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: VelocityModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: VelocityModule.y.scalar
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: VelocityModule.z.scalar
+      value: -1.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517343859629728800, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: VelocityModule.radial.scalar
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8808361150542967966, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+      propertyPath: m_Name
+      value: ThrowWater
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+--- !u!4 &6476171908321516234 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8158513754437981779, guid: f879b0c757274c44cb9c5f96c1050b68, type: 3}
+  m_PrefabInstance: {fileID: 2947360771055815833}
+  m_PrefabAsset: {fileID: 0}

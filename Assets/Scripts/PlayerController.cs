@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideDuration = 1.0f;
     [SerializeField] private float slideCooldown = 0.5f;
 
+    [SerializeField] private GameObject slideParticleEffect;
+
     [SerializeField] private float itemThrowHeight = 1f;
     //[SerializeField] private float itemThrowForce = 4f;
     [SerializeField] private float itemThrowSpeed = 10f;
@@ -175,6 +177,8 @@ public class PlayerController : MonoBehaviour
     { 
         isSliding = true;
 
+        GameObject slideEffect = Instantiate(slideParticleEffect, transform.position, Quaternion.LookRotation(-moveDirection.normalized), transform);
+
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(0.2f);
@@ -194,6 +198,9 @@ public class PlayerController : MonoBehaviour
 
         
         yield return new WaitForSeconds(slideCooldown);
+
+        Destroy(slideEffect);
+
         isSliding = false;
     }
 
@@ -311,7 +318,7 @@ public class PlayerController : MonoBehaviour
             weightDisplay.SetActive(true);
             int weight = (int)heldItem.GetItemData().GetWeight();
             weightDisplay.GetComponentInChildren<TMP_Text>().text = weight.ToString("0");
-            StartCoroutine(WeightIconTimer(2));
+            StartCoroutine(WeightIconTimer(1));
         }
 
     }
@@ -351,7 +358,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StunCoroutine(float duration)
     {
-        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.LookRotation(Vector3.up), transform);
         float timer = 0f;
         while (timer < duration)
         {
