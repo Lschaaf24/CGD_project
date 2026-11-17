@@ -15,6 +15,7 @@ public class BucketItem : Item
         if (!isFull)
         {
             base.ThrowItem(direction, throwHeight, throwSpeed);
+
             return;
         }
 
@@ -41,6 +42,7 @@ public class BucketItem : Item
                 Physics.IgnoreCollision(itemCollider, playerCollider, true);
             }
         }
+        SoundManager.PlaySound(SoundType.Splash);
 
         rb.linearVelocity = new Vector3(0, 0, 0);
         proj.GetComponent<Rigidbody>().AddForce(direction * throwVelocity, ForceMode.Impulse);

@@ -56,6 +56,7 @@ public class BasketTask : MonoBehaviour
                 basketParticle.Play();
                 basketParticle_2.Play();
             }
+            SoundManager.PlaySound(SoundType.Basket);
             SpawnScoreText(item.GetWeight(),matchesQuota);
         }
         else

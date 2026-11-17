@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using FMODUnity;
 using System.Collections;
 
 
@@ -20,6 +21,8 @@ public class FishingTask: Task
     float lossRate = 10.0f;
 
     [SerializeField] Slider reelUI;
+    
+
     bool reeling = false;
 
     float difference = 0;
@@ -85,7 +88,10 @@ public class FishingTask: Task
         reeling = true;
         reelUI.gameObject.SetActive(true);
         lossRate = UnityEngine.Random.Range(minLossRate, maxLossRate);
-        startTime = Time.time;
+        startTime = Time.time; 
+         
+        SoundManager.PlaySound(SoundType.FishStart);
+        
     }
 
     public override void TaskAction() 
@@ -98,6 +104,9 @@ public class FishingTask: Task
         {
             isCompleted = true;
             EndTask();
+           
+            SoundManager.PlaySound(SoundType.Splash);
+            
         }
     }
 
