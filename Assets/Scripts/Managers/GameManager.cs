@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelSelector levelSelector;
     [SerializeField] private GameObject feedbackUI;
     [SerializeField] private GameObject quotaPanel;
+    [SerializeField] private GameObject quotaCompleteText;
     [SerializeField] private GameObject timerText;
     private States currentState;
     [SerializeField] private LevelDataSO currentLevel;
@@ -132,8 +134,17 @@ public class GameManager : MonoBehaviour
     private void HandleQuotaCompleted(QuotaDataSO sO)
     {
         Debug.LogWarning("Completed Quota");
+        StartCoroutine(QuotaCompleteText());
         //Debug.Log("Completed Quota");
         //quotaManager.TryRandomGenerateQuota();
+    }
+
+    private IEnumerator QuotaCompleteText()
+    {
+        quotaCompleteText.SetActive(true);
+        yield return new WaitForSeconds(2);
+        quotaCompleteText.SetActive(false);
+
     }
 
     private void OnLevelFinished()
