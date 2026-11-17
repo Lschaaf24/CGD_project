@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class ScoreChecker : MonoBehaviour
@@ -8,12 +9,13 @@ public class ScoreChecker : MonoBehaviour
 
     [Header("refs")]
     [SerializeField] private QuotaManager quotaManager;
+    [SerializeField] private TMP_Text scoreText;
     [Header("Score settings")]
     [SerializeField] private int score;
 
     private void Start()
     {
-
+        scoreText.text = $"Score: 0";
     }
     private void OnEnable()
     {
@@ -24,12 +26,14 @@ public class ScoreChecker : MonoBehaviour
     private void HandleScoreSubtracted(QuotaDataSO obj)
     {
         score = obj.getScore();
+        scoreText.text = $"Score: {score.ToString()}";
         OnScoreChanged(score);
     }
 
     private void HandleScoreAdded(QuotaDataSO obj)
     {
         score += obj.getScore();
+        scoreText.text = $"Score: {score.ToString()}";
         OnScoreChanged(score);
     }
 

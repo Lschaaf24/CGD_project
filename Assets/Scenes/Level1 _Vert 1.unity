@@ -1202,6 +1202,14 @@ PrefabInstance:
       propertyPath: m_VerticalAlignment
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 8843486810361080342, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843486810361080342, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8888902046194175397, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -1960,7 +1968,7 @@ PrefabInstance:
       objectReference: {fileID: 1450155614}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: cooldown
-      value: 30
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: duration
@@ -1972,7 +1980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: baseWeight
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1662355556541194494, guid: 08b61ec9ee27cc847a64c460ca9a405c, type: 3}
       propertyPath: tipDegrees
