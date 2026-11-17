@@ -151,6 +151,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8465390981955853370}
     m_Modifications:
+    - target: {fileID: 27457347648164062, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: availableQuotas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 27457347648164062, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: 'availableQuotas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5fdbd3855b0da904da5dc50fb1516fe7, type: 2}
+    - target: {fileID: 27457347648164062, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
+      propertyPath: 'availableQuotas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ee21b7b89e505c547a5094b8da2ce3cb, type: 2}
     - target: {fileID: 1767216495858494342, guid: 8f9f26ceb7025104f89689c253a256f0, type: 3}
       propertyPath: scoreChecker
       value: 
