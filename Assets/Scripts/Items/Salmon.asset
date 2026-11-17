@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   itemWeight: 1
   itemMesh: {fileID: 2959467708922500008, guid: dfbefb401e17d65449a58586add2bd1d, type: 3}
+  itemName: Salmon
   minWeight: 1
   maxWeight: 12
   isFish: 1

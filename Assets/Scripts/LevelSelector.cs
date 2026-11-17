@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+
 
 public class LevelSelector : MonoBehaviour
 {
@@ -82,7 +80,7 @@ public class LevelSelector : MonoBehaviour
     {
         if (currentLevel == null)
             return null;
-        return currentLevel.GetLevelData().getLevelScene().name;
+        return currentLevel.GetLevelData().getLevelScene();
     }
 
 
@@ -90,10 +88,8 @@ public class LevelSelector : MonoBehaviour
     {
         SetCurrentLevel(level);
 
-        Debug.Log(GetCurrentLevel().GetLevelData().getLevelScene());
-
         currentLevelDataSO = currentLevel.GetLevelData();
-        SceneManager.LoadScene(currentLevelDataSO.getLevelScene().name);
+        SceneManager.LoadScene(currentLevelDataSO.getLevelScene());
     }
 
     private void OnDestroy()
@@ -103,4 +99,6 @@ public class LevelSelector : MonoBehaviour
             Instance = null;
         }
     }
+
+
 }

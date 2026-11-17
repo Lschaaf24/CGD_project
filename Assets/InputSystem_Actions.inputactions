@@ -438,17 +438,6 @@
                     "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d5cad857-50d6-4aa5-852d-0fa44705613c",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },

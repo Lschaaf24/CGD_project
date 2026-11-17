@@ -1,6 +1,10 @@
 using System.Collections;
+using TMPro;
+using Unity.IO.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,38 +18,48 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slideDuration = 1.0f;
     [SerializeField] private float slideCooldown = 0.5f;
 
-    [SerializeField] private float itemThrowHeight = 1f;
-    [SerializeField] private float itemThrowForce = 4f;
-    [SerializeField] private float itemThrowSpeed = 10f;
+    [SerializeField] private GameObject slideParticleEffect;
 
+    [SerializeField] private float itemThrowHeight = 1f;
+    //[SerializeField] private float itemThrowForce = 4f;
+    [SerializeField] private float itemThrowSpeed = 10f;
+    [SerializeField] private float stunDuration = 2f;
+    [SerializeField] private GameObject stunParticlePrefab;
+
+    [SerializeField] private GameObject hat;
+
+
+    private ThrowIndication throwIndication;
 
     private float slideTimer;
     private bool isSliding = false;
-    
+    private bool isStunned = false;
 
     private Item heldItem = null;
 
     private PlayerInput playerInput;
     private InputAction throwAction;
 
-
     private Vector2 movementInput = Vector2.zero;
     private Vector3 moveDirection;
     private Vector3 lastMoveDirection;
+    private Vector3 throwDirection;
     private Rigidbody rb;
 
     private GameObject closestObject = null;
     private GameObject interactedObject = null;
-    private GameObject itemObject = null;
 
     private bool isChargingThrow;
 
     [SerializeField] private bool inTask = false;
 
+    [SerializeField] private GameObject weightDisplay;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        throwIndication = GetComponentInChildren<ThrowIndication>();
     }
     private void OnEnable()
     {
@@ -58,6 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         throwAction.started -= OnThrowStarted;
         throwAction.canceled -= OnThrowCanceled;
+        
     }
 
     private void OnThrowStarted(InputAction.CallbackContext context)
@@ -70,11 +85,34 @@ public class PlayerController : MonoBehaviour
 
     private void OnThrowCanceled(InputAction.CallbackContext context)
     {
+
         if (heldItem == null || !isChargingThrow) return;
 
         isChargingThrow = false;
-        heldItem.ReleaseCharge(lastMoveDirection * itemThrowForce + Vector3.up * itemThrowHeight, itemThrowSpeed);
-        heldItem = null;
+        if (throwDirection.sqrMagnitude < 0.01f)
+        {
+            throwDirection = throwIndication.GetCurrentDirection();
+        }
+
+        BucketItem bucket = heldItem.GetComponent<BucketItem>();
+        bool keepHeldItem = (bucket != null && bucket.GetIsFull());
+
+        if (!keepHeldItem)
+        {
+            heldItem.GetComponent<Collider>().enabled = true;
+        }
+
+        heldItem.SetThrower(this);
+        heldItem.ReleaseCharge(throwDirection, itemThrowHeight, itemThrowSpeed);
+
+        if (!keepHeldItem)
+        {
+            heldItem = null;
+        }
+        
+      
+        
+
     }
 
 
@@ -86,20 +124,27 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-
         //if (heldItem != null) return;
         if (closestObject == null) return;
         Task task;
+        Item item;
+        ObstacleMove box;
         if (interactedObject == null) 
         {
-
-
-
-
             task = closestObject.GetComponent<Task>();
-            if (task && !inTask)
+            item = closestObject.GetComponent<Item>();
+            box = closestObject.GetComponent<ObstacleMove>();
+            if (box) 
             {
-
+                box.PauseSlide();
+            }
+            else if(item)
+            {
+                ReceiveItem(item);
+               
+            }
+            else if (task && !inTask)
+            {
                 if (task.EnterTask(this)) 
                 {
                     if (!task.isTaskCompleted()) 
@@ -108,22 +153,9 @@ public class PlayerController : MonoBehaviour
                         interactedObject = closestObject;
                     }
                 }
-                
             }
-            else
-            {
-                if (itemObject != null)
-                {
-                    Debug.Log("pickup");
-                    ReceiveItem(itemObject.GetComponent<Item>());
-
-                }
-            }
-
 
             return;
-
-
         }
       
         task = interactedObject.GetComponent<Task>();
@@ -133,22 +165,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
-
     public void OnSlide(InputValue value)
     {
-        if (!isSliding && moveDirection.magnitude > 0.1f)
+        if (!isSliding && moveDirection.magnitude > 0.1f && !isChargingThrow)
         {
             StartCoroutine(StartSlide());
         }
     }
     
-
     private IEnumerator StartSlide()
     { 
-
         isSliding = true;
+
+        GameObject slideEffect = Instantiate(slideParticleEffect, transform.position, Quaternion.LookRotation(-moveDirection.normalized), transform);
 
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
 
@@ -157,7 +186,7 @@ public class PlayerController : MonoBehaviour
         slideTimer = 0.0f;
         while (slideTimer < slideDuration)
         {
-            Vector3 slideDirection = moveDirection * slideSpeed;
+            Vector3 slideDirection = lastMoveDirection * slideSpeed;
             Vector3 velocity = rb.linearVelocity;
             velocity = new Vector3(Mathf.Lerp(velocity.x, slideDirection.x, 12f * Time.fixedDeltaTime), velocity.y, Mathf.Lerp(velocity.z, slideDirection.z, 12f * Time.fixedDeltaTime));
             rb.linearVelocity = velocity;
@@ -169,14 +198,30 @@ public class PlayerController : MonoBehaviour
 
         
         yield return new WaitForSeconds(slideCooldown);
+
+        Destroy(slideEffect);
+
         isSliding = false;
     }
 
     private void FixedUpdate()
     {
         InteractionDetection();
+        if (isSliding || isStunned) return;
 
-        if (isSliding) return; 
+        if (isChargingThrow)
+        {
+            throwIndication.gameObject.SetActive(true);
+            throwIndication.UpdateChargeMeter(heldItem.GetChargeRatio());
+            throwIndication.UpdateArrowDirection(new Vector3(movementInput.x, 0, movementInput.y));
+            throwDirection = new Vector3(movementInput.x, 0, movementInput.y);
+            return;
+        }
+        else
+        {
+            throwIndication.gameObject.SetActive(false);
+            throwIndication.UpdateChargeMeter(0f);
+        }
 
         moveDirection = new Vector3(movementInput.x, 0.0f, movementInput.y);
         Vector3 walkingDirection = moveDirection * moveSpeed;
@@ -194,28 +239,50 @@ public class PlayerController : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius, interactionLayers);
 
-        bool currentlyOverlapping = false;
-        foreach (Collider collider in colliders)
+        GameObject newClosest = null;
+        float shortestDistancesSqr = float.MaxValue;
+        int highestPriority = -1;
+
+        foreach(Collider collider in colliders) 
         {
-            currentlyOverlapping = true;
+            GameObject obj = collider.gameObject;
+            float sqrDist = (obj.transform.position - transform.position).sqrMagnitude;
 
-            closestObject = collider.gameObject;
-
-            if (collider.gameObject.GetComponent<Item>() != null)
+            int priority = 0;
+            if(obj.GetComponent<ObstacleMove>() != null) 
             {
-                itemObject = collider.gameObject;
+                priority = 2;
+            }
+            else if(obj.GetComponent<Item>()!= null) 
+            {
+                priority = 1;
+            }
+            else if(obj.GetComponent<Task>() != null) 
+            {
+                priority = 0;
             }
 
-            break;
+            if(priority > highestPriority) 
+            {
+                highestPriority = priority;
+                shortestDistancesSqr = sqrDist;
+                newClosest = obj;
+            }
+            else if(priority == highestPriority) 
+            {
+                if(sqrDist < shortestDistancesSqr) 
+                {
+                    shortestDistancesSqr = sqrDist;
+                    newClosest = obj;
+                }
+            }
         }
 
-        if (!currentlyOverlapping)
+        closestObject = newClosest;
+
+        if(closestObject == null && inTask && interactedObject != null) 
         {
-            closestObject = null;
-            if (inTask)
-            {
-                interactedObject.GetComponent<Task>().LeaveTask(this);
-            }
+            interactedObject.GetComponent<Task>()?.LeaveTask(this);
         }
     }
 
@@ -239,9 +306,20 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        item.ResetThrowerCollision();
+
         item.transform.SetParent(transform, false);
         heldItem = item;
         heldItem.GetComponent<Collider>().enabled = false;
+
+
+        if (heldItem.GetItemData().GetType() == typeof(FishData))
+        {
+            weightDisplay.SetActive(true);
+            int weight = (int)heldItem.GetItemData().GetWeight();
+            weightDisplay.GetComponentInChildren<TMP_Text>().text = weight.ToString("0");
+            StartCoroutine(WeightIconTimer(1));
+        }
 
     }
 
@@ -250,19 +328,46 @@ public class PlayerController : MonoBehaviour
         if (item != null) 
         {
             item.transform.SetParent(transform, false);
+            item.GetComponent<Collider>().enabled = false;
         }
         if (heldItem != null) 
         {
             heldItem.transform.SetParent(senderTransform, false);
+            heldItem.GetComponent<Collider>().enabled = true;
         }
 
         Item temp = heldItem;
         heldItem = item;
+        
+
+
+
 
         return temp;
 
 
     }   
+
+    public void stunPlayer()
+    {
+        if (!isStunned)
+        {
+            StartCoroutine(StunCoroutine(stunDuration));
+        }
+    }
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.LookRotation(Vector3.up), transform);
+        float timer = 0f;
+        while (timer < duration)
+        {
+            isStunned = true;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        isStunned = false;
+    }
 
     public Item GetHeldItem() 
     {
@@ -274,5 +379,22 @@ public class PlayerController : MonoBehaviour
         Item item = heldItem;
         heldItem = null;
         return item;
+    }
+
+    public bool GetIsStunned() 
+    {
+        return isStunned;
+    }
+
+    public MeshRenderer GetHatRenderer() 
+    {
+        if (hat == null) return null;
+        return hat.GetComponent<MeshRenderer>();
+    }
+
+    IEnumerator WeightIconTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        weightDisplay.SetActive(false);       
     }
 }
