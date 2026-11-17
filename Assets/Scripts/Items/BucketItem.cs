@@ -22,16 +22,16 @@ public class BucketItem : Item
 
         throwSpeedMult = Mathf.Lerp(minSpeedMult, maxSpeedMult, chargeRatio);
 
-        throwSpeed = throwSpeed * throwSpeedMult;
+        //throwSpeed = throwSpeed * throwSpeedMult;
         float throwVelocity = throwSpeed * throwSpeedMult;
 
-        var proj = Instantiate(waterProjectile, transform.position, Quaternion.identity);
+        var proj = Instantiate(waterProjectile, transform.position + Vector3.up, Quaternion.identity);
 
         if (thrower != null)
         Instantiate(throwWater,this.transform.position, Quaternion.LookRotation(direction));
 
         RaycastHit hit;
-        if (Physics.Raycast(position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
+        if (Physics.Raycast(this.transform.position + (direction * throwSpeed), -Vector3.up, out hit, 10f, 1 << LayerMask.NameToLayer("Ground")))
         {
             Collider itemCollider = proj.GetComponent<Collider>();
             Collider[] playerColliders = thrower.GetComponentsInChildren<Collider>();
@@ -41,7 +41,8 @@ public class BucketItem : Item
                 Physics.IgnoreCollision(itemCollider, playerCollider, true);
             }
         }
- 
+
+        rb.linearVelocity = new Vector3(0, 0, 0);
         proj.GetComponent<Rigidbody>().AddForce(direction * throwVelocity, ForceMode.Impulse);
 
    
