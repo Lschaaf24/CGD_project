@@ -15,7 +15,7 @@ public class QuotaUI : MonoBehaviour
         quota = q;
         quota.OnProgressChanged += HandleProgress;
 
-        TitleText.text = $"{quota.Data.getWeightMin()} - {quota.Data.getWeightMax()}";
+        TitleText.text = $"Weight Req: {quota.Data.getWeightMin()} - {quota.Data.getWeightMax()}";
         HandleProgress(0, q.Data.getTargetNum());
     }
 
@@ -27,7 +27,7 @@ public class QuotaUI : MonoBehaviour
 
     private void HandleProgress(int progress, int target)
     {
-        ProgressText.text = $"{progress}/{target}";
+        ProgressText.text = $"Progress: {progress}/{target}";
     }
 
     private void Update()
