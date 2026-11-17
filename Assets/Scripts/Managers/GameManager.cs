@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image endScreen_image;
     [SerializeField] private Sprite endScreen_winSprite;
     [SerializeField] private Sprite endScreen_loseSprite;
+    [SerializeField] private TMP_Text inGame_Score_Text;
 
 
     [Header("Quota timing Settings")]
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour
         feedbackUI.SetActive(false);
         quotaPanel.SetActive(false);
         timerText.SetActive(false);
+        inGame_Score_Text.gameObject.SetActive(false);
         StopQuotaRoutine();
         quotaManager.ClearAll();
         TimeChecker.Instance.SetTimerOff(false);

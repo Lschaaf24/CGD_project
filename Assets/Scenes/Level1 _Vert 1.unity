@@ -957,11 +957,11 @@ MonoBehaviour:
   - name: 
     sounds:
     - Guid:
-        Data1: -880920696
-        Data2: 1194960423
-        Data3: -1393920598
-        Data4: 1482736286
-      Path: event:/FishPickUp2
+        Data1: 624158416
+        Data2: 1084038762
+        Data3: -2142366306
+        Data4: 960240295
+      Path: event:/Bucket
 --- !u!4 &487579719
 Transform:
   m_ObjectHideFlags: 0

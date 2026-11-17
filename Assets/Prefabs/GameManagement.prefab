@@ -377,6 +377,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2547532366220210233}
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: quotaPanel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: winChecker
       value: 
       objectReference: {fileID: 2793606196107116007}
@@ -396,6 +404,10 @@ PrefabInstance:
       propertyPath: endScreen_image
       value: 
       objectReference: {fileID: 3301592906929416558}
+    - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
+      propertyPath: inGame_Score_Text
+      value: 
+      objectReference: {fileID: 8843486810361080342}
     - target: {fileID: 6121136509691068778, guid: 59115f5bc645c9940bed09494978e949, type: 3}
       propertyPath: endScreen_winSprite
       value: 
