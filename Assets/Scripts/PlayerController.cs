@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
     { 
         isSliding = true;
 
-        GameObject slideEffect = Instantiate(slideParticleEffect, transform.position, Quaternion.LookRotation(-moveDirection.normalized));
+        GameObject slideEffect = Instantiate(slideParticleEffect, transform.position, Quaternion.LookRotation(-moveDirection.normalized), transform);
 
         rb.AddForce(moveDirection * dashForce + Vector3.up * hopForce, ForceMode.Impulse);
 
@@ -358,7 +358,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StunCoroutine(float duration)
     {
-        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+        Instantiate(stunParticlePrefab, transform.position + Vector3.up * 1.5f, Quaternion.LookRotation(Vector3.up), transform);
         float timer = 0f;
         while (timer < duration)
         {
