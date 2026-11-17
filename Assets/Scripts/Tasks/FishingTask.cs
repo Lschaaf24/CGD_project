@@ -21,7 +21,7 @@ public class FishingTask: Task
     float lossRate = 10.0f;
 
     [SerializeField] Slider reelUI;
-    //[SerializeField] private EventReference fishPickupSound;
+    
 
     bool reeling = false;
 
@@ -89,8 +89,8 @@ public class FishingTask: Task
         reelUI.gameObject.SetActive(true);
         lossRate = UnityEngine.Random.Range(minLossRate, maxLossRate);
         startTime = Time.time; 
-           //RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
-        SoundManager.PlaySound(SoundType.FishPickup);
+         
+        SoundManager.PlaySound(SoundType.FishStart);
         
     }
 
@@ -104,8 +104,8 @@ public class FishingTask: Task
         {
             isCompleted = true;
             EndTask();
-            //RuntimeManager.PlayOneShot(fishPickupSound, transform.position);
-            SoundManager.PlaySound(SoundType.FishPickup);
+           
+            SoundManager.PlaySound(SoundType.Splash);
             
         }
     }

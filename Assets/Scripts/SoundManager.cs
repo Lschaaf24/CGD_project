@@ -5,12 +5,13 @@ using FMODUnity;
 
 public enum SoundType
 {
-    FishPickup,
-     RunningWater, 
      FishStart,
+     Basket, 
+     FishPickup,
+     Splash,
 }
 
-//[RequireComponent(typeof(AudioSource))]
+
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;

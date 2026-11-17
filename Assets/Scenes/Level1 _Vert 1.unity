@@ -911,7 +911,15 @@ MonoBehaviour:
         Data2: 1165699361
         Data3: 75484057
         Data4: 200206221
-      Path: event:/Fishing_start
+      Path: event:/FishingStart
+  - name: 
+    sounds:
+    - Guid:
+        Data1: 1377738797
+        Data2: 1293640228
+        Data3: 1716656284
+        Data4: -481742746
+      Path: event:/Basket
   - name: 
     sounds:
     - Guid:
@@ -919,15 +927,15 @@ MonoBehaviour:
         Data2: 1165699361
         Data3: 75484057
         Data4: 200206221
-      Path: event:/Fishing_start
+      Path: event:/FishingStart
   - name: 
     sounds:
     - Guid:
-        Data1: -467945017
-        Data2: 1165699361
-        Data3: 75484057
-        Data4: 200206221
-      Path: event:/Fishing_start
+        Data1: -880920696
+        Data2: 1194960423
+        Data3: -1393920598
+        Data4: 1482736286
+      Path: event:/FishPickUp2
 --- !u!4 &487579719
 Transform:
   m_ObjectHideFlags: 0

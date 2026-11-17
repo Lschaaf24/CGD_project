@@ -13,6 +13,7 @@ public class BucketItem : Item
         if (!isFull)
         {
             base.ThrowItem(direction, throwHeight, throwSpeed);
+
             return;
         }
 
@@ -30,7 +31,7 @@ public class BucketItem : Item
         {
             Instantiate(puddle_task, new Vector3(position.x + (direction * throwSpeed).x, hit.point.y, position.z + (direction * throwSpeed).z), Quaternion.identity);
         }
-
+        SoundManager.PlaySound(SoundType.Splash);
         SetFill(false);
     }
 

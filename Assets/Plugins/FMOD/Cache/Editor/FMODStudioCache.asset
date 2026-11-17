@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6833625501693174253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Basket
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Basket
+  Guid:
+    Data1: 1377738797
+    Data2: 1293640228
+    Data3: 1716656284
+    Data4: -481742746
+  Banks:
+  - {fileID: 3819359579038313780}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-4845853459189022062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +42,7 @@ MonoBehaviour:
   Path: FMOD_Integration/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639304362696003820
+  lastModified: 639304694791668537
   FileSizes: []
   Exists: 1
 --- !u!114 &-4069038018526390602
@@ -45,7 +72,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-3177440679938270330
+--- !u!114 &-1301430074681425824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,14 +82,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Fishing_start
+  m_Name: event:/FishPickUp2
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Fishing_start
+  Path: event:/FishPickUp2
   Guid:
-    Data1: -467945017
-    Data2: 1165699361
-    Data3: 75484057
-    Data4: 200206221
+    Data1: -880920696
+    Data2: 1194960423
+    Data3: -1393920598
+    Data4: 1482736286
   Banks:
   - {fileID: 3819359579038313780}
   IsStream: 0
@@ -89,25 +116,29 @@ MonoBehaviour:
   - {fileID: -4845853459189022062}
   - {fileID: 3819359579038313780}
   EditorEvents:
-  - {fileID: -3177440679938270330}
-  - {fileID: 8932326838510691546}
   - {fileID: 654201481465705074}
+  - {fileID: -6833625501693174253}
+  - {fileID: 8548362856367875428}
+  - {fileID: -1301430074681425824}
+  - {fileID: 3566127950070664200}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4845853459189022062}
   StringsBanks:
   - {fileID: 7530224467276975905}
   cacheVersion: 131861
-  cacheTime: 639304362696013890
+  cacheTime: 639304694791683377
   SerializableEventsDict:
-  - key: event:/Fishing_start
+  - key: event:/FishPickUp
     index: 0
-  - key: event:/Test
+  - key: event:/Basket
     index: 1
-  - key: event:/FishingRod_Start
+  - key: event:/FishingStart
     index: 2
-  - key: event:/TestingBuild
+  - key: event:/FishPickUp2
     index: 3
+  - key: event:/Bucket
+    index: 4
 --- !u!114 &654201481465705074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +157,33 @@ MonoBehaviour:
     Data2: 1280443585
     Data3: -1244343161
     Data4: -2045559063
+  Banks:
+  - {fileID: 3819359579038313780}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &3566127950070664200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Bucket
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Bucket
+  Guid:
+    Data1: 624158416
+    Data2: 1084038762
+    Data3: -2142366306
+    Data4: 960240295
   Banks:
   - {fileID: 3819359579038313780}
   IsStream: 0
@@ -170,7 +228,7 @@ MonoBehaviour:
   Path: FMOD_Integration/Desktop/FMODSound.bank
   Name: FMODSound
   StudioPath: bank:/FMODSound
-  lastModified: 639304362695963614
+  lastModified: 639304694791618889
   FileSizes: []
   Exists: 1
 --- !u!114 &5008857989160110035
@@ -224,12 +282,12 @@ MonoBehaviour:
   Path: FMOD_Integration/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639304362696013890
+  lastModified: 639304694791683377
   FileSizes:
   - Name: 
-    Value: 928
+    Value: 1014
   Exists: 1
---- !u!114 &8932326838510691546
+--- !u!114 &8548362856367875428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,18 +297,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/FishingRod_Start
+  m_Name: event:/FishingStart
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/FishingRod_Start
+  Path: event:/FishingStart
   Guid:
-    Data1: -1938768096
-    Data2: 1199827902
-    Data3: 1345071000
-    Data4: 1019969995
+    Data1: -467945017
+    Data2: 1165699361
+    Data3: 75484057
+    Data4: 200206221
   Banks:
   - {fileID: 3819359579038313780}
   IsStream: 0
-  Is3D: 1
+  Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
