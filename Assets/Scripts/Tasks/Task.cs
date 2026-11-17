@@ -211,6 +211,8 @@ public class Task : MonoBehaviour
         Debug.Log("FAILED TASK");
     }
 
+    public bool IsReady() { return taskReady; }
+
     IEnumerator EjectItem(GameObject item) 
     {
         float timeElapsed = 0;

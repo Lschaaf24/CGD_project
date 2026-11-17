@@ -3403,6 +3403,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInputManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6760526218914849870, guid: 0eb116fb083f0c2418d0f1593695cd52, type: 3}
+      propertyPath: m_SplitScreen
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7267745408190023197, guid: 0eb116fb083f0c2418d0f1593695cd52, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.09

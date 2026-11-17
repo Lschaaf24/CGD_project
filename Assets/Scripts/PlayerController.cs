@@ -4,6 +4,7 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject stunParticlePrefab;
 
     [SerializeField] private GameObject hat;
+    [SerializeField] private ScreenSpaceIcon playstationInputIcon;
+    [SerializeField] private ScreenSpaceIcon xboxInputIcon;
+    private ScreenSpaceIcon inputIcon;
 
 
     private ThrowIndication throwIndication;
@@ -154,6 +158,8 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+            inputIcon.targetObject = null;
+            inputIcon.gameObject.SetActive(false);
 
             return;
         }
@@ -249,7 +255,8 @@ public class PlayerController : MonoBehaviour
             float sqrDist = (obj.transform.position - transform.position).sqrMagnitude;
 
             int priority = 0;
-            if(obj.GetComponent<ObstacleMove>() != null) 
+
+            if (obj.GetComponent<ObstacleMove>() != null  && !(obj.GetComponent<ObstacleMove>().IsPaused())) 
             {
                 priority = 2;
             }
@@ -279,6 +286,25 @@ public class PlayerController : MonoBehaviour
         }
 
         closestObject = newClosest;
+
+        if (closestObject != null)
+        {
+            if (closestObject.GetComponent<Task>()) 
+            {
+                if (!closestObject.GetComponent<Task>().IsReady()) return;
+
+                BucketItem bucket = GetHeldItem()?.GetComponent<BucketItem>();
+                if (closestObject.GetComponent<RepairTask>() && !bucket) return;
+            }
+            inputIcon.targetObject = closestObject.transform;
+            inputIcon.gameObject.SetActive(true);
+            inputIcon.transform.SetAsLastSibling();
+        }
+        else 
+        {
+            inputIcon.targetObject = null;
+            inputIcon.gameObject.SetActive(false);
+        }
 
         if(closestObject == null && inTask && interactedObject != null) 
         {
@@ -396,5 +422,17 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         weightDisplay.SetActive(false);       
+    }
+
+    public void AssignControllerType(Gamepad gamepad) 
+    {
+        if (Gamepad.current is DualSenseGamepadHID dualSense || Gamepad.current is DualShockGamepad) 
+        {
+            inputIcon = playstationInputIcon;
+            return;
+        }
+
+            inputIcon = xboxInputIcon;
+        
     }
 }

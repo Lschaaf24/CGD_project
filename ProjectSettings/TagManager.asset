@@ -8,6 +8,7 @@ TagManager:
   - DeathBox
   - Item
   - Event
+  - Input Icon
   layers:
   - Default
   - TransparentFX

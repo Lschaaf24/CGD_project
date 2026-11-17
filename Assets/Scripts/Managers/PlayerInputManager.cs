@@ -30,6 +30,8 @@ public class PlayerInputManager : MonoBehaviour
                 player.SwitchCurrentActionMap("Player");
                 joinedGamePads.Add(gamepad);
                 spawn++;
+
+                player.GetComponent<PlayerController>().AssignControllerType(gamepad);
             }
         }
     }

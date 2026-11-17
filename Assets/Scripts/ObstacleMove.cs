@@ -183,6 +183,7 @@ public class ObstacleMove : MonoBehaviour
         return;
     }
 
+    public bool IsPaused() { return slidePaused; }
 
     IEnumerator LerpSquash(GameObject player) 
     {
