@@ -16,11 +16,6 @@ public class TipEvent : GameEvent
     [SerializeField] float holdTime = 0;
     [SerializeField] GameObject warningText;
 
-    enum tipDirection
-    {
-        left,
-        right
-    }
     public override void StartEvent()
     {
         isActive = true;

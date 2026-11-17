@@ -318,7 +318,7 @@ public class PlayerController : MonoBehaviour
             weightDisplay.SetActive(true);
             int weight = (int)heldItem.GetItemData().GetWeight();
             weightDisplay.GetComponentInChildren<TMP_Text>().text = weight.ToString("0");
-            StartCoroutine(WeightIconTimer(2));
+            StartCoroutine(WeightIconTimer(1));
         }
 
     }

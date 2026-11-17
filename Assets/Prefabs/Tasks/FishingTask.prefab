@@ -882,8 +882,8 @@ MonoBehaviour:
   taskReady: 0
   startReelPercentage: 20
   reelGain: 7.5
-  minInterval: 1
-  maxInterval: 9
+  minInterval: 5
+  maxInterval: 13
   minLossRate: 10
   maxLossRate: 15
   pulseSpeed: 500
