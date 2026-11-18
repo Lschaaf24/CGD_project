@@ -57,6 +57,7 @@ public class RepairTask: Task
 
     public void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("PLAYER SLIP");
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {

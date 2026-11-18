@@ -295,7 +295,8 @@ public class PlayerController : MonoBehaviour
 
                 BucketItem bucket = GetHeldItem()?.GetComponent<BucketItem>();
                 if (closestObject.GetComponent<RepairTask>() && !bucket) return;
-                if (bucket) return;
+                if (!closestObject.GetComponent<RepairTask>() && GetHeldItem()) return; 
+
             }
             inputIcon.targetObject = closestObject.transform;
             inputIcon.gameObject.SetActive(true);

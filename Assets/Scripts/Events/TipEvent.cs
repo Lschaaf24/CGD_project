@@ -23,8 +23,9 @@ public class TipEvent : GameEvent
         cameraRock = camera.GetComponent<CameraRock>();
         cameraRock.enabled = false;
 
+        float sign = Mathf.Sign(UnityEngine.Random.Range(-2, 1));
 
-        StartCoroutine(LerpTip(tipDegrees * Mathf.Sign(UnityEngine.Random.Range(-2, 1))));
+        StartCoroutine(LerpTip(tipDegrees * sign));
         warningText.SetActive(true);
     }
 

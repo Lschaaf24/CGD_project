@@ -67,7 +67,6 @@ public class ObstacleMove : MonoBehaviour
             {
                 currentSpeed = 0f;
                 netAcceleration = 0f;
-                Debug.Log("FRICTION LOCK");
             }
         }
 
