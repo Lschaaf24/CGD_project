@@ -11,8 +11,11 @@ public class QuotaManager : MonoBehaviour
     public event Action<QuotaDataSO> OnQuotaFailed;
     public event Action<Quota> OnQuotaAdded;
     public event Action<Quota> OnQuotaRemoved;
+    public event Action OnQuotaSDGFailed;
+    public event Action OnQuotaSDGPassed;
 
     [SerializeField] private BasketTask basket;
+    [SerializeField] private DeathBox deathbox;
 
     [SerializeField] private List<QuotaDataSO> availableQuotas;
     [SerializeField] private Quota quotaPrefab;
@@ -42,6 +45,7 @@ public class QuotaManager : MonoBehaviour
 
         quota.OnCompleted += HandleCompleted;
         quota.OnFailed += HandleFailed;
+        quota.OnSDGPassed += HandleSDGPass;
 
         activeQuotas.Add(quota);
         OnQuotaAdded?.Invoke(quota);
@@ -60,10 +64,16 @@ public class QuotaManager : MonoBehaviour
         OnQuotaFailed?.Invoke(quota.Data);
     }
 
+    private void HandleSDGPass()
+    {
+        OnQuotaSDGPassed?.Invoke();
+    }
+
     private void Remove(Quota quota)
     {
         quota.OnCompleted -= HandleCompleted;
         quota.OnFailed -= HandleFailed;
+        quota.OnSDGPassed -= HandleSDGPass;
         activeQuotas.Remove(quota);
         OnQuotaRemoved?.Invoke(quota);
         Destroy(quota.gameObject);
@@ -90,21 +100,29 @@ public class QuotaManager : MonoBehaviour
     void OnEnable()
     {
         basket.OnFishCollected += HandleFishCollected;
+        deathbox.OnFishEntered += HandleFishRelease;
     }
 
 
     void OnDisable()
     {
         basket.OnFishCollected -= HandleFishCollected;
+        deathbox.OnFishEntered -= HandleFishRelease;
     }
-    private void HandleFishCollected(Item item)
+    public void HandleFishCollected(Item item)
     {
-        foreach(var quota in activeQuotas.ToArray())
+        bool accepted = false;
+        foreach (var quota in activeQuotas.ToArray())
         {
-            if (quota.TryAddProgress(item))
-                break;
+            if (quota.TryAddProgress(item)) { accepted = true; break; }
         }
+
+        if (!accepted) OnQuotaSDGFailed?.Invoke();
     }
 
-
+    private void HandleFishRelease(Item fish)
+    {
+        if (MatchesActiveQuotas(fish)) OnQuotaSDGFailed?.Invoke();
+        else OnQuotaSDGPassed?.Invoke();
+    }
 }

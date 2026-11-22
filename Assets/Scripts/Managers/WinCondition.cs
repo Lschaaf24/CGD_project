@@ -55,6 +55,7 @@ public class WinCondition : MonoBehaviour
 
     private void OnTimeReached()
     {
+        scoreChecker.AddSustainableScore();
         OnEndGame?.Invoke();
     }
 

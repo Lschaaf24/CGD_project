@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,7 +6,8 @@ public class DeathBox : MonoBehaviour
 {
     private Transform objectToRespawn;
     [SerializeField] private GameObject respawnPos;
-    
+    public event Action<Item> OnFishEntered;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,15 +22,21 @@ public class DeathBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player" && !other.GetComponent<BucketItem>())
+        if (other.CompareTag("Player") || other.TryGetComponent<BucketItem>(out _))
         {
-            Destroy(other.gameObject);
+            StartCoroutine(RespawnObject(other.transform));
             return;
         }
-        objectToRespawn = other.GetComponent<Transform>();
 
-        StartCoroutine(RespawnObject(objectToRespawn));
+        if (other.TryGetComponent(out Item item) && item.GetItemData() is FishData)
+        {
+            OnFishEntered?.Invoke(item);
+        }
+
+        Destroy(other.gameObject);
     }
+
+    
 
     private IEnumerator RespawnObject(Transform go)
     {

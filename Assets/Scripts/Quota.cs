@@ -6,6 +6,7 @@ public class Quota : MonoBehaviour
     public event Action<Quota> OnCompleted;
     public event Action<Quota> OnFailed;
     public event Action<int, int> OnProgressChanged;
+    public event Action OnSDGPassed;
 
     public QuotaDataSO Data { get; private set; }
     private int progress;
@@ -35,8 +36,8 @@ public class Quota : MonoBehaviour
         Debug.Log("scored");
         progress++;
         OnProgressChanged?.Invoke(progress, Data.getTargetNum());
-
-        if(progress >= Data.getTargetNum())
+        OnSDGPassed?.Invoke();
+        if (progress >= Data.getTargetNum())
         {
             finished = true;
             OnCompleted?.Invoke(this);
@@ -54,9 +55,7 @@ public class Quota : MonoBehaviour
         if (finished) return false;
 
         int weight = item.GetWeight();
-        if (weight < Data.getWeightMin() || weight > Data.getWeightMax()) return false;
-
-        return true;
+        return weight >= Data.getWeightMin() && weight <= Data.getWeightMax();
     }
 
     // Update is called once per frame
