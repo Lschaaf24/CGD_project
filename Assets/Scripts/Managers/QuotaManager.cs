@@ -101,13 +101,14 @@ public class QuotaManager : MonoBehaviour
     {
         basket.OnFishCollected += HandleFishCollected;
         deathbox.OnFishEntered += HandleFishRelease;
+        deathbox.OnCargoEntered += HandleCargoReleased;
     }
-
 
     void OnDisable()
     {
         basket.OnFishCollected -= HandleFishCollected;
         deathbox.OnFishEntered -= HandleFishRelease;
+        deathbox.OnCargoEntered -= HandleCargoReleased;
     }
     public void HandleFishCollected(Item item)
     {
@@ -125,4 +126,9 @@ public class QuotaManager : MonoBehaviour
         if (MatchesActiveQuotas(fish)) OnQuotaSDGFailed?.Invoke();
         else OnQuotaSDGPassed?.Invoke();
     }
+    private void HandleCargoReleased()
+    {
+        OnQuotaSDGFailed?.Invoke();
+    }
+
 }

@@ -7,6 +7,7 @@ public class DeathBox : MonoBehaviour
     private Transform objectToRespawn;
     [SerializeField] private GameObject respawnPos;
     public event Action<Item> OnFishEntered;
+    public event Action OnCargoEntered;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,6 +32,11 @@ public class DeathBox : MonoBehaviour
         if (other.TryGetComponent(out Item item) && item.GetItemData() is FishData)
         {
             OnFishEntered?.Invoke(item);
+        }
+
+        if (other.CompareTag("CargoBox"))
+        {
+            OnCargoEntered?.Invoke();
         }
 
         Destroy(other.gameObject);

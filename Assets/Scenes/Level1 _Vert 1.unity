@@ -1009,6 +1009,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1777884821498974994, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: quotaUI
+      value: 
+      objectReference: {fileID: -3488977257154550331, guid: 6a8a628f636c25646a4bab8d91c730a9, type: 3}
     - target: {fileID: 1965398581212764239, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -1246,8 +1250,12 @@ PrefabInstance:
       value: ScoreText
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_Spacing
+      value: 22.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 400
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_ChildAlignment
@@ -1255,7 +1263,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_Padding.m_Left
-      value: 280
+      value: -299
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_ChildScaleWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_ChildForceExpandWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8465390981955853370, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_LocalPosition.x
