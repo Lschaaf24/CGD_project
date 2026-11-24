@@ -1263,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_Padding.m_Left
-      value: -299
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_ChildScaleWidth
@@ -1275,11 +1275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_ChildForceExpandWidth
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8315661919104766505, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_ChildForceExpandHeight
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8465390981955853370, guid: bec7fe2338a8c174593f30421149b525, type: 3}
       propertyPath: m_LocalPosition.x
