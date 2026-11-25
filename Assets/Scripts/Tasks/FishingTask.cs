@@ -50,6 +50,7 @@ public class FishingTask: Task
                 {
                     readyIcon.SetActive(true);
                     waitingIcon.SetActive(false);
+                
                 }
                 EventManager.Instance.ChangeCounter(EventManager.SceneCounter.ReadyRods, 1);
             }
