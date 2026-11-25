@@ -12,6 +12,8 @@ public class PlayerInputManager : MonoBehaviour
     private HashSet<Gamepad> joinedGamePads = new HashSet<Gamepad>();
 
     [SerializeField] List<Color> hatColors;
+
+  
     int playerCount = 0;
     private int spawn;
 
@@ -35,6 +37,19 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
     }
+
+    public void PlayerSpawn()
+    {
+
+
+
+
+
+    }
+
+
+
+
 
     private void AssignHatColour(PlayerController player) 
     {
