@@ -13,9 +13,10 @@ public class PlayerInputManager : MonoBehaviour
 
     [SerializeField] List<Color> hatColors;
 
-  
+    
+    
     int playerCount = 0;
-    private int spawn;
+    private int spawn = 0;
 
     void Update()
     {
@@ -23,32 +24,20 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (gamepad.buttonSouth.wasPressedThisFrame && spawn < spawnPoints.Count && !joinedGamePads.Contains(gamepad))
             {
-                var player = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: gamepad);
-
+               
+                var player = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: gamepad);       
                 AssignHatColour(player.GetComponent<PlayerController>());
-                
-
                 player.transform.position = spawnPoints[spawn].position;
                 player.SwitchCurrentActionMap("Player");
                 joinedGamePads.Add(gamepad);
+
                 spawn++;
 
                 player.GetComponent<PlayerController>().AssignControllerType(gamepad);
+
             }
         }
     }
-
-    public void PlayerSpawn()
-    {
-
-
-
-
-
-    }
-
-
-
 
 
     private void AssignHatColour(PlayerController player) 
