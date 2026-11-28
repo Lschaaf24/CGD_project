@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Quota timing Settings")]
-    [SerializeField] private float startDelay = 2f; 
+    [SerializeField] private float startDelay = 4f; 
     [SerializeField] private float minDelay = 8f; 
     [SerializeField] private float maxDelay = 12f;
 
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
     {
         if(quotaRoutine == null) return;
 
-        StopCoroutine(QuotaScheduleRoutine());
+        StopCoroutine(quotaRoutine);
         quotaRoutine = null;
     }
 
